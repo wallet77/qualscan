@@ -1,0 +1,58 @@
+{
+  "name": "qualscan",
+  "version": "1.0.0",
+  "description": "Scan your project to find quality issues",
+  "main": "index.js",
+  "bin": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    "require": "./index.js",
+    "import": "./index.js"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test ./node_modules/.bin/jest",
+    "lint": "./node_modules/.bin/eslint ./",
+    "cpd": "./node_modules/.bin/jscpd ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wallet77/qualscan.git"
+  },
+  "keywords": [
+    "quality",
+    "code",
+    "scanner",
+    "security",
+    "audit"
+  ],
+  "author": {
+    "name": "Vincent Vallet",
+    "email": "wallet77@gmail.com",
+    "url": "https://github.com/wallet77"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wallet77/qualscan/issues"
+  },
+  "homepage": "https://github.com/wallet77/qualscan#readme",
+  "devDependencies": {
+    "eslint": "^7.13.0",
+    "eslint-config-standard": "^16.0.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.2",
+    "jest": "^26.6.3"
+  },
+  "jscpd": {
+    "threshold": 0.1,
+    "gitignore": true
+  },
+  "dependencies": {
+    "jscpd": "^3.3.19",
+    "ora": "5.1.0"
+  }
+}
