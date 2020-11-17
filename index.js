@@ -9,6 +9,7 @@ const cmdList = ['jscpd', 'npm_audit', 'npm_outdated']
 const runCmd = (cmd) => {
     const spinner = ora()
     spinner.color = 'yellow'
+    spinner.indent = 2
 
     spinner.start(cmd.title)
 
