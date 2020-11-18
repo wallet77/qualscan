@@ -29,7 +29,8 @@ const runCmd = (cmd) => {
     })
 }
 
-const argv = require('yargs')(process.argv.slice(2))
+global.argv = require('yargs')(process.argv.slice(2))
+    .config()
     .help('h')
     .alias('h', 'help')
     .option('errors', {
@@ -52,6 +53,11 @@ const argv = require('yargs')(process.argv.slice(2))
         type: 'boolean',
         description: 'Display detailed result for all tasks'
     })
+    .option('code-duplication', {
+        alias: 'cd',
+        type: 'string',
+        description: 'Args for code duplication plugins'
+    })
     .argv;
 
 (async () => {
@@ -69,10 +75,10 @@ const argv = require('yargs')(process.argv.slice(2))
 
         for (const i in res) {
             const cmd = res[i]
-            if (argv.verbose ||
-                (argv.errors && cmd.level === 'fail') ||
-                (argv.warnings && cmd.level === 'warn') ||
-                (argv.infos && cmd.level === 'info')) {
+            if (global.argv.verbose ||
+                (global.argv.errors && cmd.level === 'fail') ||
+                (global.argv.warnings && cmd.level === 'warn') ||
+                (global.argv.infos && cmd.level === 'info')) {
                 console.log('--------------------------------------------------------------')
                 console.log(cmd.title)
                 console.log(cmd.data)

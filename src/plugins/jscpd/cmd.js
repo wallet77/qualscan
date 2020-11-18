@@ -1,8 +1,12 @@
 'use strict'
 const path = require('path')
 
+const args = global.argv['code-duplication'] || `-c ${path.join(__dirname, '/config.json')}`
+
+const cmdLine = `${path.join(__dirname, '/../../../node_modules/.bin/jscpd')} ${args} ./`
+
 const cmd = {
-    cmd: `${path.join(__dirname, '/../../../node_modules/.bin/jscpd')} -c ${path.join(__dirname, '/config.json')} ./`,
+    cmd: cmdLine,
     title: 'Code duplication',
     callback: async (error, stdout, stderr) => {
         cmd.data = stdout
