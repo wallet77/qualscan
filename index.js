@@ -16,11 +16,11 @@ const runCmd = (cmd) => {
     return new Promise((resolve, reject) => {
         exec(cmd.cmd, async (error, stdout, stderr) => {
             try {
-                const res = await cmd.callback(error, stdout, stderr)
+                await cmd.callback(error, stdout, stderr)
 
-                spinner[res.level](cmd.title)
+                spinner[cmd.level](cmd.title)
 
-                resolve(res)
+                resolve(cmd)
             } catch (err) {
                 spinner.fail(cmd.title)
                 reject(err)
@@ -28,6 +28,31 @@ const runCmd = (cmd) => {
         })
     })
 }
+
+const argv = require('yargs')(process.argv.slice(2))
+    .help('h')
+    .alias('h', 'help')
+    .option('errors', {
+        alias: 'e',
+        type: 'boolean',
+        description: 'Display error information for each task which has failed'
+    })
+    .option('warnings', {
+        alias: 'w',
+        type: 'boolean',
+        description: 'Display output for each task which has a warning'
+    })
+    .option('infos', {
+        alias: 'i',
+        type: 'boolean',
+        description: 'Display output for each task which has an information'
+    })
+    .option('verbose', {
+        alias: 'v',
+        type: 'boolean',
+        description: 'Display detailed result for all tasks'
+    })
+    .argv;
 
 (async () => {
     console.log('Qualscan ...')
@@ -40,8 +65,19 @@ const runCmd = (cmd) => {
     }
 
     try {
-        await Promise.all(allCmds)
-        // console.log(res)
+        const res = await Promise.all(allCmds)
+
+        for (const i in res) {
+            const cmd = res[i]
+            if (argv.verbose ||
+                (argv.errors && cmd.level === 'fail') ||
+                (argv.warnings && cmd.level === 'warn') ||
+                (argv.infos && cmd.level === 'info')) {
+                console.log('--------------------------------------------------------------')
+                console.log(cmd.title)
+                console.log(cmd.data)
+            }
+        }
     } catch (err) {
         console.log(err)
     }

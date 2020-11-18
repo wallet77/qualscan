@@ -54,6 +54,7 @@
   "dependencies": {
     "jscpd": "^3.3.19",
     "ora": "5.1.0",
-    "semver": "7.3.2"
+    "semver": "7.3.2",
+    "yargs": "16.1.1"
   }
 }

@@ -1,20 +1,20 @@
 'use strict'
-
-module.exports = {
+const cmd = {
     cmd: 'npm audit -json',
     title: 'Security audit',
     callback: async (error, stdout, stderr) => {
         const data = JSON.parse(stdout)
 
-        const res = {
-            data: data,
-            level: 'succeed'
-        }
+        cmd.data = data
+        cmd.level = 'succeed'
 
         if (error) {
-            res.level = 'fail'
+            cmd.level = 'fail'
+            cmd.data = error
         }
 
-        return res
+        return cmd
     }
 }
+
+module.exports = cmd
