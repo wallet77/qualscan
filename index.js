@@ -77,7 +77,10 @@ global.argv = require('yargs')(process.argv.slice(2))
             const cmdEntrypoint = require(path.join(__dirname, `/src/plugins/${cmdList[index]}/cmd.js`))
             allCmds.push(runCmd(cmdEntrypoint))
         } catch (err) {
-            skipped.push(cmdList[index])
+            skipped.push({
+                name: cmdList[index],
+                reason: "Module doesn't exist!!!!"
+            })
         }
     }
 
@@ -102,7 +105,8 @@ global.argv = require('yargs')(process.argv.slice(2))
             console.log('Skipped plugins')
             console.log('--------------------------------------------------------------')
             for (const index in skipped) {
-                console.warn(`    ${skipped[index]} - Module doesn't exist!!!!`)
+                const skippedPlugin = skipped[index]
+                console.warn(`    ${skippedPlugin.name} - ${skippedPlugin.reason}`)
             }
         }
     } catch (err) {
