@@ -70,10 +70,15 @@ global.argv = require('yargs')(process.argv.slice(2))
 
     const allCmds = []
     const cmdList = global.argv.tasks || cmdListDefault
+    const skipped = []
 
     for (const index in cmdList) {
-        const cmdEntrypoint = require(path.join(__dirname, `/src/plugins/${cmdList[index]}/cmd.js`))
-        allCmds.push(runCmd(cmdEntrypoint))
+        try {
+            const cmdEntrypoint = require(path.join(__dirname, `/src/plugins/${cmdList[index]}/cmd.js`))
+            allCmds.push(runCmd(cmdEntrypoint))
+        } catch (err) {
+            skipped.push(cmdList[index])
+        }
     }
 
     try {
@@ -88,6 +93,15 @@ global.argv = require('yargs')(process.argv.slice(2))
                 console.log('--------------------------------------------------------------')
                 console.log(cmd.title)
                 console.log(cmd.data)
+            }
+        }
+
+        if (skipped.length > 0) {
+            console.log('--------------------------------------------------------------')
+            console.log('Skipped plugins')
+            console.log('--------------------------------------------------------------')
+            for (const index in skipped) {
+                console.warn(`${skipped[index]} - Module doesn't exist!!!!`)
             }
         }
     } catch (err) {
