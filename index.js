@@ -97,11 +97,12 @@ global.argv = require('yargs')(process.argv.slice(2))
         }
 
         if (skipped.length > 0) {
+            console.log('\n')
             console.log('--------------------------------------------------------------')
             console.log('Skipped plugins')
             console.log('--------------------------------------------------------------')
             for (const index in skipped) {
-                console.warn(`${skipped[index]} - Module doesn't exist!!!!`)
+                console.warn(`    ${skipped[index]} - Module doesn't exist!!!!`)
             }
         }
     } catch (err) {
