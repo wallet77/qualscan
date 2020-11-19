@@ -4,7 +4,7 @@ const { exec } = require('child_process')
 const ora = require('ora')
 const path = require('path')
 
-const cmdList = ['jscpd', 'npm_audit', 'npm_outdated']
+const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated']
 
 const runCmd = (cmd) => {
     const spinner = ora()
@@ -53,6 +53,11 @@ global.argv = require('yargs')(process.argv.slice(2))
         type: 'boolean',
         description: 'Display detailed result for all tasks'
     })
+    .option('tasks', {
+        alias: 't',
+        type: 'array',
+        description: 'List of tasks to run'
+    })
     .option('code-duplication', {
         alias: 'cd',
         type: 'string',
@@ -64,6 +69,7 @@ global.argv = require('yargs')(process.argv.slice(2))
     console.log('Qualscan ...')
 
     const allCmds = []
+    const cmdList = global.argv.tasks || cmdListDefault
 
     for (const index in cmdList) {
         const cmdEntrypoint = require(path.join(__dirname, `/src/plugins/${cmdList[index]}/cmd.js`))
