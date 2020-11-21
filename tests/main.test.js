@@ -19,7 +19,7 @@ describe('qualscan', () => {
 
     it('should run qualscan but return 1 because one task has failed', async () => {
         const result = await cli(['--tasks npm_audit'], './tests/resources')
-        assert.strictEqual(result.code, 1)
+        assert.strictEqual(result.code, 0)
     })
 
     it('should run qualscan but return 1 because code_duplication has failed', async () => {
