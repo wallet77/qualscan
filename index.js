@@ -86,9 +86,17 @@ global.argv = require('yargs')(process.argv.slice(2))
 
     try {
         const res = await Promise.all(allCmds)
+        let hasError = false
+        let hasWarning = false
+        let hasInfo = false
 
         for (const i in res) {
             const cmd = res[i]
+
+            hasError = hasError || cmd.level === 'fail'
+            hasWarning = hasWarning || cmd.level === 'warn'
+            hasInfo = hasInfo || cmd.level === 'info'
+
             if (global.argv.verbose ||
                 (global.argv.errors && cmd.level === 'fail') ||
                 (global.argv.warnings && cmd.level === 'warn') ||
@@ -109,7 +117,9 @@ global.argv = require('yargs')(process.argv.slice(2))
                 console.warn(`    ${skippedPlugin.name} - ${skippedPlugin.reason}`)
             }
         }
+        process.exit(hasError ? 1 : 0)
     } catch (err) {
         console.log(err)
+        process.exit(1)
     }
 })()
