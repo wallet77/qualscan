@@ -24,8 +24,6 @@ Supported and tested : >= 8.0
 | 14.x          | yes           | yes            |
 | 12.x          | yes           | yes            |
 | 10.x          | yes           | yes            |
-| 9.x           | yes           | yes            |
-| 8.x           | yes           | yes            |
 
 # Installation
 
