@@ -13,7 +13,7 @@
     "node": ">=8.0.0"
   },
   "scripts": {
-    "test": "NODE_ENV=test ./node_modules/.bin/jest",
+    "test": "NODE_ENV=test ./node_modules/.bin/nyc ./node_modules/.bin/jest",
     "lint": "./node_modules/.bin/eslint ./",
     "cpd": "./node_modules/.bin/jscpd ./"
   },
@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "jscpd": "^3.3.19",
+    "nyc": "^15.1.0",
     "ora": "5.1.0",
     "semver": "7.3.2",
     "yargs": "16.1.1"
