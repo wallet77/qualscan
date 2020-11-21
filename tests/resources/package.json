@@ -1,0 +1,22 @@
+{
+  "name": "fake-package",
+  "version": "1.0.0",
+  "description": "Only for tests",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "author": {
+    "name": "Vincent Vallet",
+    "email": "wallet77@gmail.com",
+    "url": "https://github.com/wallet77"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.13.0",
+    "jest": "^26.6.3"
+  },
+  "dependencies": {
+    "jscpd": "^3.3.19",
+    "yargs": "15.0.0"
+  }
+}
