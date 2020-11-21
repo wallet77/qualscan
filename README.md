@@ -1,14 +1,17 @@
 # Qualscan = Quality Scanner
 
-[![GitHub release](https://badge.fury.io/js/inspector-api.svg)](https://github.com/wallet77/v8-inspector-api/releases/)
+[![GitHub release](https://badge.fury.io/js/qualscan.svg)](https://github.com/wallet77/qualscan/releases/)
 [![GitHub license](https://img.shields.io/github/license/wallet77/v8-inspector-api)](https://github.com/wallet77/v8-inspector-api/blob/master/LICENSE)
 
 # Purpose
 
-Simple wrapper around "inspector" module.
-Basically it adds :
-- promises & async/await syntax
-- S3 exporter
+A CLI tool to run multiples plugins in order to check the quality of your project.
+For example it can run:
+- security audit of your dependencies
+- check dependencies updates
+- check code duplications
+- and more
+
 
 # Compatibility
 
@@ -24,18 +27,22 @@ Supported and tested : >= 8.0
 | 9.x           | yes           | yes            |
 | 8.x           | yes           | yes            |
 
-**In order to have all features we recommend to use at least Node.js version 10 or higher.**
-
 # Installation
 
 ```console
-$ npm install inspector-api --save
+$ npm install qualscan -g
+```
+
+or
+
+```console
+$ npm install qualscan --save
 ```
 
 # Usage
 
 ```console
-$ npm qualscan
+$ qualscan
 ```
 
 # Test
