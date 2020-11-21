@@ -1,4 +1,5 @@
 {
+    "all": true,
     "report-dir": "coverage",
     "reporter": [
         "html",
