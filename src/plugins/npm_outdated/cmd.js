@@ -5,7 +5,7 @@ const semver = require('semver')
 const cmd = {
     cmd: 'npm outdated -json -long',
     title: 'Dependencies updates',
-    callback: async (error, stdout, stderr) => {
+    callback: (error, stdout, stderr) => {
         if (stdout === '') {
             cmd.level = 'succeed'
             return cmd
@@ -42,7 +42,7 @@ const cmd = {
 
         if (error && cmd.level === 'succeed') {
             cmd.level = 'fail'
-            console.error(error)
+            cmd.error = error
         }
 
         return cmd
