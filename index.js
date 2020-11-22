@@ -4,7 +4,7 @@ const { exec } = require('child_process')
 const ora = require('ora')
 const path = require('path')
 
-const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated']
+const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check']
 
 const runCmd = (cmd) => {
     const spinner = ora()
@@ -101,8 +101,10 @@ global.argv = require('yargs')(process.argv.slice(2))
                 (global.argv.errors && cmd.level === 'fail') ||
                 (global.argv.warnings && cmd.level === 'warn') ||
                 (global.argv.infos && cmd.level === 'info')) {
+                console.log('\n\n')
                 console.log('--------------------------------------------------------------')
                 console.log(cmd.title)
+                console.log('--------------------------------------------------------------')
                 console.log(cmd.data)
             }
         }
