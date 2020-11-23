@@ -4,14 +4,20 @@ const { exec } = require('child_process')
 const ora = require('ora')
 const path = require('path')
 
-const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check']
+const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version']
 
-const runCmd = (cmd) => {
+const runCmd = async (cmd) => {
     const spinner = ora()
     spinner.color = 'yellow'
     spinner.indent = 2
 
     spinner.start(cmd.title)
+
+    if (!cmd.cmd) {
+        await cmd.callback()
+        spinner[cmd.level](cmd.title)
+        return cmd
+    }
 
     return new Promise((resolve, reject) => {
         exec(cmd.cmd, async (error, stdout, stderr) => {
@@ -62,6 +68,11 @@ global.argv = require('yargs')(process.argv.slice(2))
         alias: 'cd',
         type: 'string',
         description: 'Args for code duplication plugins'
+    })
+    .option('check-dev-dependencies', {
+        alias: 'cdd',
+        type: 'boolean',
+        description: 'Check dev dependencies exact version'
     })
     .argv;
 

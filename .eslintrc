@@ -1,7 +1,7 @@
 {
   "extends": "standard",
   "env": {
-    "jest": true
+    "mocha": true
   },
   "rules": {
     "indent": ["error", 4]

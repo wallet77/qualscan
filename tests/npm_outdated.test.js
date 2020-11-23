@@ -65,6 +65,14 @@ describe('npm_outdated', () => {
                 location: 'node_modules/module',
                 type: 'dependencies',
                 homepage: 'https://module.org'
+            },
+            module1: {
+                current: '7.15.0',
+                wanted: '7.15.0',
+                latest: '7.15.0',
+                location: 'node_modules/module1',
+                type: 'dependencies',
+                homepage: 'https://module1.org'
             }
         }), null)
         assert.strictEqual(cmd.level, 'info')

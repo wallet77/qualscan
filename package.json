@@ -43,12 +43,12 @@
   },
   "homepage": "https://github.com/wallet77/qualscan#readme",
   "devDependencies": {
-    "eslint": "^7.13.0",
-    "eslint-config-standard": "^16.0.1",
+    "eslint": "^7.14.0",
+    "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.2",
+    "eslint-plugin-standard": "^5.0.0",
     "mocha": "^8.2.1",
     "nyc": "^15.1.0"
   },
@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "@skypack/package-check": "0.2.2",
-    "jscpd": "^3.3.19",
+    "jscpd": "3.3.21",
     "ora": "5.1.0",
     "semver": "7.3.2",
     "yargs": "16.1.1"
