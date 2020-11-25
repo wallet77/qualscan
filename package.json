@@ -18,7 +18,7 @@
   "scripts": {
     "test": "NODE_ENV=test ./node_modules/.bin/mocha './tests/**/*.js'",
     "coverage": "./node_modules/.bin/nyc npm run test",
-    "lint": "./node_modules/.bin/eslint ./",
+    "linter": "./node_modules/.bin/eslint ./",
     "cpd": "./node_modules/.bin/jscpd ./"
   },
   "repository": {

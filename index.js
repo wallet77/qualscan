@@ -4,7 +4,8 @@ const { exec } = require('child_process')
 const ora = require('ora')
 const path = require('path')
 
-const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version']
+const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version', 'linter']
+const isScript = ['test', 'linter']
 
 const runCmd = async (cmd) => {
     const spinner = ora()
@@ -84,8 +85,14 @@ global.argv = require('yargs')(process.argv.slice(2))
     const skipped = []
 
     for (const index in cmdList) {
+        const cmdName = cmdList[index]
+        const cmdDir = isScript.indexOf(cmdName) === -1 ? cmdList[index] : 'run_script'
         try {
-            const cmdEntrypoint = require(path.join(__dirname, `/src/plugins/${cmdList[index]}/cmd.js`))
+            const cmdEntrypoint = require(path.join(__dirname, `/src/plugins/${cmdDir}/cmd.js`))
+            if (isScript.indexOf(cmdName) > -1) {
+                cmdEntrypoint.cmd = `npm run ${cmdName}`
+                cmdEntrypoint.title = cmdName
+            }
             allCmds.push(runCmd(cmdEntrypoint))
         } catch (err) {
             skipped.push({

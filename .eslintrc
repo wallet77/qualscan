@@ -3,6 +3,7 @@
   "env": {
     "mocha": true
   },
+  "ignorePatterns": ["tests/resources/**/*.js"],
   "rules": {
     "indent": ["error", 4]
   }
