@@ -4,7 +4,7 @@ const semver = require('semver')
 const path = require('path')
 
 const cmd = {
-    title: 'Exact version for dependencies',
+    title: 'Exact version of dependencies',
     callback: async () => {
         try {
             const packagefile = require(path.join(process.cwd(), 'package.json'))
