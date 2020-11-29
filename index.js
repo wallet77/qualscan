@@ -4,8 +4,8 @@ const { exec } = require('child_process')
 const ora = require('ora')
 const path = require('path')
 
-const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version', 'linter']
-const isScript = ['test', 'linter']
+const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version']
+const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : ['test', 'linter']
 
 const runCmd = async (cmd) => {
     const spinner = ora()
@@ -65,6 +65,11 @@ global.argv = require('yargs')(process.argv.slice(2))
         type: 'array',
         description: 'List of tasks to run'
     })
+    .option('scripts', {
+        alias: 's',
+        type: 'array',
+        description: 'List of scripts to run'
+    })
     .option('code-duplication', {
         alias: 'cd',
         type: 'string',
@@ -75,31 +80,40 @@ global.argv = require('yargs')(process.argv.slice(2))
         type: 'boolean',
         description: 'Check dev dependencies exact version'
     })
-    .argv;
+    .argv
+
+const prepareCmd = (cmdList, index, allCmds, skipped, isScript = false) => {
+    const cmdName = cmdList[index]
+    const cmdDir = !isScript ? cmdList[index] : 'run_script'
+    try {
+        const cmdEntrypoint = require(path.join(__dirname, `/src/plugins/${cmdDir}/cmd.js`))
+        if (isScript) {
+            cmdEntrypoint.cmd = `npm run ${cmdName}`
+            cmdEntrypoint.title = cmdName
+        }
+        allCmds.push(runCmd(cmdEntrypoint))
+    } catch (err) {
+        skipped.push({
+            name: cmdList[index],
+            reason: "Module doesn't exist!!!!"
+        })
+    }
+}
 
 (async () => {
     console.log('Qualscan ...')
 
     const allCmds = []
     const cmdList = global.argv.tasks || cmdListDefault
+    const scriptList = global.argv.scripts || scriptListDefault
     const skipped = []
 
     for (const index in cmdList) {
-        const cmdName = cmdList[index]
-        const cmdDir = isScript.indexOf(cmdName) === -1 ? cmdList[index] : 'run_script'
-        try {
-            const cmdEntrypoint = require(path.join(__dirname, `/src/plugins/${cmdDir}/cmd.js`))
-            if (isScript.indexOf(cmdName) > -1) {
-                cmdEntrypoint.cmd = `npm run ${cmdName}`
-                cmdEntrypoint.title = cmdName
-            }
-            allCmds.push(runCmd(cmdEntrypoint))
-        } catch (err) {
-            skipped.push({
-                name: cmdList[index],
-                reason: "Module doesn't exist!!!!"
-            })
-        }
+        prepareCmd(cmdList, index, allCmds, skipped)
+    }
+
+    for (const index in scriptList) {
+        prepareCmd(scriptList, index, allCmds, skipped, true)
     }
 
     try {
