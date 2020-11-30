@@ -1,9 +1,10 @@
 const cmd = require('../src/plugins/dependencies-exact-version/cmd')
 const assert = require('assert')
+const path = require('path')
 
 describe('dependencies exact version', () => {
     let currentDir
-    before(() => { currentDir = process.cwd(); global.argv = {} })
+    before(() => { currentDir = process.cwd(); global.argv = {}; global.packagefile = require(path.join(process.cwd(), 'package.json')) })
     after(() => process.chdir(currentDir))
 
     it('should run dependencies-exact-version and return succeed level', async () => {
@@ -12,15 +13,13 @@ describe('dependencies exact version', () => {
     })
 
     it('should run dependencies-exact-version and return fail level', async () => {
-        process.chdir('./tests')
-        await cmd.callback(null, null, null)
-        assert.strictEqual(cmd.level, 'fail')
-        assert.strictEqual(cmd.error.message.indexOf('Cannot find module') > -1, true)
-        process.chdir('./resources')
+        process.chdir('./tests/resources')
+        global.packagefile = require(path.join(process.cwd(), 'package.json'))
         await cmd.callback(null, null, null)
         assert.strictEqual(cmd.data.jscpd, '^3.3.19')
 
         process.chdir('./dependencies-exact-version')
+        global.packagefile = require(path.join(process.cwd(), 'package.json'))
         await cmd.callback(null, null, null)
         assert.strictEqual(Object.keys(cmd.data).length, 0)
 

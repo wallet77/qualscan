@@ -33,4 +33,9 @@ describe('qualscan', () => {
         assert.strictEqual(result.code, 0)
         process.env.SCRIPTS_LIST = 'linter'
     })
+
+    it('should run qualscan but failed (no package.json file)', async () => {
+        const result = await cli(['--tasks npm_outdated'], './tests')
+        assert.strictEqual(result.code, 1)
+    })
 })

@@ -7,6 +7,17 @@ const path = require('path')
 const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version']
 const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : ['test', 'linter']
 
+console.log('\x1b[33m%s\x1b[0m', '   ____              __                    \r\n  / __ \\__  ______ _/ /_____________ _____ \r\n / / / / / / / __ `/ / ___/ ___/ __ `/ __ \\\r\n/ /_/ / /_/ / /_/ / (__  ) /__/ /_/ / / / /\r\n\\___\\_\\__,_/\\__,_/_/____/\\___/\\__,_/_/ /_/ ')
+console.log('\n')
+
+try {
+    global.packagefile = require(path.join(process.cwd(), 'package.json'))
+} catch (err) {
+    console.error('No package.json file found!')
+    console.error('Qualscan requires a valid Javascript project structure with a package.json file.')
+    process.exit(1)
+}
+
 const runCmd = async (cmd) => {
     const spinner = ora()
     spinner.color = 'yellow'
@@ -101,8 +112,6 @@ const prepareCmd = (cmdList, index, allCmds, skipped, isScript = false) => {
 }
 
 (async () => {
-    console.log('Qualscan ...')
-
     const allCmds = []
     const cmdList = global.argv.tasks || cmdListDefault
     const scriptList = global.argv.scripts || scriptListDefault
