@@ -1,18 +1,23 @@
 'use strict'
-const cmd = {
-    cmd: '',
-    title: 'Script',
-    callback: async (error, stdout, stderr) => {
-        cmd.data = stdout || stderr
-        cmd.level = 'succeed'
+class Script {
+    constructor (title, cmd) {
+        this.cmd = cmd
+        this.title = title
+        this.data = null
+        this.level = null
+    }
+
+    async callback (error, stdout) {
+        this.data = stdout
+        this.level = 'succeed'
 
         if (error) {
-            cmd.level = 'fail'
-            cmd.error = error
+            this.level = 'fail'
+            this.error = error
         }
 
-        return cmd
+        return this
     }
 }
 
-module.exports = cmd
+module.exports = Script

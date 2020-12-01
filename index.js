@@ -5,13 +5,23 @@ const ora = require('ora')
 const path = require('path')
 
 const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version']
-const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : ['test', 'linter']
+const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : []
+
+const knownScripts = ['test', 'lint', 'linter']
 
 console.log('\x1b[33m%s\x1b[0m', '   ____              __                    \r\n  / __ \\__  ______ _/ /_____________ _____ \r\n / / / / / / / __ `/ / ___/ ___/ __ `/ __ \\\r\n/ /_/ / /_/ / /_/ / (__  ) /__/ /_/ / / / /\r\n\\___\\_\\__,_/\\__,_/_/____/\\___/\\__,_/_/ /_/ ')
 console.log('\n')
 
 try {
     global.packagefile = require(path.join(process.cwd(), 'package.json'))
+    if (global.packagefile.scripts && scriptListDefault.length === 0) {
+        for (const index in knownScripts) {
+            const script = knownScripts[index]
+            if (global.packagefile.scripts[script]) {
+                scriptListDefault.push(script)
+            }
+        }
+    }
 } catch (err) {
     console.error('No package.json file found!')
     console.error('Qualscan requires a valid Javascript project structure with a package.json file.')
@@ -93,19 +103,19 @@ global.argv = require('yargs')(process.argv.slice(2))
     })
     .argv
 
-const prepareCmd = (cmdList, index, allCmds, skipped, isScript = false) => {
-    const cmdName = cmdList[index]
-    const cmdDir = !isScript ? cmdList[index] : 'run_script'
+const prepareCmd = (cmdName, allCmds, skipped, isScript = false) => {
+    const cmdDir = !isScript ? cmdName : 'run_script'
     try {
-        const cmdEntrypoint = require(path.join(__dirname, `/src/plugins/${cmdDir}/cmd.js`))
+        const CmdEntrypoint = require(path.join(__dirname, `/src/plugins/${cmdDir}/cmd.js`))
         if (isScript) {
-            cmdEntrypoint.cmd = `npm run ${cmdName}`
-            cmdEntrypoint.title = cmdName
+            const instanceScript = new CmdEntrypoint(cmdName, `npm run ${cmdName}`)
+            allCmds.push(runCmd(instanceScript))
+        } else {
+            allCmds.push(runCmd(CmdEntrypoint))
         }
-        allCmds.push(runCmd(cmdEntrypoint))
     } catch (err) {
         skipped.push({
-            name: cmdList[index],
+            name: cmdName,
             reason: "Module doesn't exist!!!!"
         })
     }
@@ -116,13 +126,19 @@ const prepareCmd = (cmdList, index, allCmds, skipped, isScript = false) => {
     const cmdList = global.argv.tasks || cmdListDefault
     const scriptList = global.argv.scripts || scriptListDefault
     const skipped = []
+    const skippedScripts = []
 
     for (const index in cmdList) {
-        prepareCmd(cmdList, index, allCmds, skipped)
+        prepareCmd(cmdList[index], allCmds, skipped)
     }
 
     for (const index in scriptList) {
-        prepareCmd(scriptList, index, allCmds, skipped, true)
+        const script = scriptList[index]
+        if (!global.packagefile.scripts || !global.packagefile.scripts[script]) {
+            skippedScripts.push(script)
+        } else {
+            prepareCmd(script, allCmds, skipped, true)
+        }
     }
 
     try {
@@ -158,6 +174,16 @@ const prepareCmd = (cmdList, index, allCmds, skipped, isScript = false) => {
             for (const index in skipped) {
                 const skippedPlugin = skipped[index]
                 console.warn(`    ${skippedPlugin.name} - ${skippedPlugin.reason}`)
+            }
+        }
+        if (skippedScripts.length > 0) {
+            console.log('\n')
+            console.log('--------------------------------------------------------------')
+            console.log('Skipped scripts')
+            console.log('--------------------------------------------------------------')
+            for (const index in skippedScripts) {
+                const skippedScript = skippedScripts[index]
+                console.warn(`    ${skippedScript} - does not exist in package.json!`)
             }
         }
         process.exit(hasError ? 1 : 0)
