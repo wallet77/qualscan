@@ -1,0 +1,3 @@
+{
+    "code-duplication": "--ignore */resources/code_duplication_failed/*"
+}

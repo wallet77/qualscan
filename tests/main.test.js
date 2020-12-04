@@ -3,7 +3,7 @@ const assert = require('assert')
 
 describe('qualscan', () => {
     it('should run qualscan default behavior', async () => {
-        const result = await cli(['--verbose', '--code-duplication="--ignore "*/resources/code_duplication_failed/*""'], '.')
+        const result = await cli(['--verbose', '--code-duplication="--ignore tests/resources/code_duplication_failed/*"'], '.')
         assert.strictEqual(result.code, 0)
     })
 
@@ -23,7 +23,7 @@ describe('qualscan', () => {
     })
 
     it('should run qualscan but return 1 because code_duplication has failed', async () => {
-        const result = await cli(['--tasks code_duplication'], '.')
+        const result = await cli(['--tasks code_duplication'], './tests/resources/')
         assert.strictEqual(result.code, 1)
     })
 
@@ -37,5 +37,10 @@ describe('qualscan', () => {
     it('should run qualscan but failed (no package.json file)', async () => {
         const result = await cli(['--tasks npm_outdated'], './tests')
         assert.strictEqual(result.code, 1)
+    })
+
+    it('should run qualscan but failed to load qualscanrc (bad format)', async () => {
+        const result = await cli(['--tasks npm_outdated'], './tests/resources/configFile')
+        assert.strictEqual(result.code, 0)
     })
 })

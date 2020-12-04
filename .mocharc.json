@@ -4,7 +4,7 @@
     "package": "./package.json",
     "reporter": "spec",
     "slow": 150,
-    "timeout": 4000,
+    "timeout": 10000,
     "exclude": ["./tests/resources/**/*.js"],
     "ui": "bdd",
     "watch-files": ["index.js", "src/**/*.js", "tests/**/*.js"],

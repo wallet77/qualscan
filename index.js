@@ -3,6 +3,7 @@
 const { exec } = require('child_process')
 const ora = require('ora')
 const path = require('path')
+const fs = require('fs')
 
 const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version']
 const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : []
@@ -26,6 +27,17 @@ try {
     console.error('No package.json file found!')
     console.error('Qualscan requires a valid Javascript project structure with a package.json file.')
     process.exit(1)
+}
+
+const rcFilePath = path.join(process.cwd(), '.qualscanrc')
+let conf
+if (fs.existsSync(rcFilePath)) {
+    try {
+        conf = JSON.parse(fs.readFileSync(rcFilePath))
+    } catch (err) {
+        console.warn('Invalid .qualscanrc file format, Qualscan requires a valid JSON file!')
+        console.warn('.qualscanrc file has been ignored.')
+    }
 }
 
 const runCmd = async (cmd) => {
@@ -57,8 +69,9 @@ const runCmd = async (cmd) => {
     })
 }
 
-global.argv = require('yargs')(process.argv.slice(2))
-    .config()
+const init = !conf ? require('yargs')(process.argv.slice(2)).config() : require('yargs')(process.argv.slice(2)).config(conf)
+
+global.argv = init
     .help('h')
     .alias('h', 'help')
     .option('errors', {
