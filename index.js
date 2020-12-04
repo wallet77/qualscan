@@ -74,20 +74,11 @@ const init = !conf ? require('yargs')(process.argv.slice(2)).config() : require(
 global.argv = init
     .help('h')
     .alias('h', 'help')
-    .option('errors', {
-        alias: 'e',
-        type: 'boolean',
-        description: 'Display error information for each task which has failed'
-    })
-    .option('warnings', {
-        alias: 'w',
-        type: 'boolean',
-        description: 'Display output for each task which has a warning'
-    })
-    .option('infos', {
-        alias: 'i',
-        type: 'boolean',
-        description: 'Display output for each task which has an information'
+    .options('level', {
+        alias: 'l',
+        type: 'string',
+        description: 'Level of information to display (error, warnings, info, all)',
+        default: 'all'
     })
     .option('verbose', {
         alias: 'v',
@@ -135,6 +126,8 @@ const prepareCmd = (cmdName, allCmds, skipped, isScript = false) => {
 }
 
 (async () => {
+    const levels = ['all', 'info', 'warn', 'fail']
+    const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level]
     const allCmds = []
     const cmdList = global.argv.tasks || cmdListDefault
     const scriptList = global.argv.scripts || scriptListDefault
@@ -167,10 +160,9 @@ const prepareCmd = (cmdName, allCmds, skipped, isScript = false) => {
             hasWarning = hasWarning || cmd.level === 'warn'
             hasInfo = hasInfo || cmd.level === 'info'
 
-            if (global.argv.verbose ||
-                (global.argv.errors && cmd.level === 'fail') ||
-                (global.argv.warnings && cmd.level === 'warn') ||
-                (global.argv.infos && cmd.level === 'info')) {
+            if (global.argv.verbose &&
+                (levels.indexOf(cmd.level) >= currentLevel ||
+                (global.argv.level === 'all' && cmd.level === 'succeed'))) {
                 console.log('\n\n')
                 console.log('--------------------------------------------------------------')
                 console.log(cmd.title)
