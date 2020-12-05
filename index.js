@@ -69,6 +69,24 @@ const runCmd = async (cmd) => {
     })
 }
 
+const prepareCmd = (cmdName, allCmds, skipped, isScript = false) => {
+    const cmdDir = !isScript ? cmdName : 'run_script'
+    try {
+        const CmdEntrypoint = require(path.join(__dirname, `/src/plugins/${cmdDir}/cmd.js`))
+        if (isScript) {
+            const instanceScript = new CmdEntrypoint(cmdName, `npm run ${cmdName}`)
+            allCmds.push(runCmd(instanceScript))
+        } else {
+            allCmds.push(runCmd(CmdEntrypoint))
+        }
+    } catch (err) {
+        skipped.push({
+            name: cmdName,
+            reason: "Module doesn't exist!!!!"
+        })
+    }
+}
+
 const init = !conf ? require('yargs')(process.argv.slice(2)).config() : require('yargs')(process.argv.slice(2)).config(conf)
 
 global.argv = init
@@ -107,27 +125,16 @@ global.argv = init
     })
     .argv
 
-const prepareCmd = (cmdName, allCmds, skipped, isScript = false) => {
-    const cmdDir = !isScript ? cmdName : 'run_script'
-    try {
-        const CmdEntrypoint = require(path.join(__dirname, `/src/plugins/${cmdDir}/cmd.js`))
-        if (isScript) {
-            const instanceScript = new CmdEntrypoint(cmdName, `npm run ${cmdName}`)
-            allCmds.push(runCmd(instanceScript))
-        } else {
-            allCmds.push(runCmd(CmdEntrypoint))
-        }
-    } catch (err) {
-        skipped.push({
-            name: cmdName,
-            reason: "Module doesn't exist!!!!"
-        })
-    }
-}
+const levels = ['all', 'info', 'warn', 'fail']
+const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level]
+const colors = {
+    fail: '\x1b[31m',
+    succeed: '\x1b[32m',
+    warn: '\x1b[33m',
+    info: '\x1b[34m'
+};
 
 (async () => {
-    const levels = ['all', 'info', 'warn', 'fail']
-    const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level]
     const allCmds = []
     const cmdList = global.argv.tasks || cmdListDefault
     const scriptList = global.argv.scripts || scriptListDefault
@@ -164,9 +171,9 @@ const prepareCmd = (cmdName, allCmds, skipped, isScript = false) => {
                 (levels.indexOf(cmd.level) >= currentLevel ||
                 (global.argv.level === 'all' && cmd.level === 'succeed'))) {
                 console.log('\n\n')
-                console.log('--------------------------------------------------------------')
-                console.log(cmd.title)
-                console.log('--------------------------------------------------------------')
+                console.log(`${colors[cmd.level]}%s\x1b[0m`, '--------------------------------------------------------------')
+                console.log(`${colors[cmd.level]}%s\x1b[0m`, cmd.title)
+                console.log(`${colors[cmd.level]}%s\x1b[0m`, '--------------------------------------------------------------')
                 console.log(cmd.data)
             }
         }
