@@ -3,6 +3,8 @@
 [![GitHub release](https://badge.fury.io/js/qualscan.svg)](https://github.com/wallet77/qualscan/releases/)
 [![GitHub license](https://img.shields.io/github/license/wallet77/qualscan)](https://github.com/wallet77/qualscan/blob/master/LICENSE)
 
+![Qualscan example](https://github.com/wallet77/qualscan/blob/main/examples/run_qualscan.gif)
+
 # Purpose
 
 A CLI tool to run multiples plugins in order to check the quality of your project.
