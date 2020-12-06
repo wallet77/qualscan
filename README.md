@@ -84,7 +84,7 @@ List of level
 | all           | (default) display all logs       |
 | error         | Display errors only              |
 | warn          | Display warnings & errors        |
-| info          | Display info & errors é warnings |
+| info          | Display info & errors & warnings |
 
 
 **Send custom args to jscpd**
@@ -125,6 +125,12 @@ To see a basic example you can look at this [basic example with github actions](
 
 ```console
 $ npm test
+```
+
+Run with coverage
+
+```console
+$ npm run coverage
 ```
 
 Coverage report can be found in coverage/.
