@@ -30,7 +30,9 @@
     "code",
     "scanner",
     "security",
-    "audit"
+    "audit",
+    "dependencies",
+    "updates"
   ],
   "author": {
     "name": "Vincent Vallet",

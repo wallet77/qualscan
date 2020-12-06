@@ -1,0 +1,5 @@
+{
+    "verbose": true,
+    "code-duplication": "--ignore */resources/code_duplication_failed/*",
+    "scripts": "linter"
+}
