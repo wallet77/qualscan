@@ -18,8 +18,7 @@
   "scripts": {
     "test": "NODE_ENV=test SCRIPTS_LIST=linter ./node_modules/.bin/mocha './tests/**/*.js'",
     "coverage": "./node_modules/.bin/nyc npm run test",
-    "linter": "./node_modules/.bin/eslint ./",
-    "cpd": "./node_modules/.bin/jscpd ./"
+    "linter": "./node_modules/.bin/eslint ./"
   },
   "repository": {
     "type": "git",
@@ -45,7 +44,7 @@
   },
   "homepage": "https://github.com/wallet77/qualscan#readme",
   "devDependencies": {
-    "eslint": "^7.14.0",
+    "eslint": "^7.15.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
@@ -54,15 +53,11 @@
     "mocha": "^8.2.1",
     "nyc": "^15.1.0"
   },
-  "jscpd": {
-    "threshold": 0.1,
-    "gitignore": true
-  },
   "dependencies": {
     "@skypack/package-check": "0.2.2",
-    "jscpd": "3.3.21",
+    "jscpd": "3.3.22",
     "ora": "5.1.0",
-    "semver": "7.3.2",
-    "yargs": "16.1.1"
+    "semver": "7.3.4",
+    "yargs": "16.2.0"
   }
 }
