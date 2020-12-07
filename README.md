@@ -4,6 +4,10 @@
 [![GitHub license](https://img.shields.io/github/license/wallet77/qualscan)](https://github.com/wallet77/qualscan/blob/master/LICENSE)
 [![CI pipeline](https://github.com/wallet77/qualscan/workflows/Node.js%20CI/badge.svg)](https://github.com/wallet77/qualscan/actions?query=workflow%3A%22Node.js+CI%22)
 [![Code coverage](https://codecov.io/gh/wallet77/qualscan/branch/main/graph/badge.svg)](https://codecov.io/gh/wallet77/qualscan)
+[![Opened issues](https://img.shields.io/github/issues-raw/wallet77/qualscan)](https://github.com/wallet77/qualscan/issues)
+[![Opened PR](https://img.shields.io/github/issues-pr-raw/wallet77/qualscan)](https://github.com/wallet77/qualscan/pulls)
+[![Package size](https://img.shields.io/bundlephobia/min/qualscan)](https://www.npmjs.com/package/qualscan)
+
 
 ![Qualscan example](https://github.com/wallet77/qualscan/blob/main/examples/run_qualscan.gif)
 
