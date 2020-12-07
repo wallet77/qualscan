@@ -27,8 +27,9 @@ jobs:
     - run: npm run linter
 
     - name: Run the qualscan tool
-    - run: npm install qualscan -g
-    - run: qualscan --scripts # don't run scripts as linter and tests have already been triggered
+    - run: |
+        npm install qualscan -g
+        qualscan --scripts
 
     - name: Run the tests and generate coverage report
       run: npm run coverage
