@@ -120,7 +120,7 @@ You can specify your configuration file in two different ways:
 $ qualscan -c /pathTo/MyConfigFile.json
 ```
 
-2. Use .qualscanrc file
+2. Use .qualscanrc file.
 By default, Qualscan will check if .qualscanrc file is present in the current directory.
 You can find an [example here](https://github.com/wallet77/qualscan/tree/main/examples/.qualscanrc).
 
