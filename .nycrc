@@ -3,6 +3,7 @@
     "report-dir": "coverage",
     "reporter": [
         "html",
-        "text"
+        "text",
+        "lcovonly"
     ]
 }
