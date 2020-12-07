@@ -2,6 +2,7 @@
 
 [![GitHub release](https://badge.fury.io/js/qualscan.svg)](https://github.com/wallet77/qualscan/releases/)
 [![GitHub license](https://img.shields.io/github/license/wallet77/qualscan)](https://github.com/wallet77/qualscan/blob/master/LICENSE)
+[![CI pipeline](https://github.com/wallet77/qualscan/workflows/Node.js%20CI/badge.svg)](https://github.com/wallet77/qualscan/actions?query=workflow%3A%22Node.js+CI%22)
 
 ![Qualscan example](https://github.com/wallet77/qualscan/blob/main/examples/run_qualscan.gif)
 

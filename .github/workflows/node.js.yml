@@ -25,5 +25,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-    - run: npm test
     - run: npm run linter
+
+    - name: Run the tests and generate coverage report
+      run: npm run coverage
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
