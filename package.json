@@ -30,8 +30,18 @@
     "scanner",
     "security",
     "audit",
+    "vulnerabilities",
     "dependencies",
-    "updates"
+    "updates",
+    "duplication",
+    "linter",
+    "linting",
+    "test",
+    "script",
+    "exact",
+    "version",
+    "cli",
+    "ci"
   ],
   "author": {
     "name": "Vincent Vallet",
