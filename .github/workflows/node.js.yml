@@ -27,7 +27,7 @@ jobs:
     - run: npm run linter
 
     - name: Run the qualscan tool
-    - run: |
+      run: | 
         npm install qualscan -g
         qualscan --scripts
 
