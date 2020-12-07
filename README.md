@@ -128,6 +128,7 @@ You can find an [example here](https://github.com/wallet77/qualscan/tree/main/ex
 
 Qualscan can be easily integrate with any CI pipeline.
 To see a basic example you can look at this [basic example with github actions](https://github.com/wallet77/qualscan/blob/main/.github/workflows/node.js.yml).
+To see an example output you can have a look at this page: [actions page](https://github.com/wallet77/qualscan/runs/1511486101?check_suite_focus=true), and click on step "run the qualscan tool".
 
 # Test
 
