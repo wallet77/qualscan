@@ -8,7 +8,7 @@ function duplicate(arr) {
 }
 
 const main = () => {
-    duplicate()
+    duplicate([])
 }
 
 main()
