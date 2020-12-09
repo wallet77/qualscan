@@ -5,7 +5,7 @@ const ora = require('ora')
 const path = require('path')
 const fs = require('fs')
 
-const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version']
+const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version', 'npm_pack']
 const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : []
 
 const knownScripts = ['test', 'lint', 'linter']

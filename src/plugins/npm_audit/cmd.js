@@ -1,23 +1,18 @@
 'use strict'
+const path = require('path')
+const utils = require(path.join(__dirname, '/../utils.js'))
+
 const cmd = {
     cmd: 'npm audit -json',
     title: 'Security audit',
     callback: async (error, stdout, stderr) => {
-        const data = JSON.parse(stdout)
+        utils.parseData(cmd, error, stdout, stderr)
 
-        cmd.data = data
-        cmd.level = 'succeed'
-
-        if (error) {
+        if (cmd.data.metadata.vulnerabilities.critical > 0 || cmd.data.metadata.vulnerabilities.high > 0) {
             cmd.level = 'fail'
-            cmd.error = error
-        }
-
-        if (data.metadata.vulnerabilities.critical > 0 || data.metadata.vulnerabilities.high > 0) {
-            cmd.level = 'fail'
-        } else if (data.metadata.vulnerabilities.moderate > 0 || data.metadata.vulnerabilities.low > 0) {
+        } else if (cmd.data.metadata.vulnerabilities.moderate > 0 || cmd.data.metadata.vulnerabilities.low > 0) {
             cmd.level = 'warn'
-        } else if (data.metadata.vulnerabilities.info > 0) {
+        } else if (cmd.data.metadata.vulnerabilities.info > 0) {
             cmd.level = 'info'
         }
 

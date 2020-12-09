@@ -109,6 +109,11 @@ For a full list of possible arguments, please follow this documentation: [Jscpd 
 $ qualscan -cdd
 ```
 
+**Check project size**
+With the .gitignore file
+With the .npmignore file
+With the files property
+
 ## Using Config file
 
 Qualscan can use a configuration file instead of a list of options.
