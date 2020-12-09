@@ -123,6 +123,24 @@ global.argv = init
         type: 'boolean',
         description: 'Check dev dependencies exact version'
     })
+    .option('number-of-files-limit', {
+        alias: 'nofl',
+        type: 'number',
+        default: 100,
+        description: 'Customize the number of files limit'
+    })
+    .option('package-size-limit', {
+        alias: 'psl',
+        type: 'number',
+        default: 50000,
+        description: 'Customize the package size limit'
+    })
+    .option('unpacked-size-limit', {
+        alias: 'usl',
+        type: 'number',
+        default: 100000,
+        description: 'Customize the unpacked size limit'
+    })
     .argv
 
 const levels = ['all', 'info', 'warn', 'fail']

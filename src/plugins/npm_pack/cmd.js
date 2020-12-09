@@ -8,9 +8,9 @@ const cmd = {
     callback: async (error, stdout, stderr) => {
         utils.parseData(cmd, error, stdout, stderr)
 
-        if (cmd.data[0].entryCount > 100) {
+        if (cmd.data[0].entryCount > global.argv['number-of-files-limit']) {
             cmd.level = 'fail'
-        } else if (cmd.data[0].size > 50000 || cmd.data[0].unpackedSize > 100000) {
+        } else if (cmd.data[0].size > global.argv['package-size-limit'] || cmd.data[0].unpackedSize > global.argv['unpacked-size-limit']) {
             cmd.level = 'fail'
         }
 
