@@ -28,7 +28,6 @@ const cmd = {
             }
 
             if (semver.major(module.current) < semver.major(module.latest)) {
-                currentLevel = 2
                 cmd.level = 'fail'
                 break
             } else if (semver.minor(module.current) < semver.minor(module.latest) && currentLevel < 1) {

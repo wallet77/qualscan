@@ -163,7 +163,7 @@ const colors = {
         prepareCmd(cmdList[index], allCmds, skipped)
     }
 
-    for (const index in scriptList) {
+    for (let index = 0; index < scriptList.length; index++) {
         const script = scriptList[index]
         if (!global.packagefile.scripts || !global.packagefile.scripts[script]) {
             skippedScripts.push(script)
@@ -201,7 +201,7 @@ const colors = {
             console.log('--------------------------------------------------------------')
             console.log('Skipped plugins')
             console.log('--------------------------------------------------------------')
-            for (const index in skipped) {
+            for (let index = 0; index < skipped.length; index++) {
                 const skippedPlugin = skipped[index]
                 console.warn(`    ${skippedPlugin.name} - ${skippedPlugin.reason}`)
             }
@@ -211,7 +211,7 @@ const colors = {
             console.log('--------------------------------------------------------------')
             console.log('Skipped scripts')
             console.log('--------------------------------------------------------------')
-            for (const index in skippedScripts) {
+            for (let index = 0; index < skippedScripts.length; index++) {
                 const skippedScript = skippedScripts[index]
                 console.warn(`    ${skippedScript} - does not exist in package.json!`)
             }
