@@ -2,6 +2,12 @@ const cmd = require('../src/plugins/npm_pack/cmd')
 const assert = require('assert')
 
 describe('npm_pack', () => {
+    before(() => {
+        global.argv['number-of-files-limit'] = 100
+        global.argv['package-size-limit'] = 50000
+        global.argv['unpacked-size-limit'] = 100000
+    })
+
     it('should run npm_pack and return fail level', async () => {
         // too many files
         await cmd.callback(null, JSON.stringify([{

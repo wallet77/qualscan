@@ -6,7 +6,6 @@
 [![Code coverage](https://codecov.io/gh/wallet77/qualscan/branch/main/graph/badge.svg)](https://codecov.io/gh/wallet77/qualscan)
 [![Opened issues](https://img.shields.io/github/issues-raw/wallet77/qualscan)](https://github.com/wallet77/qualscan/issues)
 [![Opened PR](https://img.shields.io/github/issues-pr-raw/wallet77/qualscan)](https://github.com/wallet77/qualscan/pulls)
-[![Package size](https://img.shields.io/bundlephobia/min/qualscan)](https://www.npmjs.com/package/qualscan)
 
 
 ![Qualscan example](https://github.com/wallet77/qualscan/blob/main/examples/run_qualscan.gif)
@@ -110,9 +109,35 @@ $ qualscan -cdd
 ```
 
 **Check project size**
-With the .gitignore file
-With the .npmignore file
-With the files property
+This task will run `npm pack` command.
+It will check the size of your project and the numbers of files.
+You can define which directories/files must be taken into account.
+- With the .gitignore file
+- With the .npmignore file
+- With the files property
+
+By default this task will fail if:
+- the number of files is greater than 100
+- the package size is higher than 50KB
+- the unpacked size is higher tahn 1MB
+
+Customize the number of files limit
+
+```console
+$ qualscan -nofl 200
+```
+
+Customize the package size limit (in bytes)
+
+```console
+$ qualscan -psl 200000
+```
+
+Customize the package size limit (in bytes)
+
+```console
+$ qualscan -usl 200000000
+```
 
 ## Using Config file
 
