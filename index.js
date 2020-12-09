@@ -16,7 +16,7 @@ console.log('\n')
 try {
     global.packagefile = require(path.join(process.cwd(), 'package.json'))
     if (global.packagefile.scripts && scriptListDefault.length === 0) {
-        for (const index in knownScripts) {
+        for (let index = 0; index < knownScripts.length; index++) {
             const script = knownScripts[index]
             if (global.packagefile.scripts[script]) {
                 scriptListDefault.push(script)
