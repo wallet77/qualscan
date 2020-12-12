@@ -11,7 +11,7 @@ It will check:
 - ✓ No Unnecessary Files: if you use "files" property in your package.json
 - ✓ Keywords: if you have some keywords to describe your project
 - ✓ License: if you have a license file
-- ✓ Repository URL: if the repositoru url is setup
+- ✓ Repository URL: if the repository url is setup
 - ✓ TypeScript Types: if you have specified an entrypoint for Typescript definitions
 - ✓ README: if you have a readme file
 
@@ -29,7 +29,7 @@ package-check
 **1. package.json**  
 Just check if a package.json file is present in your root directory and if the format is correct.
 
-**2. ES Module Entrypoint**
+**2. ES Module Entrypoint**  
 The ES Module entrypoint is useful to tell to some other program where to find the main file of your project.
 For more details: [Node.JS doc.](https://nodejs.org/api/packages.html#packages_package_entry_points)
 
@@ -65,7 +65,7 @@ They are useful to describe your project/package.
 ```
 
 **6. License**  
-Mandatory for Open-Sources program.
+Mandatory for Open-Source programs.
 
 **7. Repository URL**  
 ```json
