@@ -10,7 +10,6 @@
 
 ![DeepScan grade](https://img.shields.io/david/wallet77/qualscan)
 
-
 ![Qualscan example](https://github.com/wallet77/qualscan/blob/main/examples/run_qualscan.gif)
 
 # Purpose

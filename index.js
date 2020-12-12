@@ -23,6 +23,8 @@ try {
             }
         }
     }
+
+    console.log(`Scanning ${global.packagefile.name}@${global.packagefile.version}`)
 } catch (err) {
     console.error('No package.json file found!')
     console.error('Qualscan requires a valid Javascript project structure with a package.json file.')
