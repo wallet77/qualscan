@@ -15,11 +15,10 @@ It will check:
 - ✓ TypeScript Types: if you have specified an entrypoint for Typescript definitions
 - ✓ README: if you have a readme file
 
-This plugin will fail if one of this point is not correct.
-
-To run the plugin as a standalone module you can refer to [this page](https://www.npmjs.com/package/@skypack/package-check).
+This plugin will fail if one of this point is not satisfied.
 
 ## Command
+To run the plugin as a standalone module you can refer to [this page](https://www.npmjs.com/package/@skypack/package-check).
 
 ```bash
 package-check
@@ -27,15 +26,15 @@ package-check
 
 ## Details
 
-1. package.json
+**1. package.json**  
 Just check if a package.json file is present in your root directory and if the format is correct.
 
-2. ES Module Entrypoint
+**2. ES Module Entrypoint**
 The ES Module entrypoint is useful to tell to some other program where to find the main file of your project.
 For more details: [Node.JS doc.](https://nodejs.org/api/packages.html#packages_package_entry_points)
 
 
-3. Export Map
+**3. Export Map**  
 The property "exports" allows to set the main entry point for a package.
 ```json
 "exports": {
@@ -45,7 +44,7 @@ The property "exports" allows to set the main entry point for a package.
 ```
 For more details: [Node.JS doc.](https://nodejs.org/api/packages.html#packages_main_entry_point_export)
 
-4. No Unnecessary Files
+**4. No Unnecessary Files**  
 Use the property "files" in your package.json to specify which files/directories must be included when your package is installed as a dependency.
 It acts as a whitelist instead of .npmignore.
 ```json
@@ -55,7 +54,7 @@ It acts as a whitelist instead of .npmignore.
 ```
 For more details: [NPM doc.](https://docs.npmjs.com/cli/v6/configuring-npm/package-json#files)
 
-5. Keywords
+**5. Keywords**  
 They are useful to describe your project/package.
 ```json
 "keywords": [
@@ -65,10 +64,10 @@ They are useful to describe your project/package.
 ]
 ```
 
-6. License
+**6. License**  
 Mandatory for Open-Sources program.
 
-7. Repository URL
+**7. Repository URL**  
 ```json
 "repository": {
     "type": "git",
@@ -76,11 +75,11 @@ Mandatory for Open-Sources program.
 }
 ```
 
-8. TypeScript Types
+**8. TypeScript Types**  
 You should provide a typescript definition file for your project, even if your project is not written with typescript.
 ```json
 "types": "./index.d.ts",
 ```
 
-9. README
+**9. README**  
 Always provide a readme file. It will help other developers to use/understand your project.
