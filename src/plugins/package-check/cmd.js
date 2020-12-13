@@ -8,6 +8,7 @@ const cmdLine = `${path.join(__dirname, '/../../../node_modules/.bin/package-che
 const cmd = {
     cmd: cmdLine,
     title: 'Check package',
+    doc: 'https://github.com/wallet77/qualscan/blob/main/doc/package-check.md',
     callback: async (error, stdout, stderr) => {
         cmd.data = stdout || stderr
         cmd.level = 'succeed'

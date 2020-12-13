@@ -199,6 +199,10 @@ const colors = {
                 if (cmd.cmd) {
                     console.log('\x1b[44m%s\x1b[0m', `    How to debug: "${cmd.cmd}"`)
                 }
+
+                if (cmd.doc) {
+                    console.log('\x1b[2m%s\x1b[0m', `    How to fix: ${cmd.doc}`)
+                }
             }
         }
 
