@@ -15,7 +15,8 @@ It will check:
 - ✓ TypeScript Types: if you have specified an entrypoint for Typescript definitions
 - ✓ README: if you have a readme file
 
-This plugin will fail if one of this point is not satisfied.
+## Reasons for failure
+This plugin will fail if at least one of the previous points is not satisfied.
 
 ## Command
 To run the plugin as a standalone module you can refer to [this page](https://www.npmjs.com/package/@skypack/package-check).
@@ -23,6 +24,10 @@ To run the plugin as a standalone module you can refer to [this page](https://ww
 ```bash
 package-check
 ```
+
+## External documentation
+
+[See package-check official website.](https://docs.skypack.dev/package-authors/package-checks)
 
 ## Details
 
@@ -39,7 +44,7 @@ The property "exports" allows to set the main entry point for a package.
 ```json
 "exports": {
     "require": "./index.js",
-    "import": "./index.js"
+    "import": "./index.mjs"
 }
 ```
 For more details: [Node.JS doc.](https://nodejs.org/api/packages.html#packages_main_entry_point_export)
