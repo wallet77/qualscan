@@ -140,7 +140,7 @@ global.argv = init
     .option('unpacked-size-limit', {
         alias: 'usl',
         type: 'number',
-        default: 100000,
+        default: 1000000,
         description: 'Customize the unpacked size limit'
     })
     .argv
