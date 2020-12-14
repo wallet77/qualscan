@@ -5,6 +5,7 @@ const semver = require('semver')
 const cmd = {
     cmd: 'npm outdated -json -long',
     title: 'Dependencies updates',
+    doc: 'https://github.com/wallet77/qualscan/blob/main/doc/npm_outdated.md',
     callback: (error, stdout, stderr) => {
         if (stdout === '') {
             cmd.level = 'succeed'

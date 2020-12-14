@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "@skypack/package-check": "0.2.2",
-    "jscpd": "3.3.22",
+    "jscpd": "3.3.23",
     "ora": "5.1.0",
     "semver": "7.3.4",
     "yargs": "16.2.0"
