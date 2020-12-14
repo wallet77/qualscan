@@ -4,6 +4,7 @@ const semver = require('semver')
 
 const cmd = {
     title: 'Exact version of dependencies',
+    doc: 'https://github.com/wallet77/qualscan/blob/main/doc/dependencies-exact-version.md',
     callback: async () => {
         const badVersions = {}
         cmd.level = 'succeed'

@@ -1,4 +1,4 @@
-# Package-check
+# Code duplication
 
 ## Overview
 
