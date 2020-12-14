@@ -5,6 +5,7 @@ const utils = require(path.join(__dirname, '/../utils.js'))
 const cmd = {
     cmd: 'npm audit -json',
     title: 'Security audit',
+    doc: 'https://github.com/wallet77/qualscan/blob/main/doc/npm_audit.md',
     callback: async (error, stdout, stderr) => {
         utils.parseData(cmd, error, stdout, stderr)
 
