@@ -33,6 +33,8 @@ For example it can run:
 
 This tool will basically returns 1 if, at least, one task has failed, otherwise it returns 0.
 
+Basic error output:
+![Qualscan error](https://github.com/wallet77/qualscan/blob/main/examples/error_output.png)
 
 ## Installation
 
@@ -157,6 +159,9 @@ Qualscan can be easily integrate with any CI pipeline.
 To see a basic example you can look at this [basic example with github actions](https://github.com/wallet77/qualscan/blob/main/.github/workflows/node.js.yml).
 
 To see a typical output you can have a look at this page: [actions page](https://github.com/wallet77/qualscan/runs/1511486101?check_suite_focus=true), and click on step "run the qualscan tool".
+
+Basic error output:
+![CI example](https://github.com/wallet77/qualscan/blob/main/examples/ci.png)
 
 ## Compatibility
 
