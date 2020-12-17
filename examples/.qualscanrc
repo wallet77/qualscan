@@ -1,5 +1,10 @@
 {
+    "nofl": 150,
+    "psl": 3000000,
+    "usl": 6000000,
+    "scripts": ["linter"],
+    "code-duplication": "--threshold 10 --gitignore",
     "verbose": true,
-    "code-duplication": "--ignore */resources/code_duplication_failed/*",
-    "scripts": "linter"
+    "level": "error",
+    "cdd": true
 }

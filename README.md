@@ -12,9 +12,19 @@
 
 ![Qualscan example](https://github.com/wallet77/qualscan/blob/main/examples/run_qualscan.gif)
 
-# Purpose
+<p>
+  <a href="#purpose">Purpose</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#using-config-file">Using config file</a> •
+  <a href="#ci/cd">CI / CD</a> •
+  <a href="#test">Test</a> •
+  <a href="#license">License</a>
+</p>
 
-A CLI tool to run multiples plugins in order to check the quality of your project.
+## Purpose
+
+A CLI tool to run multiple plugins in order to check the quality of your project.
 For example it can run:
 - security audit of your dependencies
 - check dependencies updates
@@ -24,81 +34,66 @@ For example it can run:
 This tool will basically returns 1 if, at least, one task has failed, otherwise it returns 0.
 
 
-# Compatibility
+## Installation
 
-**/!\ This module use async/await syntax and the inspector module, this is why you must have node 8.0+.**
-
-Supported and tested : >= 8.0
-
-| Version       | Supported     | Tested         |
-|:-------------:|:-------------:|:--------------:|
-| 14.x          | yes           | yes            |
-| 12.x          | yes           | yes            |
-| 10.x          | yes           | yes            |
-
-# Installation
-
-```console
+```bash
 $ npm install qualscan -g
 ```
 
 or
 
-```console
+```bash
 $ npm install qualscan --save
 ```
 
-# Usage
+## Usage
 
-```console
+```bash
 $ qualscan
 ```
 
-## Options
+### Options
 
 **Display all existing options**
-
-```console
+```bash
 $ qualscan -h
 ```
 
 **Run only a set of tasks**
 
-```console
+```bash
 $ qualscan --tasks npm_audit npm_outdated
 ```
 
 **Run only a set of scripts**
 
-```console
+```bash
 $ qualscan --scripts test
 ```
 
 **Display tasks messages**
 
-```console
+```bash
 $ qualscan -v
 ```
 
 **Display tasks messages by level**
 
-```console
+```bash
 $ qualscan -v -l warn
 ```
-
-List of level
 
 | Level         | Description                      |
 |:-------------:|:--------------------------------:|
 | all           | (default) display all logs       |
 | error         | Display errors only              |
 | warn          | Display warnings & errors        |
-| info          | Display info & errors & warnings |
-
+| info          | Display info & errors & warnings |  
+<br/>
 
 **Send custom args to jscpd**
 
-```console
+```bash
 $ qualscan -cd "--ignore tests/resources/code_duplication_failed/*"
 ```
 
@@ -106,32 +101,21 @@ For a full list of possible arguments, please follow this documentation: [Jscpd 
 
 **Check exact version for dev dependencies**
 
-```console
+```bash
 $ qualscan -cdd
 ```
 
 **Check project size**
-This task will run `npm pack` command.
-It will check the size of your project and the numbers of files.
-You can define which directories/files must be taken into account.
-- With the .gitignore file
-- With the .npmignore file
-- With the files property
-
-By default this task will fail if:
-- the number of files is greater than 100
-- the package size is higher than 50KB
-- the unpacked size is higher tahn 1MB
 
 Customize the number of files limit
 
-```console
+```bash
 $ qualscan -nofl 200
 ```
 
 Customize the package size limit (in bytes)
 
-```console
+```bash
 $ qualscan -psl 200000
 ```
 
@@ -146,32 +130,60 @@ $ qualscan -usl 200000000
 Qualscan can use a configuration file instead of a list of options.
 
 You can specify your configuration file in two different ways:
-1. Use the option -c
 
-```console
+1. **Use .qualscanrc file**  
+By default, Qualscan will check if .qualscanrc file is present in the current directory.
+You can find an [example here](https://github.com/wallet77/qualscan/tree/main/examples/.qualscanrc).
+```json
+{
+    "nofl": 150,
+    "psl": 3000000,
+    "usl": 6000000,
+    "scripts": ["linter"],
+    "code-duplication": "--threshold 10 --gitignore",
+    "verbose": true,
+    "level": "error"
+}
+```
+
+2. **Use the option -c**
+```bash
 $ qualscan -c /pathTo/MyConfigFile.json
 ```
 
-2. Use .qualscanrc file.
-By default, Qualscan will check if .qualscanrc file is present in the current directory.
-You can find an [example here](https://github.com/wallet77/qualscan/tree/main/examples/.qualscanrc).
+## CI/CD
 
-## Usage with a CI pipeline
-
-Qualscan can be easily integrate with any CI pipeline.
+Qualscan can be easily integrate with any CI pipeline.  
 To see a basic example you can look at this [basic example with github actions](https://github.com/wallet77/qualscan/blob/main/.github/workflows/node.js.yml).
-To see an example output you can have a look at this page: [actions page](https://github.com/wallet77/qualscan/runs/1511486101?check_suite_focus=true), and click on step "run the qualscan tool".
 
-# Test
+To see a typical output you can have a look at this page: [actions page](https://github.com/wallet77/qualscan/runs/1511486101?check_suite_focus=true), and click on step "run the qualscan tool".
 
-```console
+## Compatibility
+
+**/!\ This module use async/await syntax and the inspector module, this is why you must have node 8.0+.**
+
+Supported and tested : >= 8.0
+
+| Version       | Supported     | Tested         |
+|:-------------:|:-------------:|:--------------:|
+| 14.x          | yes           | yes            |
+| 12.x          | yes           | yes            |
+| 10.x          | yes           | yes            |
+
+## Test
+
+```bash
 $ npm test
 ```
 
 Run with coverage
 
-```console
+```bash
 $ npm run coverage
 ```
 
 Coverage report can be found in coverage/.
+
+## License
+
+MIT
