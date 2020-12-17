@@ -17,7 +17,7 @@
   <a href="#installation">Installation</a> •
   <a href="#usage">Usage</a> •
   <a href="#using-config-file">Using config file</a> •
-  <a href="#ci%2Fcd">CI / CD</a> •
+  <a href="#cicd">CI / CD</a> •
   <a href="#test">Test</a> •
   <a href="#license">License</a>
 </p>
