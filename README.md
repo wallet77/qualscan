@@ -160,7 +160,7 @@ To see a basic example you can look at this [basic example with github actions](
 
 To see a typical output you can have a look at this page: [actions page](https://github.com/wallet77/qualscan/runs/1511486101?check_suite_focus=true), and click on step "run the qualscan tool".
 
-Basic error output:
+Basic CI output with Github actions:
 ![CI example](https://github.com/wallet77/qualscan/blob/main/examples/ci.png)
 
 ## Compatibility
