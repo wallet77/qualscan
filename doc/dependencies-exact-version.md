@@ -50,3 +50,16 @@ qualscan --tasks dependencies-exact-version -cdd
     "yargs": "16.2.0"
 }
 ```
+
+## How to fix?
+
+Install exact version with command line
+```bash
+npm install myPackage --save-exact
+```
+
+Or with .npmrc file.
+```json
+save=true
+save-exact=true
+```
