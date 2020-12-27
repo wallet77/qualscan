@@ -1,9 +1,7 @@
 #!/usr/bin/env node
-
-const { exec } = require('child_process')
-const ora = require('ora')
 const path = require('path')
 const fs = require('fs')
+const utils = require(path.join(__dirname, '/src/utils'))
 
 const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version', 'npm_pack']
 const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : []
@@ -39,53 +37,6 @@ if (fs.existsSync(rcFilePath)) {
     } catch (err) {
         console.warn('Invalid .qualscanrc file format, Qualscan requires a valid JSON file!')
         console.warn('.qualscanrc file has been ignored.')
-    }
-}
-
-const runCmd = async (cmd) => {
-    const spinner = ora()
-    spinner.color = 'yellow'
-    spinner.indent = 2
-
-    spinner.start(cmd.title)
-
-    if (!cmd.cmd) {
-        await cmd.callback()
-        spinner[cmd.level](cmd.title)
-        return cmd
-    }
-
-    return new Promise((resolve, reject) => {
-        exec(cmd.cmd, async (error, stdout, stderr) => {
-            try {
-                await cmd.callback(error, stdout, stderr)
-
-                spinner[cmd.level](cmd.title)
-
-                resolve(cmd)
-            } catch (err) {
-                spinner.fail(cmd.title)
-                reject(err)
-            }
-        })
-    })
-}
-
-const prepareCmd = (cmdName, allCmds, skipped, isScript = false) => {
-    const cmdDir = !isScript ? cmdName : 'run_script'
-    try {
-        const CmdEntrypoint = require(path.join(__dirname, `/src/plugins/${cmdDir}/cmd.js`))
-        if (isScript) {
-            const instanceScript = new CmdEntrypoint(cmdName, `npm run ${cmdName}`)
-            allCmds.push(runCmd(instanceScript))
-        } else {
-            allCmds.push(runCmd(CmdEntrypoint))
-        }
-    } catch (err) {
-        skipped.push({
-            name: cmdName,
-            reason: "Module doesn't exist!!!!"
-        })
     }
 }
 
@@ -143,6 +94,16 @@ global.argv = init
         default: 1000000,
         description: 'Customize the unpacked size limit'
     })
+    .option('npm-audit.budget', {
+        alias: 'usl',
+        type: 'object',
+        default: {
+            fail: { critical: 0, high: 0 },
+            warn: { moderate: 0, low: 0 },
+            info: { info: 0 }
+        },
+        description: 'Set the budget for npm audit plugin.'
+    })
     .argv
 
 const levels = ['all', 'info', 'warn', 'fail']
@@ -162,7 +123,7 @@ const colors = {
     const skippedScripts = []
 
     for (const index in cmdList) {
-        prepareCmd(cmdList[index], allCmds, skipped)
+        utils.prepareCmd(cmdList[index], allCmds, skipped)
     }
 
     for (let index = 0; index < scriptList.length; index++) {
@@ -170,7 +131,7 @@ const colors = {
         if (!global.packagefile.scripts || !global.packagefile.scripts[script]) {
             skippedScripts.push(script)
         } else {
-            prepareCmd(script, allCmds, skipped, true)
+            utils.prepareCmd(script, allCmds, skipped, true)
         }
     }
 
