@@ -94,8 +94,14 @@ global.argv = init
         default: 1000000,
         description: 'Customize the unpacked size limit'
     })
+    .option('budget-info', {
+        alias: 'bi',
+        type: 'boolean',
+        default: true,
+        description: 'Display budgets info?'
+    })
     .option('npm-audit.budget', {
-        alias: 'usl',
+        alias: 'nab',
         type: 'object',
         default: {
             fail: { critical: 0, high: 0 },
@@ -140,6 +146,7 @@ const colors = {
         let hasError = false
         let hasWarning = false
         let hasInfo = false
+        const budgetInfo = []
 
         for (const i in res) {
             const cmd = res[i]
@@ -147,6 +154,10 @@ const colors = {
             hasError = hasError || cmd.level === 'fail'
             hasWarning = hasWarning || cmd.level === 'warn'
             hasInfo = hasInfo || cmd.level === 'info'
+
+            if (global.argv.budgetInfo && cmd.budget) {
+                budgetInfo.push(cmd.budget)
+            }
 
             if (global.argv.verbose &&
                 (levels.indexOf(cmd.level) >= currentLevel ||
@@ -166,6 +177,8 @@ const colors = {
                 }
             }
         }
+        console.log(budgetInfo)
+        utils.displayBudgets(budgetInfo, colors)
 
         if (skipped.length > 0) {
             console.log('\n')

@@ -2,26 +2,42 @@
 const path = require('path')
 const utils = require(path.join(__dirname, '/../utils.js'))
 
-const getLevel = (cmd) => {
+const processBudget = () => {
     const budget = global.argv['npm-audit'].budget
-
-    let level = 'succeed'
     const levels = ['succeed', 'info', 'warn', 'fail']
 
-    for (const threshold in budget) {
-        if ((cmd.data.metadata.vulnerabilities.critical > budget[threshold].critical ||
-            cmd.data.metadata.vulnerabilities.high > budget[threshold].high ||
-            cmd.data.metadata.vulnerabilities.moderate > budget[threshold].moderate ||
-            cmd.data.metadata.vulnerabilities.low > budget[threshold].low ||
-            cmd.data.metadata.vulnerabilities.info > budget[threshold].info) &&
-            levels.indexOf(threshold) >= levels.indexOf(level)) {
-            level = threshold
+    cmd.level = 'succeed'
+    cmd.budget = {}
 
-            if (level === 'fail') return level
+    for (const threshold in budget) {
+        for (const metric in budget[threshold]) {
+            if (!cmd.budget[threshold]) {
+                cmd.budget[threshold] = {}
+            }
+            cmd.budget[threshold][metric] = {
+                plugin: cmd.title,
+                threshold: threshold,
+                level: 'succeed',
+                metric: metric,
+                value: 0,
+                limit: budget[threshold][metric],
+                unit: `nb ${metric}`
+            }
         }
     }
 
-    return level
+    for (const threshold in budget) {
+        for (const metric in budget[threshold]) {
+            if (cmd.data.metadata.vulnerabilities[metric] > budget[threshold][metric]) {
+                cmd.budget[threshold][metric].value = cmd.data.metadata.vulnerabilities[metric]
+                cmd.budget[threshold][metric].level = threshold
+
+                if (levels.indexOf(cmd.level) < levels.indexOf(threshold)) {
+                    cmd.level = threshold
+                }
+            }
+        }
+    }
 }
 
 const cmd = {
@@ -31,7 +47,7 @@ const cmd = {
     callback: async (error, stdout, stderr) => {
         utils.parseData(cmd, error, stdout, stderr)
 
-        cmd.level = getLevel(cmd)
+        processBudget()
 
         return cmd
     }

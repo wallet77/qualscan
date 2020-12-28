@@ -17,7 +17,7 @@ describe('qualscan', () => {
         assert.strictEqual(result.code, 0)
     })
 
-    it('should run qualscan but return 1 because one task has failed', async () => {
+    it('should run qualscan and return 0 because audit has only one low vulnerability', async () => {
         const result = await cli(['--tasks npm_audit --scripts'], './tests/resources')
         assert.strictEqual(result.code, 0)
     })
@@ -42,5 +42,10 @@ describe('qualscan', () => {
     it('should run qualscan but failed to load qualscanrc (bad format)', async () => {
         const result = await cli(['--tasks npm_outdated'], './tests/resources/configFile')
         assert.strictEqual(result.code, 0)
+    })
+
+    it('should run qualscan without budget info', async () => {
+        const result = await cli(['--tasks code_duplication --bi false'], './tests/resources/')
+        assert.strictEqual(result.code, 1)
     })
 })
