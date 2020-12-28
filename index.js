@@ -177,7 +177,6 @@ const colors = {
                 }
             }
         }
-        console.log(budgetInfo)
         utils.displayBudgets(budgetInfo, colors)
 
         if (skipped.length > 0) {

@@ -52,7 +52,7 @@ module.exports = {
 
     displayBudgets: (budgetInfo, colors) => {
         if (global.argv.budgetInfo) {
-            console.log('\n\n')
+            console.log('\n')
             console.log('\x1b[44m%s\x1b[0m\u2935', 'Budgets')
             for (let i = 0; i < budgetInfo.length; i++) {
                 const pluginBudgets = budgetInfo[i]
