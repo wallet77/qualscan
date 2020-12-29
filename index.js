@@ -66,11 +66,6 @@ global.argv = init
         type: 'array',
         description: 'List of scripts to run'
     })
-    .option('code-duplication', {
-        alias: 'cd',
-        type: 'string',
-        description: 'Args for code duplication plugins'
-    })
     .option('check-dev-dependencies', {
         alias: 'cdd',
         type: 'boolean',
@@ -109,6 +104,19 @@ global.argv = init
             info: { info: 0 }
         },
         description: 'Set the budget for npm audit plugin.'
+    })
+    .option('code-duplication.args', {
+        alias: 'cda',
+        type: 'string',
+        description: 'Args for code duplication plugins'
+    })
+    .option('code-duplication.budget', {
+        alias: 'cdb',
+        type: 'object',
+        default: {
+            fail: { percentageTokens: 0, percentage: 0 }
+        },
+        description: 'Set the budget for code duplication plugin (in percentage).'
     })
     .argv
 
