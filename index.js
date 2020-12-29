@@ -11,6 +11,9 @@ const knownScripts = ['test', 'lint', 'linter']
 console.log('\x1b[33m%s\x1b[0m', '   ____              __                    \r\n  / __ \\__  ______ _/ /_____________ _____ \r\n / / / / / / / __ `/ / ___/ ___/ __ `/ __ \\\r\n/ /_/ / /_/ / /_/ / (__  ) /__/ /_/ / / / /\r\n\\___\\_\\__,_/\\__,_/_/____/\\___/\\__,_/_/ /_/ ')
 console.log('\n')
 
+// -----------------------------
+// Get scripts from package.json
+// -----------------------------
 try {
     global.packagefile = require(path.join(process.cwd(), 'package.json'))
     if (global.packagefile.scripts && scriptListDefault.length === 0) {
@@ -29,6 +32,9 @@ try {
     process.exit(1)
 }
 
+// -----------------------------
+// Load .qualscanrc file
+// -----------------------------
 const rcFilePath = path.join(process.cwd(), '.qualscanrc')
 let conf
 if (fs.existsSync(rcFilePath)) {
@@ -40,8 +46,14 @@ if (fs.existsSync(rcFilePath)) {
     }
 }
 
+// -----------------------------
+// Load conf
+// -----------------------------
 const init = !conf ? require('yargs')(process.argv.slice(2)).config() : require('yargs')(process.argv.slice(2)).config(conf)
 
+// -----------------------------
+// Get args from command line
+// -----------------------------
 global.argv = init
     .help('h')
     .alias('h', 'help')
@@ -129,6 +141,9 @@ const colors = {
     info: '\x1b[34m'
 };
 
+// -----------------------------
+// Launch all commands
+// -----------------------------
 (async () => {
     const allCmds = []
     const cmdList = global.argv.tasks || cmdListDefault
@@ -136,10 +151,16 @@ const colors = {
     const skipped = []
     const skippedScripts = []
 
+    // -----------------------------
+    // Prepare commands list
+    // -----------------------------
     for (const index in cmdList) {
         utils.prepareCmd(cmdList[index], allCmds, skipped)
     }
 
+    // ---------------------------------
+    // Prepare scripts & skipped scripts
+    // ---------------------------------
     for (let index = 0; index < scriptList.length; index++) {
         const script = scriptList[index]
         if (!global.packagefile.scripts || !global.packagefile.scripts[script]) {
@@ -167,6 +188,9 @@ const colors = {
                 budgetInfo.push(cmd.budget)
             }
 
+            // -----------------------------
+            // Display verbose messages
+            // -----------------------------
             if (global.argv.verbose &&
                 (levels.indexOf(cmd.level) >= currentLevel ||
                 (global.argv.level === 'all' && cmd.level === 'succeed'))) {
@@ -185,8 +209,15 @@ const colors = {
                 }
             }
         }
+
+        // -----------------------------
+        // Display bugets information
+        // -----------------------------
         utils.displayBudgets(budgetInfo, colors)
 
+        // -------------------------------
+        // Print skipped scripts & plugins
+        // -------------------------------
         if (skipped.length > 0) {
             console.log('\n')
             console.log('--------------------------------------------------------------')
