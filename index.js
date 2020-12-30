@@ -130,6 +130,14 @@ global.argv = init
         },
         description: 'Set the budget for code duplication plugin (in percentage).'
     })
+    .option('dependencies-exact-version.budget', {
+        alias: 'devb',
+        type: 'object',
+        default: {
+            fail: { dependencies: 0, devDependencies: 0 }
+        },
+        description: 'Set the budget for npm audit plugin.'
+    })
     .argv
 
 const levels = ['all', 'info', 'warn', 'fail']
