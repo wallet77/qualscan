@@ -9,11 +9,10 @@ const cmd = {
     callback: async (error, stdout, stderr) => {
         utils.parseData(cmd, error, stdout, stderr)
 
-        if (cmd.data[0].entryCount > global.argv['number-of-files-limit']) {
-            cmd.level = 'fail'
-        } else if (cmd.data[0].size > global.argv['package-size-limit'] || cmd.data[0].unpackedSize > global.argv['unpacked-size-limit']) {
-            cmd.level = 'fail'
-        }
+        const budget = global.argv['npm-pack'].budget
+        utils.initBudget(cmd, budget, '', '')
+
+        utils.processBudget(cmd, budget, cmd.data[0])
 
         return cmd
     }

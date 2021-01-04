@@ -38,8 +38,8 @@ module.exports = {
 
         for (const threshold in budget) {
             for (const metric in budget[threshold]) {
+                cmd.budget[threshold][metric].value = data[metric]
                 if (data[metric] > budget[threshold][metric]) {
-                    cmd.budget[threshold][metric].value = data[metric]
                     cmd.budget[threshold][metric].level = threshold
 
                     if (levels.indexOf(cmd.level) < levels.indexOf(threshold)) {
