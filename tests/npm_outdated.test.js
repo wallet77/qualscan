@@ -3,6 +3,18 @@ const cmd = require('../src/plugins/npm_outdated/cmd')
 const assert = require('assert')
 
 describe('npm_outdated', () => {
+    before(() => {
+        global.argv = {
+            'npm-outdated': {
+                budget: {
+                    fail: { major: 0, minor: 5, patch: 10 },
+                    warn: { major: 0, minor: 1, patch: 5 },
+                    info: { major: 0, minor: 0, patch: 0 }
+                }
+            }
+        }
+    })
+
     it('should run npm_outdated and return a success', async () => {
         const result = await cli([], './tests/resources', 'node -e "require(\'../../src/plugins/npm_outdated/cmd.js\').callback(null, \'\', null)"')
         assert.strictEqual(result.code, 0)
@@ -14,7 +26,7 @@ describe('npm_outdated', () => {
         assert.strictEqual(cmd.error.message, 'test')
     })
 
-    it('should run npm_outdated and return info level', async () => {
+    it('should run npm_outdated and return succeed level', async () => {
         await cmd.callback(null, JSON.stringify({
             eslint: {
                 current: '7.13.0',
@@ -25,7 +37,7 @@ describe('npm_outdated', () => {
                 homepage: 'https://eslint.org'
             }
         }), null)
-        assert.strictEqual(cmd.level, 'info')
+        assert.strictEqual(cmd.level, 'succeed')
     })
 
     it('should run npm_outdated and return fail level (one major diff)', async () => {
@@ -42,9 +54,31 @@ describe('npm_outdated', () => {
         assert.strictEqual(cmd.level, 'fail')
     })
 
-    it('should run npm_outdated and return warn level (one minor diff)', async () => {
+    it('should run npm_outdated and return info level (one minor diff)', async () => {
         await cmd.callback(null, JSON.stringify({
             module: {
+                current: '7.13.0',
+                wanted: '7.15.0',
+                latest: '7.15.0',
+                location: 'node_modules/module',
+                type: 'dependencies',
+                homepage: 'https://module.org'
+            }
+        }), null)
+        assert.strictEqual(cmd.level, 'info')
+    })
+
+    it('should run npm_outdated and return info level (two minor diff)', async () => {
+        await cmd.callback(null, JSON.stringify({
+            module: {
+                current: '7.13.0',
+                wanted: '7.15.0',
+                latest: '7.15.0',
+                location: 'node_modules/module',
+                type: 'dependencies',
+                homepage: 'https://module.org'
+            },
+            module2: {
                 current: '7.13.0',
                 wanted: '7.15.0',
                 latest: '7.15.0',

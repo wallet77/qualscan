@@ -1,6 +1,8 @@
 'use strict'
 
 const semver = require('semver')
+const path = require('path')
+const utils = require(path.join(__dirname, '/../utils.js'))
 
 const cmd = {
     cmd: 'npm outdated -json -long',
@@ -17,28 +19,30 @@ const cmd = {
         cmd.data = data
         cmd.level = 'succeed'
 
-        let currentLevel = -1
+        const budget = global.argv['npm-outdated'].budget
+        utils.initBudget(cmd, budget, 'nb ', '')
+
+        const values = {
+            major: 0, minor: 0, patch: 0
+        }
 
         for (const moduleName in data) {
             const module = data[moduleName]
 
-            if (module.type === 'devDependencies' && currentLevel === -1) {
-                currentLevel = 0
-                cmd.level = 'info'
+            if (module.type === 'devDependencies' && !global.argv['npm-outdated'].devDependencies) {
                 continue
             }
 
             if (semver.major(module.current) < semver.major(module.latest)) {
-                cmd.level = 'fail'
-                break
-            } else if (semver.minor(module.current) < semver.minor(module.latest) && currentLevel < 1) {
-                currentLevel = 1
-                cmd.level = 'warn'
-            } else if (semver.patch(module.current) < semver.patch(module.latest) && currentLevel === -1) {
-                currentLevel = 0
-                cmd.level = 'info'
+                values.major++
+            } else if (semver.minor(module.current) < semver.minor(module.latest)) {
+                values.minor++
+            } else if (semver.patch(module.current) < semver.patch(module.latest)) {
+                values.patch++
             }
         }
+
+        utils.processBudget(cmd, budget, values)
 
         if (error && cmd.level === 'succeed') {
             cmd.level = 'fail'

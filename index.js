@@ -138,6 +138,22 @@ global.argv = init
         },
         description: 'Set the budget for npm audit plugin.'
     })
+    .option('npm-outdated.budget', {
+        alias: 'nob',
+        type: 'object',
+        default: {
+            fail: { major: 0, minor: 5, patch: 10 },
+            warn: { major: 0, minor: 1, patch: 5 },
+            info: { major: 0, minor: 0, patch: 0 }
+        },
+        description: 'Set the budget for npm outdated plugin.'
+    })
+    .option('npm-outdated.devDependencies', {
+        alias: 'nod',
+        type: 'boolean',
+        default: false,
+        description: 'Take into account dev dependencies for updates?'
+    })
     .argv
 
 const levels = ['all', 'info', 'warn', 'fail']
