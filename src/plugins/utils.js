@@ -11,7 +11,7 @@ module.exports = {
         }
     },
 
-    initBudget: (cmd, budget, prefix, suffix) => {
+    initBudget: (cmd, budget, prefix, suffix, format = (value, column) => { return value }) => {
         cmd.budget = {}
         cmd.level = 'succeed'
 
@@ -26,19 +26,19 @@ module.exports = {
                     level: 'succeed',
                     metric: metric,
                     value: 0,
-                    limit: budget[threshold][metric],
+                    limit: format(budget[threshold][metric], metric),
                     unit: `${prefix}${metric}${suffix}`
                 }
             }
         }
     },
 
-    processBudget: (cmd, budget, data) => {
+    processBudget: (cmd, budget, data, format = (value, column) => { return value }) => {
         const levels = ['succeed', 'info', 'warn', 'fail']
 
         for (const threshold in budget) {
             for (const metric in budget[threshold]) {
-                cmd.budget[threshold][metric].value = data[metric]
+                cmd.budget[threshold][metric].value = format(data[metric], metric)
                 if (data[metric] > budget[threshold][metric]) {
                     cmd.budget[threshold][metric].level = threshold
 
