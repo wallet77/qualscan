@@ -36,7 +36,7 @@ const cmd = {
 
         cmd.data = badVersions
 
-        utils.initBudget(cmd, budget, 'number of range version in ', '')
+        utils.initBudget(cmd, budget, 'number of range versions in ', '')
         utils.processBudget(cmd, budget, {
             dependencies: Object.keys(badVersions.dependencies).length,
             devDependencies: Object.keys(badVersions.devDependencies).length
