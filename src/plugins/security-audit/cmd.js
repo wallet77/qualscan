@@ -5,11 +5,11 @@ const utils = require(path.join(__dirname, '/../utils.js'))
 const cmd = {
     cmd: 'npm audit -json',
     title: 'Security audit',
-    doc: 'https://github.com/wallet77/qualscan/blob/main/doc/npm_audit.md',
+    doc: 'https://github.com/wallet77/qualscan/blob/main/doc/security-audit.md',
     callback: async (error, stdout, stderr) => {
         utils.parseData(cmd, error, stdout, stderr)
 
-        const budget = global.argv['npm-audit'].budget
+        const budget = global.argv['security-audit'].budget
         utils.initBudget(cmd, budget, 'nb ', '')
         utils.processBudget(cmd, budget, cmd.data.metadata.vulnerabilities)
 

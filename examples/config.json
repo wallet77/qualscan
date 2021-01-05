@@ -3,5 +3,5 @@
     "errors": false,
     "warnings": false,
     "infos": false,
-    "tasks": ["code_duplication","npm_audit","npm_outdated"]
+    "tasks": ["code_duplication","security-audit","npm_outdated"]
 }

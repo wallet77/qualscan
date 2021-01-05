@@ -18,7 +18,7 @@ describe('qualscan', () => {
     })
 
     it('should run qualscan and return 0 because audit has only one low vulnerability', async () => {
-        const result = await cli(['--tasks npm_audit --scripts'], './tests/resources')
+        const result = await cli(['--tasks security-audit --scripts'], './tests/resources')
         assert.strictEqual(result.code, 0)
     })
 

@@ -1,10 +1,10 @@
-const cmd = require('../src/plugins/npm_audit/cmd')
+const cmd = require('../src/plugins/security-audit/cmd')
 const assert = require('assert')
 
-describe('npm_audit', () => {
+describe('Security audit', () => {
     before(() => {
         global.argv = {
-            'npm-audit': {
+            'security-audit': {
                 budget: {
                     fail: { critical: 0, high: 0 },
                     warn: { moderate: 0, low: 0 },
@@ -14,7 +14,7 @@ describe('npm_audit', () => {
         }
     })
 
-    it('should run npm_audit and return fail level', async () => {
+    it('should run security-audit and return fail level', async () => {
         await cmd.callback(null, JSON.stringify({
             metadata: {
                 vulnerabilities: {
@@ -42,7 +42,7 @@ describe('npm_audit', () => {
         assert.strictEqual(cmd.level, 'fail')
     })
 
-    it('should run npm_audit and return warn level', async () => {
+    it('should run security-audit and return warn level', async () => {
         await cmd.callback(null, JSON.stringify({
             metadata: {
                 vulnerabilities: {
@@ -70,7 +70,7 @@ describe('npm_audit', () => {
         assert.strictEqual(cmd.level, 'warn')
     })
 
-    it('should run npm_audit and return info level', async () => {
+    it('should run security-audit and return info level', async () => {
         await cmd.callback(null, JSON.stringify({
             metadata: {
                 vulnerabilities: {

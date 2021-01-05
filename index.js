@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const utils = require(path.join(__dirname, '/src/utils'))
 
-const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version', 'project-size']
+const cmdListDefault = ['code_duplication', 'security-audit', 'npm_outdated', 'package-check', 'dependencies-exact-version', 'project-size']
 const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : []
 
 const knownScripts = ['test', 'lint', 'linter']
@@ -84,7 +84,7 @@ global.argv = init
         default: true,
         description: 'Display budgets info?'
     })
-    .option('npm-audit.budget', {
+    .option('security-audit.budget', {
         alias: 'nab',
         type: 'object',
         default: {
