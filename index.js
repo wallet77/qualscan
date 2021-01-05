@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const utils = require(path.join(__dirname, '/src/utils'))
 
-const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version', 'npm_pack']
+const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version', 'project-size']
 const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : []
 
 const knownScripts = ['test', 'lint', 'linter']
@@ -78,11 +78,6 @@ global.argv = init
         type: 'array',
         description: 'List of scripts to run'
     })
-    .option('check-dev-dependencies', {
-        alias: 'cdd',
-        type: 'boolean',
-        description: 'Check dev dependencies exact version'
-    })
     .option('budget-info', {
         alias: 'bi',
         type: 'boolean',
@@ -120,6 +115,11 @@ global.argv = init
         },
         description: 'Set the budget for npm audit plugin.'
     })
+    .option('dependencies-exact-version.devDependencies', {
+        alias: 'devd',
+        type: 'boolean',
+        description: 'Check dev dependencies exact version'
+    })
     .option('npm-outdated.budget', {
         alias: 'nob',
         type: 'object',
@@ -136,7 +136,7 @@ global.argv = init
         default: false,
         description: 'Take into account dev dependencies for updates?'
     })
-    .option('npm-pack.budget', {
+    .option('project-size.budget', {
         alias: 'npb',
         type: 'object',
         default: {

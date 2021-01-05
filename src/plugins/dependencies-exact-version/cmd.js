@@ -22,7 +22,7 @@ const cmd = {
             }
         }
 
-        if (global.packagefile.devDependencies && global.argv['check-dev-dependencies']) {
+        if (global.packagefile.devDependencies && global.argv['dependencies-exact-version'].devDependencies) {
             for (const dependency in global.packagefile.devDependencies) {
                 if (!semver.valid(global.packagefile.devDependencies[dependency])) {
                     badVersions.devDependencies[dependency] = global.packagefile.devDependencies[dependency]

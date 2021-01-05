@@ -1,10 +1,10 @@
-const cmd = require('../src/plugins/npm_pack/cmd')
+const cmd = require('../src/plugins/project-size/cmd')
 const assert = require('assert')
 
-describe('npm_pack', () => {
+describe('Project\'s size', () => {
     before(() => {
         global.argv = {
-            'npm-pack': {
+            'project-size': {
                 budget: {
                     fail: { size: 50000, unpackedSize: 1000000, entryCount: 100 }
                 }
@@ -12,7 +12,7 @@ describe('npm_pack', () => {
         }
     })
 
-    it('should run npm_pack and return fail level', async () => {
+    it('should run project-size and return fail level', async () => {
         // too many files
         await cmd.callback(null, JSON.stringify([{
             entryCount: 101

@@ -23,7 +23,7 @@ describe('dependencies exact version', () => {
         await cmd.callback(null, null, null)
         assert.strictEqual(Object.keys(cmd.data.dependencies).length, 0)
 
-        global.argv['check-dev-dependencies'] = true
+        global.argv['dependencies-exact-version'].devDependencies = true
         await cmd.callback(null, null, null)
         assert.strictEqual(cmd.data.devDependencies.eslint, '^7.13.0')
     })

@@ -14,7 +14,7 @@ const cmd = {
     callback: async (error, stdout, stderr) => {
         utils.parseData(cmd, error, stdout, stderr)
 
-        const budget = global.argv['npm-pack'].budget
+        const budget = global.argv['project-size'].budget
         utils.initBudget(cmd, budget, '', '', format)
 
         utils.processBudget(cmd, budget, cmd.data[0], format)
