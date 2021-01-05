@@ -17,6 +17,7 @@
   <a href="#installation">Installation</a> •
   <a href="#usage">Usage</a> •
   <a href="#using-config-file">Using config file</a> •
+  <a href="#budget">Budget</a> •
   <a href="#cicd">CI / CD</a> •
   <a href="#test">Test</a> •
   <a href="#license">License</a>
@@ -64,7 +65,7 @@ $ qualscan -h
 **Run only a set of tasks**
 
 ```bash
-$ qualscan --tasks npm_audit npm_outdated
+$ qualscan --tasks security-audit updates
 ```
 
 **Run only a set of scripts**
@@ -96,7 +97,7 @@ $ qualscan -v -l warn
 **Send custom args to jscpd**
 
 ```bash
-$ qualscan -cd "--ignore tests/resources/code_duplication_failed/*"
+$ qualscan -cda "--ignore tests/resources/code_duplication_failed/*"
 ```
 
 For a full list of possible arguments, please follow this documentation: [Jscpd doc](https://github.com/kucherenko/jscpd/tree/master/packages/jscpd).
@@ -104,27 +105,7 @@ For a full list of possible arguments, please follow this documentation: [Jscpd 
 **Check exact version for dev dependencies**
 
 ```bash
-$ qualscan -cdd
-```
-
-**Check project size**
-
-Customize the number of files limit
-
-```bash
-$ qualscan -nofl 200
-```
-
-Customize the package size limit (in bytes)
-
-```bash
-$ qualscan -psl 200000
-```
-
-Customize the package size limit (in bytes)
-
-```console
-$ qualscan -usl 200000000
+$ qualscan -devd
 ```
 
 ## Using Config file
@@ -138,11 +119,10 @@ By default, Qualscan will check if .qualscanrc file is present in the current di
 You can find an [example here](https://github.com/wallet77/qualscan/tree/main/examples/.qualscanrc).
 ```json
 {
-    "nofl": 150,
-    "psl": 3000000,
-    "usl": 6000000,
     "scripts": ["linter"],
-    "code-duplication": "--threshold 10 --gitignore",
+    "code-duplication": {
+        "args": "--ignore */resources/code_duplication_failed/* --gitignore"
+    },
     "verbose": true,
     "level": "error"
 }
@@ -152,6 +132,57 @@ You can find an [example here](https://github.com/wallet77/qualscan/tree/main/ex
 ```bash
 $ qualscan -c /pathTo/MyConfigFile.json
 ```
+
+## Budget
+
+The notion of budget comes from the [Webperf budget principle](https://developer.mozilla.org/en-US/docs/Web/Performance/Performance_budgets).  
+With this powerful tool you can define your own thresholds for each plugin.  
+The principle is the following:
+* for each plugin, define your thresholds: fail, warn or info
+* for each threshold set a value for every metrics
+
+Example in config file (for project's size plugin):
+```bash
+{
+  "project-size": {
+    "budget": {
+      "fail": {
+        "entryCount": 150,
+        "size": 3000000,
+        "unpackedSize": 60000000
+      },
+      "warn": {
+        "entryCount": 100,
+        "size": 300000,
+        "unpackedSize": 6000000
+      }
+    }
+  }
+}
+```
+
+Basic budgets output:
+![Budgets example](https://github.com/wallet77/qualscan/blob/main/examples/budgets.png)
+
+**List of all metrics per plugin**
+
+| Plugin               | Key                          | Metric              | Unit                                                 |
+|:--------------------:|:----------------------------:|:-------------------:|:----------------------------------------------------:|
+| Code duplication     | code-duplication             | percentageTokens    | percentage of duplicated tokens                      |
+|                      |                              | percentage          | percentage of duplicated lines                       |
+| Exact version        | dependencies-exact-version   | dependencies        | number of range version in dependencies              |
+|                      |                              | devDependencies     | number of range version in dev dependencies          |
+| Security audit       | security-audit               | critical            | number of critical vulnerabilities                   |
+|                      |                              | high                | number of high vulnerabilities                       |
+|                      |                              | moderate            | number of moderate vulnerabilities                   |
+|                      |                              | low                 | number of low vulnerabilities                        |
+|                      |                              | info                | number of info                                       |
+| Project's size       | project-size                 | entryCount          | number of files                                      |
+|                      |                              | size                | size in bytes (only files in final bundle)           |
+|                      |                              | unpackedSize        | unpacked size in bytes (only files in final bundle)  |
+| Dependencies updates | updates                      | major               | number of major updates                              |
+|                      |                              | minor               | number of minor updates                              |
+|                      |                              | patch               | number of patch                                      |
 
 ## CI/CD
 
