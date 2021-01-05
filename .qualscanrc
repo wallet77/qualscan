@@ -1,5 +1,3 @@
 {
-    "code-duplication": {
-        "args": "--ignore */resources/code_duplication_failed/* --gitignore"
-    }
+    "code-duplication": "--ignore */resources/code_duplication_failed/* --gitignore"
 }
