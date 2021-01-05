@@ -190,6 +190,7 @@ const colors = {
         let hasWarning = false
         let hasInfo = false
         const budgetInfo = []
+        let score = 0
 
         for (const i in res) {
             const cmd = res[i]
@@ -200,6 +201,10 @@ const colors = {
 
             if (global.argv.budgetInfo && cmd.budget) {
                 budgetInfo.push(cmd.budget)
+            }
+
+            if (cmd.level === 'succeed' || cmd.level === 'info') {
+                score++
             }
 
             // -----------------------------
@@ -223,6 +228,9 @@ const colors = {
                 }
             }
         }
+
+        console.log('\n')
+        console.log('\x1b[44mScore\x1b[0m %s/100', Math.round(score * 100 / res.length))
 
         // -----------------------------
         // Display bugets information
