@@ -3,7 +3,7 @@ const assert = require('assert')
 
 describe('qualscan', () => {
     it('should run qualscan default behavior', async () => {
-        const result = await cli(['--verbose', '--code-duplication="--ignore tests/resources/code_duplication_failed/* --threshold 0.1 --gitignore"'], '.')
+        const result = await cli(['--verbose', '--code-duplication="--ignore tests/resources/code-duplication_failed/* --threshold 0.1 --gitignore"'], '.')
         assert.strictEqual(result.code, 0)
     })
 
@@ -22,8 +22,8 @@ describe('qualscan', () => {
         assert.strictEqual(result.code, 0)
     })
 
-    it('should run qualscan but return 1 because code_duplication has failed', async () => {
-        const result = await cli(['--tasks code_duplication'], './tests/resources/')
+    it('should run qualscan but return 1 because code-duplication has failed', async () => {
+        const result = await cli(['--tasks code-duplication'], './tests/resources/')
         assert.strictEqual(result.code, 1)
     })
 
@@ -45,7 +45,7 @@ describe('qualscan', () => {
     })
 
     it('should run qualscan without budget info', async () => {
-        const result = await cli(['--tasks code_duplication --bi false'], './tests/resources/')
+        const result = await cli(['--tasks code-duplication --bi false'], './tests/resources/')
         assert.strictEqual(result.code, 1)
     })
 })

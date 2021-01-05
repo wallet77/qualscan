@@ -6,7 +6,7 @@ describe('code-duplication', () => {
         global.argv = {
             'code-duplication': {}
         }
-        cmd = require('../src/plugins/code_duplication/cmd')
+        cmd = require('../src/plugins/code-duplication/cmd')
     })
 
     it('should run code-duplication and return fail level', async () => {
