@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const utils = require(path.join(__dirname, '/src/utils'))
 
-const cmdListDefault = ['code_duplication', 'security-audit', 'npm_outdated', 'package-check', 'dependencies-exact-version', 'project-size']
+const cmdListDefault = ['code_duplication', 'security-audit', 'updates', 'package-check', 'dependencies-exact-version', 'project-size']
 const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : []
 
 const knownScripts = ['test', 'lint', 'linter']
@@ -120,7 +120,7 @@ global.argv = init
         type: 'boolean',
         description: 'Check dev dependencies exact version'
     })
-    .option('npm-outdated.budget', {
+    .option('updates.budget', {
         alias: 'nob',
         type: 'object',
         default: {
@@ -130,7 +130,7 @@ global.argv = init
         },
         description: 'Set the budget for npm outdated plugin.'
     })
-    .option('npm-outdated.devDependencies', {
+    .option('updates.devDependencies', {
         alias: 'nod',
         type: 'boolean',
         default: false,

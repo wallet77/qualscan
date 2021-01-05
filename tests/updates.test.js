@@ -1,11 +1,11 @@
 const { cli } = require('./utils')
-const cmd = require('../src/plugins/npm_outdated/cmd')
+const cmd = require('../src/plugins/updates/cmd')
 const assert = require('assert')
 
-describe('npm_outdated', () => {
+describe('Dependencies updates', () => {
     before(() => {
         global.argv = {
-            'npm-outdated': {
+            updates: {
                 budget: {
                     fail: { major: 0, minor: 5, patch: 10 },
                     warn: { major: 0, minor: 1, patch: 5 },
@@ -15,18 +15,18 @@ describe('npm_outdated', () => {
         }
     })
 
-    it('should run npm_outdated and return a success', async () => {
-        const result = await cli([], './tests/resources', 'node -e "require(\'../../src/plugins/npm_outdated/cmd.js\').callback(null, \'\', null)"')
+    it('should run updates and return a success', async () => {
+        const result = await cli([], './tests/resources', 'node -e "require(\'../../src/plugins/updates/cmd.js\').callback(null, \'\', null)"')
         assert.strictEqual(result.code, 0)
     })
 
-    it('should run npm_outdated and return an error', async () => {
+    it('should run updates and return an error', async () => {
         await cmd.callback(new Error('test'), JSON.stringify({}), null)
         assert.strictEqual(cmd.level, 'fail')
         assert.strictEqual(cmd.error.message, 'test')
     })
 
-    it('should run npm_outdated and return succeed level', async () => {
+    it('should run updates and return succeed level', async () => {
         await cmd.callback(null, JSON.stringify({
             eslint: {
                 current: '7.13.0',
@@ -40,7 +40,7 @@ describe('npm_outdated', () => {
         assert.strictEqual(cmd.level, 'succeed')
     })
 
-    it('should run npm_outdated and return fail level (one major diff)', async () => {
+    it('should run updates and return fail level (one major diff)', async () => {
         await cmd.callback(null, JSON.stringify({
             module: {
                 current: '7.13.0',
@@ -54,7 +54,7 @@ describe('npm_outdated', () => {
         assert.strictEqual(cmd.level, 'fail')
     })
 
-    it('should run npm_outdated and return info level (one minor diff)', async () => {
+    it('should run updates and return info level (one minor diff)', async () => {
         await cmd.callback(null, JSON.stringify({
             module: {
                 current: '7.13.0',
@@ -68,7 +68,7 @@ describe('npm_outdated', () => {
         assert.strictEqual(cmd.level, 'info')
     })
 
-    it('should run npm_outdated and return info level (two minor diff)', async () => {
+    it('should run updates and return info level (two minor diff)', async () => {
         await cmd.callback(null, JSON.stringify({
             module: {
                 current: '7.13.0',
@@ -90,7 +90,7 @@ describe('npm_outdated', () => {
         assert.strictEqual(cmd.level, 'warn')
     })
 
-    it('should run npm_outdated and return info level (one patch diff)', async () => {
+    it('should run updates and return info level (one patch diff)', async () => {
         await cmd.callback(null, JSON.stringify({
             module: {
                 current: '7.15.0',

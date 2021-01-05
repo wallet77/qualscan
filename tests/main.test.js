@@ -8,7 +8,7 @@ describe('qualscan', () => {
     })
 
     it('should run qualscan but failed (dependencies version throw an error)', async () => {
-        const result = await cli(['--tasks npm_outdated'], './tests/resources')
+        const result = await cli(['--tasks updates'], './tests/resources')
         assert.strictEqual(result.code, 1)
     })
 
@@ -35,12 +35,12 @@ describe('qualscan', () => {
     })
 
     it('should run qualscan but failed (no package.json file)', async () => {
-        const result = await cli(['--tasks npm_outdated'], './tests')
+        const result = await cli(['--tasks updates'], './tests')
         assert.strictEqual(result.code, 1)
     })
 
     it('should run qualscan but failed to load qualscanrc (bad format)', async () => {
-        const result = await cli(['--tasks npm_outdated'], './tests/resources/configFile')
+        const result = await cli(['--tasks updates'], './tests/resources/configFile')
         assert.strictEqual(result.code, 0)
     })
 

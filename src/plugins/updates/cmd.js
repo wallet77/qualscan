@@ -7,7 +7,7 @@ const utils = require(path.join(__dirname, '/../utils.js'))
 const cmd = {
     cmd: 'npm outdated -json -long',
     title: 'Dependencies updates',
-    doc: 'https://github.com/wallet77/qualscan/blob/main/doc/npm_outdated.md',
+    doc: 'https://github.com/wallet77/qualscan/blob/main/doc/updates.md',
     callback: (error, stdout, stderr) => {
         if (stdout === '') {
             cmd.level = 'succeed'
@@ -19,7 +19,7 @@ const cmd = {
         cmd.data = data
         cmd.level = 'succeed'
 
-        const budget = global.argv['npm-outdated'].budget
+        const budget = global.argv.updates.budget
         utils.initBudget(cmd, budget, 'nb ', '')
 
         const values = {
@@ -29,7 +29,7 @@ const cmd = {
         for (const moduleName in data) {
             const module = data[moduleName]
 
-            if (module.type === 'devDependencies' && !global.argv['npm-outdated'].devDependencies) {
+            if (module.type === 'devDependencies' && !global.argv.updates.devDependencies) {
                 continue
             }
 
