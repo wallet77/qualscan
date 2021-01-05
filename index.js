@@ -1,11 +1,9 @@
 #!/usr/bin/env node
-
-const { exec } = require('child_process')
-const ora = require('ora')
 const path = require('path')
 const fs = require('fs')
+const utils = require(path.join(__dirname, '/src/utils'))
 
-const cmdListDefault = ['code_duplication', 'npm_audit', 'npm_outdated', 'package-check', 'dependencies-exact-version', 'npm_pack']
+const cmdListDefault = ['code-duplication', 'security-audit', 'updates', 'package-check', 'dependencies-exact-version', 'project-size']
 const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : []
 
 const knownScripts = ['test', 'lint', 'linter']
@@ -13,6 +11,9 @@ const knownScripts = ['test', 'lint', 'linter']
 console.log('\x1b[33m%s\x1b[0m', '   ____              __                    \r\n  / __ \\__  ______ _/ /_____________ _____ \r\n / / / / / / / __ `/ / ___/ ___/ __ `/ __ \\\r\n/ /_/ / /_/ / /_/ / (__  ) /__/ /_/ / / / /\r\n\\___\\_\\__,_/\\__,_/_/____/\\___/\\__,_/_/ /_/ ')
 console.log('\n')
 
+// -----------------------------
+// Get scripts from package.json
+// -----------------------------
 try {
     global.packagefile = require(path.join(process.cwd(), 'package.json'))
     if (global.packagefile.scripts && scriptListDefault.length === 0) {
@@ -31,6 +32,9 @@ try {
     process.exit(1)
 }
 
+// -----------------------------
+// Load .qualscanrc file
+// -----------------------------
 const rcFilePath = path.join(process.cwd(), '.qualscanrc')
 let conf
 if (fs.existsSync(rcFilePath)) {
@@ -42,55 +46,14 @@ if (fs.existsSync(rcFilePath)) {
     }
 }
 
-const runCmd = async (cmd) => {
-    const spinner = ora()
-    spinner.color = 'yellow'
-    spinner.indent = 2
-
-    spinner.start(cmd.title)
-
-    if (!cmd.cmd) {
-        await cmd.callback()
-        spinner[cmd.level](cmd.title)
-        return cmd
-    }
-
-    return new Promise((resolve, reject) => {
-        exec(cmd.cmd, async (error, stdout, stderr) => {
-            try {
-                await cmd.callback(error, stdout, stderr)
-
-                spinner[cmd.level](cmd.title)
-
-                resolve(cmd)
-            } catch (err) {
-                spinner.fail(cmd.title)
-                reject(err)
-            }
-        })
-    })
-}
-
-const prepareCmd = (cmdName, allCmds, skipped, isScript = false) => {
-    const cmdDir = !isScript ? cmdName : 'run_script'
-    try {
-        const CmdEntrypoint = require(path.join(__dirname, `/src/plugins/${cmdDir}/cmd.js`))
-        if (isScript) {
-            const instanceScript = new CmdEntrypoint(cmdName, `npm run ${cmdName}`)
-            allCmds.push(runCmd(instanceScript))
-        } else {
-            allCmds.push(runCmd(CmdEntrypoint))
-        }
-    } catch (err) {
-        skipped.push({
-            name: cmdName,
-            reason: "Module doesn't exist!!!!"
-        })
-    }
-}
-
+// -----------------------------
+// Load conf
+// -----------------------------
 const init = !conf ? require('yargs')(process.argv.slice(2)).config() : require('yargs')(process.argv.slice(2)).config(conf)
 
+// -----------------------------
+// Get args from command line
+// -----------------------------
 global.argv = init
     .help('h')
     .alias('h', 'help')
@@ -115,33 +78,71 @@ global.argv = init
         type: 'array',
         description: 'List of scripts to run'
     })
-    .option('code-duplication', {
-        alias: 'cd',
+    .option('budget-info', {
+        alias: 'bi',
+        type: 'boolean',
+        default: true,
+        description: 'Display budgets info?'
+    })
+    .option('security-audit.budget', {
+        alias: 'nab',
+        type: 'object',
+        default: {
+            fail: { critical: 0, high: 0 },
+            warn: { moderate: 0, low: 0 },
+            info: { info: 0 }
+        },
+        description: 'Set the budget for npm audit plugin.'
+    })
+    .option('code-duplication.args', {
+        alias: 'cda',
         type: 'string',
         description: 'Args for code duplication plugins'
     })
-    .option('check-dev-dependencies', {
-        alias: 'cdd',
+    .option('code-duplication.budget', {
+        alias: 'cdb',
+        type: 'object',
+        default: {
+            fail: { percentageTokens: 0, percentage: 0 }
+        },
+        description: 'Set the budget for code duplication plugin (in percentage).'
+    })
+    .option('dependencies-exact-version.budget', {
+        alias: 'devb',
+        type: 'object',
+        default: {
+            fail: { dependencies: 0, devDependencies: 0 }
+        },
+        description: 'Set the budget for npm audit plugin.'
+    })
+    .option('dependencies-exact-version.devDependencies', {
+        alias: 'devd',
         type: 'boolean',
         description: 'Check dev dependencies exact version'
     })
-    .option('number-of-files-limit', {
-        alias: 'nofl',
-        type: 'number',
-        default: 100,
-        description: 'Customize the number of files limit'
+    .option('updates.budget', {
+        alias: 'nob',
+        type: 'object',
+        default: {
+            fail: { major: 0, minor: 5, patch: 10 },
+            warn: { major: 0, minor: 1, patch: 5 },
+            info: { major: 0, minor: 0, patch: 0 }
+        },
+        description: 'Set the budget for npm outdated plugin.'
     })
-    .option('package-size-limit', {
-        alias: 'psl',
-        type: 'number',
-        default: 50000,
-        description: 'Customize the package size limit'
+    .option('updates.devDependencies', {
+        alias: 'nod',
+        type: 'boolean',
+        default: false,
+        description: 'Take into account dev dependencies for updates?'
     })
-    .option('unpacked-size-limit', {
-        alias: 'usl',
-        type: 'number',
-        default: 1000000,
-        description: 'Customize the unpacked size limit'
+    .option('project-size.budget', {
+        alias: 'npb',
+        type: 'object',
+        default: {
+            fail: { size: 50000, unpackedSize: 1000000, entryCount: 100 }
+        },
+        description: 'Set the budget for npm pack plugin.'
     })
     .argv
 
@@ -154,6 +155,9 @@ const colors = {
     info: '\x1b[34m'
 };
 
+// -----------------------------
+// Launch all commands
+// -----------------------------
 (async () => {
     const allCmds = []
     const cmdList = global.argv.tasks || cmdListDefault
@@ -161,16 +165,22 @@ const colors = {
     const skipped = []
     const skippedScripts = []
 
+    // -----------------------------
+    // Prepare commands list
+    // -----------------------------
     for (const index in cmdList) {
-        prepareCmd(cmdList[index], allCmds, skipped)
+        utils.prepareCmd(cmdList[index], allCmds, skipped)
     }
 
+    // ---------------------------------
+    // Prepare scripts & skipped scripts
+    // ---------------------------------
     for (let index = 0; index < scriptList.length; index++) {
         const script = scriptList[index]
         if (!global.packagefile.scripts || !global.packagefile.scripts[script]) {
             skippedScripts.push(script)
         } else {
-            prepareCmd(script, allCmds, skipped, true)
+            utils.prepareCmd(script, allCmds, skipped, true)
         }
     }
 
@@ -179,6 +189,7 @@ const colors = {
         let hasError = false
         let hasWarning = false
         let hasInfo = false
+        const budgetInfo = []
 
         for (const i in res) {
             const cmd = res[i]
@@ -187,6 +198,13 @@ const colors = {
             hasWarning = hasWarning || cmd.level === 'warn'
             hasInfo = hasInfo || cmd.level === 'info'
 
+            if (global.argv.budgetInfo && cmd.budget) {
+                budgetInfo.push(cmd.budget)
+            }
+
+            // -----------------------------
+            // Display verbose messages
+            // -----------------------------
             if (global.argv.verbose &&
                 (levels.indexOf(cmd.level) >= currentLevel ||
                 (global.argv.level === 'all' && cmd.level === 'succeed'))) {
@@ -206,6 +224,14 @@ const colors = {
             }
         }
 
+        // -----------------------------
+        // Display bugets information
+        // -----------------------------
+        utils.displayBudgets(budgetInfo, colors)
+
+        // -------------------------------
+        // Print skipped scripts & plugins
+        // -------------------------------
         if (skipped.length > 0) {
             console.log('\n')
             console.log('--------------------------------------------------------------')

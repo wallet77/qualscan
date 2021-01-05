@@ -1,21 +1,25 @@
-const cmd = require('../src/plugins/npm_pack/cmd')
+const cmd = require('../src/plugins/project-size/cmd')
 const assert = require('assert')
 
-describe('npm_pack', () => {
+describe('Project\'s size', () => {
     before(() => {
-        global.argv['number-of-files-limit'] = 100
-        global.argv['package-size-limit'] = 50000
-        global.argv['unpacked-size-limit'] = 100000
+        global.argv = {
+            'project-size': {
+                budget: {
+                    fail: { size: 50000, unpackedSize: 1000000, entryCount: 100 }
+                }
+            }
+        }
     })
 
-    it('should run npm_pack and return fail level', async () => {
+    it('should run project-size and return fail level', async () => {
         // too many files
         await cmd.callback(null, JSON.stringify([{
             entryCount: 101
         }]), null)
         assert.strictEqual(cmd.level, 'fail')
 
-        // packge too big
+        // package too big
         await cmd.callback(null, JSON.stringify([{
             size: 50001
         }]), null)
@@ -23,7 +27,7 @@ describe('npm_pack', () => {
 
         await cmd.callback(null, JSON.stringify([{
             size: 5000,
-            unpackedSize: 100001
+            unpackedSize: 1000001
         }]), null)
         assert.strictEqual(cmd.level, 'fail')
     })
