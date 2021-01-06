@@ -24,8 +24,6 @@ try {
             }
         }
     }
-
-    console.log(`Scanning ${global.packagefile.name}@${global.packagefile.version}`)
 } catch (err) {
     console.error('No package.json file found!')
     console.error('Qualscan requires a valid Javascript project structure with a package.json file.')
@@ -144,21 +142,33 @@ global.argv = init
         },
         description: 'Set the budget for npm pack plugin.'
     })
+    .option('reporters', {
+        alias: 'r',
+        type: 'array',
+        description: 'List of reporters to use',
+        default: ['text']
+    })
     .argv
 
+global.reporters = {}
+for (let i = 0; i < global.argv.reporters.length; i++) {
+    const reporter = global.argv.reporters[i]
+    try {
+        global.reporters[reporter] = require(path.join(__dirname, './src/reporters/', reporter))
+    } catch (err) {
+        console.error(`Reporter ${reporter} does not exist!`)
+    }
+}
+
 const levels = ['all', 'info', 'warn', 'fail']
-const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level]
-const colors = {
-    fail: '\x1b[31m',
-    succeed: '\x1b[32m',
-    warn: '\x1b[33m',
-    info: '\x1b[34m'
-};
+const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level];
 
 // -----------------------------
 // Launch all commands
 // -----------------------------
 (async () => {
+    utils.display('start', [])
+
     const allCmds = []
     const cmdList = global.argv.tasks || cmdListDefault
     const scriptList = global.argv.scripts || scriptListDefault
@@ -213,52 +223,25 @@ const colors = {
             if (global.argv.verbose &&
                 (levels.indexOf(cmd.level) >= currentLevel ||
                 (global.argv.level === 'all' && cmd.level === 'succeed'))) {
-                console.log('\n\n')
-                console.log(`${colors[cmd.level]}%s\x1b[0m`, '--------------------------------------------------------------')
-                console.log(`${colors[cmd.level]}%s\x1b[0m`, cmd.title)
-                console.log(`${colors[cmd.level]}%s\x1b[0m`, '--------------------------------------------------------------')
-                console.log(cmd.data)
-
-                if (cmd.cmd) {
-                    console.log('\x1b[44m%s\x1b[0m', `    How to debug: "${cmd.cmd}"`)
-                }
-
-                if (cmd.doc) {
-                    console.log('\x1b[2m%s\x1b[0m', `    How to fix: ${cmd.doc}`)
-                }
+                utils.display('displayVerbose', [cmd])
             }
         }
 
-        console.log('\n')
-        console.log('\x1b[44mScore\x1b[0m %s/100', Math.round(score * 100 / res.length))
+        utils.display('displayScore', [score, res])
 
         // -----------------------------
         // Display bugets information
         // -----------------------------
-        utils.displayBudgets(budgetInfo, colors)
+        utils.display('displayBudgets', [budgetInfo])
 
         // -------------------------------
         // Print skipped scripts & plugins
         // -------------------------------
         if (skipped.length > 0) {
-            console.log('\n')
-            console.log('--------------------------------------------------------------')
-            console.log('Skipped plugins')
-            console.log('--------------------------------------------------------------')
-            for (let index = 0; index < skipped.length; index++) {
-                const skippedPlugin = skipped[index]
-                console.warn(`    ${skippedPlugin.name} - ${skippedPlugin.reason}`)
-            }
+            utils.display('displaySkippedPlugins', [skipped])
         }
         if (skippedScripts.length > 0) {
-            console.log('\n')
-            console.log('--------------------------------------------------------------')
-            console.log('Skipped scripts')
-            console.log('--------------------------------------------------------------')
-            for (let index = 0; index < skippedScripts.length; index++) {
-                const skippedScript = skippedScripts[index]
-                console.warn(`    ${skippedScript} - does not exist in package.json!`)
-            }
+            utils.display('displaySkippedScripts', [skippedScripts])
         }
         process.exit(hasError ? 1 : 0)
     } catch (err) {

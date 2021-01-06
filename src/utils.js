@@ -50,25 +50,10 @@ module.exports = {
         }
     },
 
-    displayBudgets: (budgetInfo, colors) => {
-        if (global.argv.budgetInfo) {
-            console.log('\n')
-            console.log('\x1b[44m%s\x1b[0m\u2935', 'Budgets')
-            for (let i = 0; i < budgetInfo.length; i++) {
-                const pluginBudgets = budgetInfo[i]
-                for (const threshold in pluginBudgets) {
-                    for (const metric in pluginBudgets[threshold]) {
-                        const budget = pluginBudgets[threshold][metric]
-                        let prefix = '\x1b[42mSUCCESS\x1b[0m'
-                        let color = colors.succeed
-                        if (budget.level !== 'succeed') {
-                            prefix = '\x1b[41mFAIL\x1b[0m   '
-                            color = colors.fail
-                        }
-                        console.log(`    %s %s - %s  ${color}%s\x1b[0m/%s %s`, prefix, budget.plugin, budget.threshold, budget.value, budget.limit, budget.unit)
-                    }
-                }
-            }
+    display: (method, args) => {
+        for (const reporterName in global.reporters) {
+            const reporter = global.reporters[reporterName]
+            reporter[method].apply(reporter, args)
         }
     }
 }
