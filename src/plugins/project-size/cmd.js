@@ -1,11 +1,7 @@
 'use strict'
 const path = require('path')
 const utils = require(path.join(__dirname, '/../utils.js'))
-const filesize = require('filesize')
-
-const format = (value, metric) => {
-    return metric !== 'entryCount' && !isNaN(value) ? filesize(value, { base: 10 }) : value
-}
+const utilsProjectSize = require(path.join(__dirname, './utils.js'))
 
 const cmd = {
     cmd: 'npm pack --dry-run --json',
@@ -15,9 +11,9 @@ const cmd = {
         utils.parseData(cmd, error, stdout, stderr)
 
         const budget = global.argv['project-size'].budget
-        utils.initBudget(cmd, budget, '', '', format)
+        utils.initBudget(cmd, budget, '', '', utilsProjectSize.format)
 
-        utils.processBudget(cmd, budget, cmd.data[0], format)
+        utils.processBudget(cmd, budget, cmd.data[0], utilsProjectSize.format)
 
         return cmd
     }

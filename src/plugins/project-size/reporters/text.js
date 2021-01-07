@@ -1,6 +1,6 @@
 const path = require('path')
-const filesize = require('filesize')
 const AbstractPluginReporter = require(path.join(__dirname, '../../../reporters/AbstractPluginReporter'))
+const utilsProjectSize = require(path.join(__dirname, '../utils.js'))
 
 class TextReporter extends AbstractPluginReporter {
     constructor (cmd) {
@@ -9,8 +9,8 @@ class TextReporter extends AbstractPluginReporter {
     }
 
     verbose () {
-        console.log(`Size: ${!isNaN(this.cmd.data[0].size) ? filesize(this.cmd.data[0].size, { base: 10 }) : this.cmd.data[0].size}`)
-        console.log(`Unpacked size: ${!isNaN(this.cmd.data[0].unpackedSize) ? filesize(this.cmd.data[0].unpackedSize, { base: 10 }) : this.cmd.data[0].unpackedSize}`)
+        console.log(`Size: ${utilsProjectSize.format(this.cmd.data[0].size, 'size')}`)
+        console.log(`Unpacked size: ${utilsProjectSize.format(this.cmd.data[0].unpackedSize, 'unpackedSize')}`)
         console.log(`Nb files: ${this.cmd.data[0].entryCount}`)
     }
 }

@@ -243,8 +243,10 @@ const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level];
         if (skippedScripts.length > 0) {
             utils.display('displaySkippedScripts', [skippedScripts])
         }
+        utils.display('end', [])
         process.exit(hasError ? 1 : 0)
     } catch (err) {
+        utils.display('end', [])
         console.log(err)
         process.exit(1)
     }
