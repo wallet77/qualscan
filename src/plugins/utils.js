@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
     parseData: (cmd, error, stdout, stderr) => {
         const data = JSON.parse(stdout)
@@ -47,6 +49,15 @@ module.exports = {
                     }
                 }
             }
+        }
+    },
+
+    loadReporters: (cmd, cmdPath) => {
+        cmd.reporters = {}
+
+        for (const reporterName in global.reporters) {
+            const ReporterClass = require(path.join(cmdPath, './reporters/', reporterName))
+            cmd.reporters[reporterName] = new ReporterClass(cmd)
         }
     }
 }

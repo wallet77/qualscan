@@ -1,5 +1,6 @@
 'use strict'
 const path = require('path')
+const utils = require(path.join(__dirname, '/../utils.js'))
 
 const args = global.argv['package-check'] || ''
 
@@ -21,5 +22,7 @@ const cmd = {
         return cmd
     }
 }
+
+utils.loadReporters(cmd, __dirname)
 
 module.exports = cmd

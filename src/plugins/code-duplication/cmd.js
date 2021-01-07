@@ -41,4 +41,6 @@ const cmd = {
     }
 }
 
+utils.loadReporters(cmd, __dirname)
+
 module.exports = cmd

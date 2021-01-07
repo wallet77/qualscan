@@ -39,8 +39,10 @@ class TextReporter extends AbstractReporter {
         console.log(`${this.colors[cmd.level]}%s\x1b[0m`, '--------------------------------------------------------------')
         console.log(`${this.colors[cmd.level]}%s\x1b[0m`, cmd.title)
         console.log(`${this.colors[cmd.level]}%s\x1b[0m`, '--------------------------------------------------------------')
-        console.log(cmd.data)
 
+        cmd.reporters.text.verbose()
+
+        console.log('\n')
         if (cmd.cmd) {
             console.log('\x1b[44m%s\x1b[0m', `    How to debug: "${cmd.cmd}"`)
         }
