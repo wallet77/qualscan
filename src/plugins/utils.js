@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+
 module.exports = {
     parseData: (cmd, error, stdout, stderr) => {
         const data = JSON.parse(stdout)
@@ -46,6 +49,18 @@ module.exports = {
                         cmd.level = threshold
                     }
                 }
+            }
+        }
+    },
+
+    loadReporters: (cmd, cmdPath) => {
+        cmd.reporters = {}
+
+        for (const reporterName in global.reporters) {
+            const reporterPath = path.join(cmdPath, './reporters/', `${reporterName}.js`)
+            if (fs.existsSync(reporterPath)) {
+                const ReporterClass = require(reporterPath)
+                cmd.reporters[reporterName] = new ReporterClass(cmd)
             }
         }
     }
