@@ -74,9 +74,9 @@ class TextReporter extends AbstractReporter {
         }
     }
 
-    displayScore (score, res) {
+    displayScore (score) {
         console.log('\n')
-        console.log('\x1b[44mScore\x1b[0m %s/100', Math.round(score * 100 / res.length))
+        console.log('\x1b[44mScore\x1b[0m %s/100', score)
     }
 
     start () {

@@ -148,6 +148,12 @@ global.argv = init
         description: 'List of reporters to use',
         default: ['text']
     })
+    .option('reportPath', {
+        alias: 'rp',
+        type: 'string',
+        description: 'Path to save report',
+        default: path.join(process.cwd(), '/report')
+    })
     .argv
 
 global.reporters = {}
@@ -174,6 +180,7 @@ const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level];
     const scriptList = global.argv.scripts || scriptListDefault
     const skipped = []
     const skippedScripts = []
+    const report = { data: {} }
 
     // -----------------------------
     // Prepare commands list
@@ -197,8 +204,6 @@ const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level];
     try {
         const res = await Promise.all(allCmds)
         let hasError = false
-        let hasWarning = false
-        let hasInfo = false
         const budgetInfo = []
         let score = 0
 
@@ -206,8 +211,6 @@ const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level];
             const cmd = res[i]
 
             hasError = hasError || cmd.level === 'fail'
-            hasWarning = hasWarning || cmd.level === 'warn'
-            hasInfo = hasInfo || cmd.level === 'info'
 
             if (global.argv.budgetInfo && cmd.budget) {
                 budgetInfo.push(cmd.budget)
@@ -227,7 +230,16 @@ const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level];
             }
         }
 
-        utils.display('displayScore', [score, res])
+        score = Math.round(score * 100 / res.length)
+
+        report.data.cmds = res
+        report.data.score = score
+        report.data.skipped = {
+            plugins: skipped,
+            scripts: skippedScripts
+        }
+
+        utils.display('displayScore', [score])
 
         // -----------------------------
         // Display bugets information
@@ -243,10 +255,10 @@ const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level];
         if (skippedScripts.length > 0) {
             utils.display('displaySkippedScripts', [skippedScripts])
         }
-        utils.display('end', [])
+        await utils.display('end', [report])
         process.exit(hasError ? 1 : 0)
     } catch (err) {
-        utils.display('end', [])
+        await utils.display('end', [report])
         console.log(err)
         process.exit(1)
     }

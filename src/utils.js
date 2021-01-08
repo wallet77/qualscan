@@ -50,10 +50,10 @@ module.exports = {
         }
     },
 
-    display: (method, args) => {
+    display: async (method, args) => {
         for (const reporterName in global.reporters) {
             const reporter = global.reporters[reporterName]
-            reporter[method].apply(reporter, args)
+            await reporter[method].apply(reporter, args)
         }
     }
 }

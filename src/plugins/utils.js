@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 
 module.exports = {
@@ -56,8 +57,11 @@ module.exports = {
         cmd.reporters = {}
 
         for (const reporterName in global.reporters) {
-            const ReporterClass = require(path.join(cmdPath, './reporters/', reporterName))
-            cmd.reporters[reporterName] = new ReporterClass(cmd)
+            const reporterPath = path.join(cmdPath, './reporters/', `${reporterName}.js`)
+            if (fs.existsSync(reporterPath)) {
+                const ReporterClass = require(reporterPath)
+                cmd.reporters[reporterName] = new ReporterClass(cmd)
+            }
         }
     }
 }
