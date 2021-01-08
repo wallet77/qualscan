@@ -30,7 +30,14 @@ For example it can run:
 - security audit of your dependencies
 - check dependencies updates
 - check code duplications
-- and more
+- check project's size (bundle's size, number of files)
+- check project's structure (readme, license, etc)
+- check exact version of dependencies
+
+In addition you can run all you custom scripts.  
+It will give you a global score based on the number of successful tasks.
+
+## Output
 
 This tool will basically returns 1 if, at least, one task has failed, otherwise it returns 0.
 
