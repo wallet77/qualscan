@@ -2,6 +2,8 @@ const { cli } = require('./utils')
 const assert = require('assert')
 const AbstractReporter = require('../src/reporters/AbstractReporter')
 const AbstractPluginReporter = require('../src/reporters/AbstractPluginReporter')
+const fs = require('fs')
+const path = require('path')
 
 class ReporterTest extends AbstractReporter {}
 
@@ -79,5 +81,30 @@ describe('Reporters', () => {
         } catch (err) {
             assert.strictEqual(err.message, 'Abstract class "AbstractPluginReporter" cannot be instantiated directly')
         }
+    })
+
+    describe('JSON reporter', () => {
+        const dir = path.join(process.cwd(), 'report/')
+        const reportPath = path.join(dir, 'qualscan_report.json')
+
+        afterEach(async () => {
+            if (fs.existsSync(reportPath)) {
+                await fs.promises.unlink(reportPath)
+                await fs.promises.rmdir(dir)
+            }
+        })
+
+        it('should run qualscan with json reporter', async () => {
+            const result = await cli(['--reporters json', '--tasks project-size', '--scripts'], '.')
+            assert.strictEqual(result.code, 0)
+            const report = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'report/qualscan_report.json')))
+            assert.strictEqual(report.score, 100)
+        })
+
+        it('should run qualscan with json reporter and print in console', async () => {
+            const result = await cli(['--reporters json', '--reportPath ""', '--verbose', '--tasks project-size toto', '--scripts toto'], '.')
+            assert.strictEqual(result.code, 0)
+            assert.strictEqual(fs.existsSync(reportPath), false)
+        })
     })
 })

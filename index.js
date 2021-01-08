@@ -151,7 +151,7 @@ global.argv = init
     .option('reportPath', {
         alias: 'rp',
         type: 'string',
-        description: 'Path to save report',
+        description: 'Path where to save report',
         default: path.join(process.cwd(), '/report')
     })
     .argv
