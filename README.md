@@ -140,6 +140,29 @@ You can find an [example here](https://github.com/wallet77/qualscan/tree/main/ex
 $ qualscan -c /pathTo/MyConfigFile.json
 ```
 
+## Reporters
+
+By default qualscan will use `text` reporter and display results in the console.  
+Allowed reporters:
+- text
+- json
+- json in console
+
+```bash
+qualscan --reporters json
+```
+By default the default path to store the report is: [workingDir]/report/qualscan_report.json
+
+Define another report directory
+```bash
+qualscan --reporters json --reportPath "myCustomDir/"
+```
+
+To display json in console
+```bash
+qualscan --reporters json --reportPath ""
+```
+
 ## Budget
 
 The notion of budget comes from the [Webperf budget principle](https://developer.mozilla.org/en-US/docs/Web/Performance/Performance_budgets).  
