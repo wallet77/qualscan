@@ -44,6 +44,9 @@ This tool will basically returns 1 if, at least, one task has failed, otherwise 
 Basic error output:
 ![Qualscan error](https://github.com/wallet77/qualscan/blob/main/examples/error_output.png)
 
+A task is considered as successful if the `fail` threhsold (see <a href="#budget">budgets</a>) has not been exceeded.
+`warn` of `info` thresholds will bring you more information but the task will be considered as successful even if the thresholds are exceeded.
+
 ## Installation
 
 ```bash
@@ -193,6 +196,19 @@ Example in config file (for project's size plugin):
 
 Basic budgets output:
 ![Budgets example](https://github.com/wallet77/qualscan/blob/main/examples/budgets.png)
+
+For a task:
+ - successful: if `fail` threshold has not been exceeded
+ - otherwise the task has failed
+
+For a threshold:
+ - successful if all metrics are under their maximum value
+ - otherwise it has failed
+
+So a task can lead to an error, a warning or an information.  
+Thresholds can only be passed or failed.
+
+![Budgets errors example](https://github.com/wallet77/qualscan/blob/main/examples/budgets_errors.png)
 
 **List of all metrics per plugin**
 
