@@ -9,12 +9,10 @@ const cmd = {
     title: 'Dependencies updates',
     doc: 'https://github.com/wallet77/qualscan/blob/main/doc/updates.md',
     callback: (error, stdout, stderr) => {
-        if (stdout === '') {
-            cmd.level = 'succeed'
-            return cmd
+        let data = {}
+        if (stdout !== '') {
+            data = JSON.parse(stdout)
         }
-
-        const data = JSON.parse(stdout)
 
         cmd.data = data
         cmd.level = 'succeed'

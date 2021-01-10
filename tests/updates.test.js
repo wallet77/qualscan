@@ -1,4 +1,3 @@
-const { cli } = require('./utils')
 let cmd
 const assert = require('assert')
 
@@ -17,11 +16,6 @@ describe('Dependencies updates', () => {
             text: ''
         }
         cmd = require('../src/plugins/updates/cmd')
-    })
-
-    it('should run updates and return a success', async () => {
-        const result = await cli([], './tests/resources', 'node -e "require(\'../../src/plugins/updates/cmd.js\').callback(null, \'\', null)"')
-        assert.strictEqual(result.code, 0)
     })
 
     it('should run updates and return an error', async () => {
