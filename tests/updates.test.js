@@ -1,5 +1,5 @@
 const { cli } = require('./utils')
-const cmd = require('../src/plugins/updates/cmd')
+let cmd
 const assert = require('assert')
 
 describe('Dependencies updates', () => {
@@ -13,6 +13,10 @@ describe('Dependencies updates', () => {
                 }
             }
         }
+        global.reporters = {
+            text: ''
+        }
+        cmd = require('../src/plugins/updates/cmd')
     })
 
     it('should run updates and return a success', async () => {
@@ -66,6 +70,7 @@ describe('Dependencies updates', () => {
             }
         }), null)
         assert.strictEqual(cmd.level, 'info')
+        cmd.reporters.text.verbose()
     })
 
     it('should run updates and return info level (two minor diff)', async () => {

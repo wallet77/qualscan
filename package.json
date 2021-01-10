@@ -1,6 +1,6 @@
 {
   "name": "qualscan",
-  "version": "1.2.3",
+  "version": "2.0.0",
   "description": "Scan your project to find quality issues",
   "main": "index.js",
   "bin": "./index.js",
@@ -40,6 +40,7 @@
     "script",
     "exact",
     "version",
+    "size",
     "cli",
     "ci"
   ],
@@ -54,7 +55,7 @@
   },
   "homepage": "https://github.com/wallet77/qualscan#readme",
   "devDependencies": {
-    "eslint": "^7.16.0",
+    "eslint": "^7.17.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
@@ -67,7 +68,7 @@
     "@skypack/package-check": "0.2.2",
     "filesize": "6.1.0",
     "jscpd": "3.3.23",
-    "ora": "5.1.0",
+    "ora": "5.2.0",
     "semver": "7.3.4",
     "yargs": "16.2.0"
   }
