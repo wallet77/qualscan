@@ -1,10 +1,23 @@
 {
-    "nofl": 150,
-    "psl": 3000000,
-    "usl": 6000000,
-    "scripts": ["linter"],
-    "code-duplication": "--threshold 10 --gitignore",
+    "scripts": [],
+    "code-duplication": {
+        "budget": {
+            "fail" : {
+                "percentage": 10,
+                "percentageTokens": 10
+            }
+        }
+    },
+    "project-size": {
+        "budget": {
+            "fail": {
+                "entryCount": 150,
+                "size": 3000000,
+                "unpackedSize": 6000000
+            }
+        }
+    },
+    "tasks": ["code-duplication", "project-size", "dependencies-exact-version", "security-audit"],
     "verbose": true,
-    "level": "error",
-    "cdd": true
+    "level": "error"
 }
