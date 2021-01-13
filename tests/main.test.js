@@ -32,6 +32,11 @@ describe('qualscan', () => {
         assert.strictEqual(result.code, 1)
     })
 
+    it('should run qualscan but return 1 because it found unused dep', async () => {
+        const result = await cli(['--tasks dependencies-check', '--verbose'], './tests/resources/')
+        assert.strictEqual(result.code, 1)
+    })
+
     it('should run qualscan without env var', async () => {
         delete process.env.SCRIPTS_LIST
         const result = await cli(['--tasks dependencies-exact-version --scripts'], '.')
