@@ -3,11 +3,6 @@ const AbstractPluginReporter = require(path.join(__dirname, '../../../reporters/
 const utils = require(path.join(__dirname, '/../../utils.js'))
 
 class TextReporter extends AbstractPluginReporter {
-    constructor (cmd) {
-        super(cmd)
-        this.cmd = cmd
-    }
-
     verbose () {
         console.log('Dependencies:')
         utils.displayMap(this.cmd.data.dependencies)
