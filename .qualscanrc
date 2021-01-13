@@ -1,3 +1,13 @@
 {
-    "code-duplication": "--ignore */resources/code_duplication_failed/* --gitignore"
+    "code-duplication": {
+        "args": "--ignore */resources/code_duplication_failed/* --gitignore"
+    },
+    "dependencies-check": {
+        "args": {
+            "ignoreMatches": [
+                "@skypack/package-check",
+                "jscpd"
+            ]
+        }
+    }
 }
