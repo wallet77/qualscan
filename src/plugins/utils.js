@@ -63,5 +63,17 @@ module.exports = {
                 cmd.reporters[reporterName] = new ReporterClass(cmd)
             }
         }
+    },
+
+    displayArr: (arr) => {
+        for (let i = 0; i < arr.length; i++) {
+            console.log(`  - ${arr[i]}`)
+        }
+    },
+
+    displayMap: (map) => {
+        for (const dep in map) {
+            console.log(`  - ${dep}`)
+        }
     }
 }

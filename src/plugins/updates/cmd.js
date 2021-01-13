@@ -39,11 +39,9 @@ const cmd = {
                 values.patch++
             }
         }
-
         utils.processBudget(cmd, budget, values)
 
-        if (error && cmd.level === 'succeed') {
-            cmd.level = 'fail'
+        if (error) {
             cmd.error = error
         }
 

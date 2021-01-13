@@ -6,7 +6,7 @@ const utilsProjectSize = require(path.join(__dirname, './utils.js'))
 const cmd = {
     cmd: 'npm pack --dry-run --json',
     title: 'Project\'s size',
-    doc: 'https://github.com/wallet77/qualscan/blob/main/doc/npm_pack.md',
+    doc: 'https://github.com/wallet77/qualscan/blob/main/doc/project-size.md',
     callback: async (error, stdout, stderr) => {
         utils.parseData(cmd, error, stdout, stderr)
 

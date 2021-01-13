@@ -17,6 +17,7 @@
   <a href="#installation">Installation</a> •
   <a href="#usage">Usage</a> •
   <a href="#using-config-file">Using config file</a> •
+  <a href="#reporters">Reporters</a> •
   <a href="#budget">Budget</a> •
   <a href="#cicd">CI / CD</a> •
   <a href="#test">Test</a> •
@@ -33,6 +34,7 @@ For example it can run:
 - check project's size (bundle's size, number of files)
 - check project's structure (readme, license, etc)
 - check exact version of dependencies
+- check dependencies (missing or unused)
 
 In addition you can run all you custom scripts.  
 It will give you a global score based on the number of successful tasks.
@@ -229,6 +231,9 @@ Thresholds can only be passed or failed.
 | Dependencies updates | updates                      | major               | number of major updates                              |
 |                      |                              | minor               | number of minor updates                              |
 |                      |                              | patch               | number of patch                                      |
+| Check dependencies   | dependencies-check           | missing             | number of missing dependencies                       |
+|                      |                              | dependencies        | number of unused dependencies                        |
+|                      |                              | devDependencies     | number of unused dev dependencies                    |
 
 ## CI/CD
 

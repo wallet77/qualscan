@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const utils = require(path.join(__dirname, '/src/utils'))
 
-const cmdListDefault = ['code-duplication', 'security-audit', 'updates', 'package-check', 'dependencies-exact-version', 'project-size']
+const cmdListDefault = ['code-duplication', 'security-audit', 'updates', 'package-check', 'dependencies-exact-version', 'project-size', 'dependencies-check']
 const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : []
 
 const knownScripts = ['test', 'lint', 'linter']
@@ -126,7 +126,7 @@ global.argv = init
             warn: { major: 0, minor: 1, patch: 5 },
             info: { major: 0, minor: 0, patch: 0 }
         },
-        description: 'Set the budget for npm outdated plugin.'
+        description: 'Set the budget for updates plugin.'
     })
     .option('updates.devDependencies', {
         alias: 'nod',
@@ -140,7 +140,24 @@ global.argv = init
         default: {
             fail: { size: 50000, unpackedSize: 1000000, entryCount: 100 }
         },
-        description: 'Set the budget for npm pack plugin.'
+        description: 'Set the budget for project size plugin.'
+    })
+    .option('dependencies-check.budget', {
+        alias: 'dcb',
+        type: 'object',
+        default: {
+            fail: { missing: 0, dependencies: 0, devDependencies: 0 }
+        },
+        description: 'Set the budget for dependencies check.'
+    })
+    .option('dependencies-check.args', {
+        alias: 'dca',
+        type: 'object',
+        default: {
+            ignoreBinPackage: false, // ignore the packages with bin entry
+            skipMissing: false // skip calculation of missing dependencies
+        },
+        description: 'Send custom args to dependencies check plugin.'
     })
     .option('reporters', {
         alias: 'r',

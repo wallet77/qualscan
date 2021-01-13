@@ -20,7 +20,7 @@ describe('Dependencies updates', () => {
 
     it('should run updates and return an error', async () => {
         await cmd.callback(new Error('test'), JSON.stringify({}), null)
-        assert.strictEqual(cmd.level, 'fail')
+        assert.strictEqual(cmd.level, 'succeed')
         assert.strictEqual(cmd.error.message, 'test')
     })
 
