@@ -37,6 +37,16 @@ describe('qualscan', () => {
         assert.strictEqual(result.code, 1)
     })
 
+    it('should run qualscan but return 0 because no node_modules', async () => {
+        const result = await cli(['--tasks dependencies-size', '--verbose'], './tests/resources/')
+        assert.strictEqual(result.code, 0)
+    })
+
+    it('should run qualscan but return 0 because dep size is ok', async () => {
+        const result = await cli(['--tasks dependencies-size', '--verbose'], '.')
+        assert.strictEqual(result.code, 0)
+    })
+
     it('should run qualscan without env var', async () => {
         delete process.env.SCRIPTS_LIST
         const result = await cli(['--tasks dependencies-exact-version --scripts'], '.')

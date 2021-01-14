@@ -20,20 +20,27 @@ const cmd = {
         if (error) {
             cmd.error = error
             cmd.level = 'fail'
-            return cmd
         }
-        const data = stdout.split('\n')
-        data.splice(0, 1)
+
+        let weight = 0
+        const folderNodeModules = path.join(process.cwd(), 'node_modules')
+        try {
+            weight = await promiseFolderSize(folderNodeModules)
+        } catch (err) {
+            console.log('No node_modules found!')
+        }
+
+        const data = stdout.split('\n').filter(Boolean)
+        data.shift()
 
         const budget = global.argv['dependencies-size'].budget
         utils.initBudget(cmd, budget, '', '', utils.format)
-
         cmd.data = {
             dependencies: data,
             values: {
                 directDependencies: Object.keys(global.packagefile.dependencies).length,
                 dependencies: data.length,
-                weight: await promiseFolderSize(path.join(process.cwd(), 'node_modules'))
+                weight: weight
             }
         }
 

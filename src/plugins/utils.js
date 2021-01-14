@@ -15,7 +15,7 @@ module.exports = {
         }
     },
 
-    initBudget: (cmd, budget, prefix = '', suffix = '', format = (value, column) => { return value }) => {
+    initBudget: (cmd, budget, prefix, suffix, format = (value, column) => { return value }) => {
         cmd.budget = {}
         cmd.level = 'succeed'
 
