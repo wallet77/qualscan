@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const utils = require(path.join(__dirname, '/src/utils'))
 
-const cmdListDefault = ['code-duplication', 'security-audit', 'updates', 'package-check', 'dependencies-exact-version', 'project-size', 'dependencies-check']
+const cmdListDefault = ['code-duplication', 'security-audit', 'updates', 'package-check', 'dependencies-exact-version', 'project-size', 'dependencies-check', 'dependencies-size']
 const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : []
 
 const knownScripts = ['test', 'lint', 'linter']

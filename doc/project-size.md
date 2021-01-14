@@ -12,11 +12,11 @@ You can specify which files will be taken into account with:
 ## Reasons for failure
 This plugin will fail if one of the following metrics is greater than their threshold:
 
-| Metric          | Threshold      | Argument       |
-|:---------------:|:--------------:|:--------------:|
-| Size            | 50kB  (50000)  | --psl          |
-| Unpacked size   | 100kB (100000) | --usl          |
-| Number of files | 100            | --nofl         |
+| Metric          | Threshold      | Argument                                     |
+|:---------------:|:--------------:|:--------------------------------------------:|
+| Size            | 50kB  (50000)  | --project-size.budget.fail.size              |
+| Unpacked size   | 100kB (100000) | --project-size.budget.fail.unpackedSize      |
+| Number of files | 100            | --project-size.budget.fail.entryCount        |
 
 ## Command
 To run the plugin as a standalone module you can refer to [this page](https://docs.npmjs.com/cli/v6/commands/npm-pack).
@@ -46,15 +46,30 @@ No files property in packe.json.
 
 To increase the number of files limit:
 ```bash
-qualscan --nofl 200
+qualscan --project-size.budget.fail.entryCount 200
 ```
 
 To increase the size to 100kB:
 ```bash
-qualscan --psl 100000
+qualscan --project-size.budget.fail.size 100000
 ```
 
 To increase the unpacked size to 1mB:
 ```bash
-qualscan --usl 1000000
+qualscan --project-size.budget.fail.unpackedSize 1000000
+```
+
+Or directly in your qualscanrc file:
+```bash
+{
+  "project-size": {
+    "budget": {
+      "fail": {
+        "entryCount": 200,
+        "size": 100000,
+        "unpackedSize": 1000000
+      }
+    }
+  }
+}
 ```
