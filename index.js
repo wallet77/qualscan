@@ -159,6 +159,14 @@ global.argv = init
         },
         description: 'Send custom args to dependencies check plugin.'
     })
+    .option('dependencies-size.budget', {
+        alias: 'dsb',
+        type: 'object',
+        default: {
+            fail: { weight: 100000000, dependencies: 300, directDependencies: 10 }
+        },
+        description: 'Set the budget for dependencies size plugin.'
+    })
     .option('reporters', {
         alias: 'r',
         type: 'array',
