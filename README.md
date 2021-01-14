@@ -35,6 +35,7 @@ For example it can run:
 - check project's structure (readme, license, etc)
 - check exact version of dependencies
 - check dependencies (missing or unused)
+- check dependencies size (number of dep, actual size)
 
 In addition you can run all you custom scripts.  
 It will give you a global score based on the number of successful tasks.
@@ -234,6 +235,9 @@ Thresholds can only be passed or failed.
 | Check dependencies   | dependencies-check           | missing             | number of missing dependencies                       |
 |                      |                              | dependencies        | number of unused dependencies                        |
 |                      |                              | devDependencies     | number of unused dev dependencies                    |
+| Dependencies size    | dependencies-size            | dependencies        | number of all dependencies                           |
+|                      |                              | directDependencies  | number of direct dependencies                        |
+|                      |                              | weight              | total weight of node_modules folder (production)     |
 
 ## CI/CD
 

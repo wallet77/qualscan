@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const filesize = require('filesize')
 
 module.exports = {
     parseData: (cmd, error, stdout, stderr) => {
@@ -75,5 +76,10 @@ module.exports = {
         for (const dep in map) {
             console.log(`  - ${dep}`)
         }
+    },
+
+    format: (value, metric) => {
+        const excluded = ['entryCount', 'directDependencies', 'dependencies']
+        return excluded.indexOf(metric) === -1 && !isNaN(value) ? filesize(value, { base: 10 }) : value
     }
 }
