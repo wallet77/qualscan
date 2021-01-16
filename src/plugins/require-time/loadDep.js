@@ -48,3 +48,8 @@ Module._load = customLoad
 require(process.env.MODULE)
 
 process.send(deps)
+
+// wait 1s to be sure the message has been read
+setTimeout(() => {
+    process.exit(0)
+}, 1000)

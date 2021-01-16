@@ -34,7 +34,6 @@ const cmd = {
         const res = {
             directDeps: {}
         }
-
         // for (const dep in global.packagefile.dependencies) {
         //     const data = await getModuleData(path.join(process.cwd(), 'node_modules', dep))
         //     res.directDeps[dep] = data
