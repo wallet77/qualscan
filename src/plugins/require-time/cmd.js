@@ -35,8 +35,6 @@ const cmd = {
         require(global.argv['require-time'].entrypoint)
         res.entrypoint = await getModuleData(global.argv['require-time'].entrypoint)
 
-        console.log(res.entrypoint)
-
         cmd.data = {
             entrypointTime: res.entrypoint[global.argv['require-time'].entrypoint].duration,
             raw: res
