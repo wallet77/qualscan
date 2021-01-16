@@ -32,7 +32,6 @@ const cmd = {
         //     res.directDeps[dep] = data
         // }
 
-        require(global.argv['require-time'].entrypoint)
         res.entrypoint = await getModuleData(global.argv['require-time'].entrypoint)
 
         cmd.data = {
