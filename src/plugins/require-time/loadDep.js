@@ -49,7 +49,4 @@ require(process.env.MODULE)
 
 process.send(deps)
 
-// wait 2s to be sure the message has been read
-setTimeout(() => {
-    process.exit(0)
-}, 2000)
+process.exit(0)
