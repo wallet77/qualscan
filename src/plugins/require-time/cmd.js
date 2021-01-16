@@ -4,7 +4,7 @@ const { fork } = require('child_process')
 
 const utils = require(path.join(__dirname, '/../utils.js'))
 
-const getModuleData = (module, envEntrypoint) => {
+const getModuleData = (module) => {
     return new Promise((resolve, reject) => {
         let data
 
