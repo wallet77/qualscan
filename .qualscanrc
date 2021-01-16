@@ -9,5 +9,10 @@
                 "jscpd"
             ]
         }
+    },
+    "require-time": {
+        "budget": {
+            "fail": { "entrypointTime": 100000000 }
+        }
     }
 }

@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const utils = require(path.join(__dirname, '/src/utils'))
 
-const cmdListDefault = ['code-duplication', 'security-audit', 'updates', 'package-check', 'dependencies-exact-version', 'project-size', 'dependencies-check', 'dependencies-size']
+const cmdListDefault = process.env.TASKS_LIST ? process.env.TASKS_LIST.split(',') : ['code-duplication', 'security-audit', 'updates', 'package-check', 'dependencies-exact-version', 'project-size', 'dependencies-check', 'dependencies-size', 'require-time']
 const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : []
 
 const knownScripts = ['test', 'lint', 'linter']
@@ -167,6 +167,20 @@ global.argv = init
         },
         description: 'Set the budget for dependencies size plugin.'
     })
+    .option('require-time.budget', {
+        alias: 'rtb',
+        type: 'object',
+        default: {
+            fail: { entrypointTime: 500000000 }
+        },
+        description: 'Set the budget for require time plugin (in nanoseconds).'
+    })
+    .option('require-time.entrypoint', {
+        alias: 'rte',
+        type: 'string',
+        default: path.join(process.cwd(), 'index.js'),
+        description: 'Path to the entrypoint of your project.'
+    })
     .option('reporters', {
         alias: 'r',
         type: 'array',
@@ -191,13 +205,15 @@ for (let i = 0; i < global.argv.reporters.length; i++) {
     }
 }
 
+global.qualscanCLI = require.main === module
+
 const levels = ['all', 'info', 'warn', 'fail']
-const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level];
+const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level]
 
 // -----------------------------
 // Launch all commands
 // -----------------------------
-(async () => {
+const runAllCmds = async () => {
     utils.display('start', [])
 
     const allCmds = []
@@ -287,4 +303,12 @@ const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level];
         console.log(err)
         process.exit(1)
     }
-})()
+}
+
+if (global.qualscanCLI) {
+    runAllCmds()
+} else {
+    module.export = {
+        run: runAllCmds
+    }
+}

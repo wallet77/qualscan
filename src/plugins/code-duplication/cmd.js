@@ -16,6 +16,7 @@ const cmd = {
     doc: 'https://github.com/wallet77/qualscan/blob/main/doc/code-duplication.md',
     callback: async (error, stdout, stderr) => {
         if (error) {
+            cmd.error = error
             cmd.level = 'fail'
             return cmd
         }
