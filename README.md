@@ -6,7 +6,7 @@
 [![Opened PR](https://img.shields.io/github/issues-pr-raw/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan/pulls)
 [![DeepScan grade](https://deepscan.io/api/teams/12061/projects/15017/branches/292479/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=12061&pid=15017&bid=292479)
 
-![Dependencies updates](https://img.shields.io/david/wallet77/qualscan.svg)
+[![Dependencies updates](https://img.shields.io/david/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan)
 
 # Qualscan = Quality Scanner
 
