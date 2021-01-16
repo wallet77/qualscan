@@ -3,7 +3,7 @@ const assert = require('assert')
 
 describe('qualscan', () => {
     it('should run qualscan default behavior', async () => {
-        const result = await cli(['--verbose', '--code-duplication="--ignore tests/resources/code-duplication_failed/* --threshold 0.1 --gitignore"'], '.')
+        const result = await cli(['--verbose', '--code-duplication="--ignore tests/resources/code-duplication_failed/* --threshold 0.1 --gitignore"', '--require-time.budget.fail.entrypointTime 1000000000'], '.')
         assert.strictEqual(result.code, 0)
     })
 

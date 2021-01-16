@@ -9,8 +9,7 @@ class ReporterTest extends AbstractReporter {}
 
 describe('Reporters', () => {
     it('should run qualscan but ignore unknown reporters', async () => {
-        const result = await cli(['--reporters toto', '--code-duplication="--ignore tests/resources/code-duplication_failed/* --threshold 0.1 --gitignore"'], '.')
-        console.log(result.stderr)
+        const result = await cli(['--reporters toto', '--code-duplication="--ignore tests/resources/code-duplication_failed/* --threshold 0.1 --gitignore"', '--require-time.budget.fail.entrypointTime 1000000000'], '.')
         assert.strictEqual(result.code, 0)
     })
 
