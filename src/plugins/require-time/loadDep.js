@@ -45,7 +45,11 @@ const customLoad = function () {
 
 Module._load = customLoad
 
-require(process.env.MODULE)
+try {
+    require(process.env.MODULE)
+} catch (err) {
+    deps.err = err
+}
 
 process.send(deps)
 

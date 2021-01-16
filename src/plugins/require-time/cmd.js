@@ -34,6 +34,10 @@ const cmd = {
 
         res.entrypoint = await getModuleData(global.argv['require-time'].entrypoint)
 
+        if (res.entrypoint.err) {
+            res.entrypoint[global.argv['require-time'].entrypoint].duration = 0
+        }
+
         cmd.data = {
             entrypointTime: res.entrypoint[global.argv['require-time'].entrypoint].duration,
             raw: res
