@@ -36,6 +36,7 @@ For example it can run:
 - check exact version of dependencies
 - check dependencies (missing or unused)
 - check dependencies size (number of dep, actual size)
+- require time of entrypoint (loading time when we require your project)
 
 In addition you can run all you custom scripts.  
 It will give you a global score based on the number of successful tasks.
@@ -238,6 +239,7 @@ Thresholds can only be passed or failed.
 | Dependencies size    | dependencies-size            | dependencies        | number of all dependencies                           |
 |                      |                              | directDependencies  | number of direct dependencies                        |
 |                      |                              | weight              | total weight of node_modules folder (production)     |
+| Require time         | require-time                 | entrypointTime      | loading time of the entrypoint : require('myModule') |
 
 ## CI/CD
 
