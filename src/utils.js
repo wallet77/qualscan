@@ -37,7 +37,6 @@ const runCmd = async (cmd) => {
             } catch (err) {
                 cmd.level = 'fail'
                 if (global.qualscanCLI) postRunCmd(cmd, spinner)
-                // cmd.spinner.fail(cmd.title)
                 reject(err)
             }
         })
@@ -68,5 +67,22 @@ module.exports = {
             const reporter = global.reporters[reporterName]
             await reporter[method].apply(reporter, args)
         }
+    },
+
+    getEntrypoint: () => {
+        let entrypoint = 'index.js'
+        if (global.packagefile.main) {
+            entrypoint = global.packagefile.main
+        } else if (global.packagefile.exports) {
+            if (typeof global.packagefile.exports === 'string') {
+                entrypoint = global.packagefile.exports
+            } else if (Object.prototype.hasOwnProperty.call(global.packagefile.exports, 'require')) {
+                entrypoint = global.packagefile.exports.require
+            } else if (Object.prototype.hasOwnProperty.call(global.packagefile.exports, '.')) {
+                entrypoint = global.packagefile.exports['.']
+            }
+        }
+
+        return path.join(process.cwd(), entrypoint)
     }
 }

@@ -3,6 +3,8 @@ const path = require('path')
 const fs = require('fs')
 const utils = require(path.join(__dirname, '/src/utils'))
 
+global.qualscanCLI = require.main === module
+
 const cmdListDefault = process.env.TASKS_LIST ? process.env.TASKS_LIST.split(',') : ['code-duplication', 'security-audit', 'updates', 'package-check', 'dependencies-exact-version', 'project-size', 'dependencies-check', 'dependencies-size', 'require-time']
 const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : []
 
@@ -178,7 +180,7 @@ global.argv = init
     .option('require-time.entrypoint', {
         alias: 'rte',
         type: 'string',
-        default: path.join(process.cwd(), 'index.js'),
+        default: utils.getEntrypoint(),
         description: 'Path to the entrypoint of your project.'
     })
     .option('reporters', {
@@ -204,8 +206,6 @@ for (let i = 0; i < global.argv.reporters.length; i++) {
         console.error(`Reporter ${reporter} does not exist!`)
     }
 }
-
-global.qualscanCLI = require.main === module
 
 const levels = ['all', 'info', 'warn', 'fail']
 const currentLevel = { error: 3, warn: 2, info: 1, all: 0 }[global.argv.level]
