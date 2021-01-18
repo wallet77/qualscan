@@ -1,14 +1,14 @@
-# Qualscan = Quality Scanner
-
 [![GitHub release](https://badge.fury.io/js/qualscan.svg)](https://github.com/wallet77/qualscan/releases/)
-[![GitHub license](https://img.shields.io/github/license/wallet77/qualscan)](https://github.com/wallet77/qualscan/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan/blob/master/LICENSE)
 [![CI pipeline](https://github.com/wallet77/qualscan/workflows/Node.js%20CI/badge.svg)](https://github.com/wallet77/qualscan/actions?query=workflow%3A%22Node.js+CI%22)
 [![Code coverage](https://codecov.io/gh/wallet77/qualscan/branch/main/graph/badge.svg)](https://codecov.io/gh/wallet77/qualscan)
-[![Opened issues](https://img.shields.io/github/issues-raw/wallet77/qualscan)](https://github.com/wallet77/qualscan/issues)
-[![Opened PR](https://img.shields.io/github/issues-pr-raw/wallet77/qualscan)](https://github.com/wallet77/qualscan/pulls)
+[![Opened issues](https://img.shields.io/github/issues-raw/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan/issues)
+[![Opened PR](https://img.shields.io/github/issues-pr-raw/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan/pulls)
 [![DeepScan grade](https://deepscan.io/api/teams/12061/projects/15017/branches/292479/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=12061&pid=15017&bid=292479)
 
-![DeepScan grade](https://img.shields.io/david/wallet77/qualscan)
+[![Dependencies updates](https://img.shields.io/david/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan)
+
+# Qualscan = Quality Scanner
 
 ![Qualscan example](https://github.com/wallet77/qualscan/blob/main/examples/run_qualscan.gif)
 
@@ -36,6 +36,7 @@ For example it can run:
 - check exact version of dependencies
 - check dependencies (missing or unused)
 - check dependencies size (number of dep, actual size)
+- require time of entrypoint (loading time when we require your project)
 
 In addition you can run all you custom scripts.  
 It will give you a global score based on the number of successful tasks.
@@ -238,6 +239,7 @@ Thresholds can only be passed or failed.
 | Dependencies size    | dependencies-size            | dependencies        | number of all dependencies                           |
 |                      |                              | directDependencies  | number of direct dependencies                        |
 |                      |                              | weight              | total weight of node_modules folder (production)     |
+| Require time         | require-time                 | entrypointTime      | loading time of the entrypoint : require('myModule') |
 
 ## CI/CD
 

@@ -2,16 +2,27 @@ const { exec } = require('child_process')
 const ora = require('ora')
 const path = require('path')
 
-const runCmd = async (cmd) => {
+const preRunCmd = (cmd) => {
     const spinner = ora()
     spinner.color = 'yellow'
     spinner.indent = 2
 
     spinner.start(cmd.title)
 
+    return spinner
+}
+
+const postRunCmd = (cmd, spinner) => {
+    spinner[cmd.level](cmd.title)
+}
+
+const runCmd = async (cmd) => {
+    let spinner
+    if (global.qualscanCLI) spinner = preRunCmd(cmd)
+
     if (!cmd.cmd) {
         await cmd.callback()
-        spinner[cmd.level](cmd.title)
+        if (global.qualscanCLI) postRunCmd(cmd, spinner)
         return cmd
     }
 
@@ -20,11 +31,12 @@ const runCmd = async (cmd) => {
             try {
                 await cmd.callback(error, stdout, stderr)
 
-                spinner[cmd.level](cmd.title)
+                if (global.qualscanCLI) postRunCmd(cmd, spinner)
 
                 resolve(cmd)
             } catch (err) {
-                spinner.fail(cmd.title)
+                cmd.level = 'fail'
+                if (global.qualscanCLI) postRunCmd(cmd, spinner)
                 reject(err)
             }
         })
@@ -55,5 +67,22 @@ module.exports = {
             const reporter = global.reporters[reporterName]
             await reporter[method].apply(reporter, args)
         }
+    },
+
+    getEntrypoint: () => {
+        let entrypoint = 'index.js'
+        if (global.packagefile.main) {
+            entrypoint = global.packagefile.main
+        } else if (global.packagefile.exports) {
+            if (typeof global.packagefile.exports === 'string') {
+                entrypoint = global.packagefile.exports
+            } else if (Object.prototype.hasOwnProperty.call(global.packagefile.exports, 'require')) {
+                entrypoint = global.packagefile.exports.require
+            } else if (Object.prototype.hasOwnProperty.call(global.packagefile.exports, '.')) {
+                entrypoint = global.packagefile.exports['.']
+            }
+        }
+
+        return path.join(process.cwd(), entrypoint)
     }
 }

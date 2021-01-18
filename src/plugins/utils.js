@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const filesize = require('filesize')
+const prettyMilliseconds = require('pretty-ms')
 
 module.exports = {
     parseData: (cmd, error, stdout, stderr) => {
@@ -81,5 +82,9 @@ module.exports = {
     format: (value, metric) => {
         const excluded = ['entryCount', 'directDependencies', 'dependencies']
         return excluded.indexOf(metric) === -1 && !isNaN(value) ? filesize(value, { base: 10 }) : value
+    },
+
+    prettyNano: (value) => {
+        return prettyMilliseconds(value / 1000 / 1000)
     }
 }
