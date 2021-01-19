@@ -33,7 +33,7 @@ class JsonReporter extends AbstractReporter {
             await fs.promises.mkdir(this.filePath, { recursive: true })
             await fs.promises.writeFile(path.join(this.filePath, '/qualscan_report.json'), JSON.stringify(report.data), 'utf8')
             console.log(`JSON file has been saved in ${this.filePath}`)
-        } else {
+        } else if (global.qualscanCLI) {
             console.log(report)
         }
     }

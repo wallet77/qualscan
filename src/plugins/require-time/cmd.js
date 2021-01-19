@@ -28,7 +28,7 @@ const cmd = {
             directDeps: {}
         }
         // for (const dep in global.packagefile.dependencies) {
-        //     const data = await getModuleData(path.join(process.cwd(), 'node_modules', dep))
+        //     const data = await getModuleData(path.join(process.env.QUALSCAN_PROJECT_PATH, 'node_modules', dep))
         //     res.directDeps[dep] = data
         // }
 

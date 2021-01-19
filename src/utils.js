@@ -13,7 +13,7 @@ const preRunCmd = (cmd) => {
 }
 
 const postRunCmd = (cmd, spinner) => {
-    spinner[cmd.level](cmd.title)
+    if (global.qualscanCLI) spinner[cmd.level](cmd.title)
 }
 
 const runCmd = async (cmd) => {
@@ -22,7 +22,7 @@ const runCmd = async (cmd) => {
 
     if (!cmd.cmd) {
         await cmd.callback()
-        if (global.qualscanCLI) postRunCmd(cmd, spinner)
+        postRunCmd(cmd, spinner)
         return cmd
     }
 
@@ -31,12 +31,12 @@ const runCmd = async (cmd) => {
             try {
                 await cmd.callback(error, stdout, stderr)
 
-                if (global.qualscanCLI) postRunCmd(cmd, spinner)
+                postRunCmd(cmd, spinner)
 
                 resolve(cmd)
             } catch (err) {
                 cmd.level = 'fail'
-                if (global.qualscanCLI) postRunCmd(cmd, spinner)
+                postRunCmd(cmd, spinner)
                 reject(err)
             }
         })
@@ -67,6 +67,15 @@ module.exports = {
             const reporter = global.reporters[reporterName]
             await reporter[method].apply(reporter, args)
         }
+
+        // clean variables
+        if (method === 'end') {
+            delete process.env.QUALSCAN_PROJECT_PATH
+            delete global.packagefile
+            delete global.argv
+            delete global.reporters
+            delete global.qualscanCLI
+        }
     },
 
     getEntrypoint: () => {
@@ -83,6 +92,6 @@ module.exports = {
             }
         }
 
-        return path.join(process.cwd(), entrypoint)
+        return path.join(process.env.QUALSCAN_PROJECT_PATH, entrypoint)
     }
 }

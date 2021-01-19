@@ -1,5 +1,7 @@
 let cmd
 const assert = require('assert')
+const path = require('path')
+const utils = require('../src/plugins/utils')
 
 describe('Dependencies updates', () => {
     before(() => {
@@ -15,7 +17,8 @@ describe('Dependencies updates', () => {
         global.reporters = {
             text: ''
         }
-        cmd = require('../src/plugins/updates/cmd')
+        cmd = require(path.join(__dirname, '../src/plugins/updates/cmd'))
+        utils.loadReporters(cmd, path.join(__dirname, '../src/plugins/updates/'))
     })
 
     it('should run updates and return an error', async () => {

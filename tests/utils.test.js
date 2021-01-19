@@ -3,7 +3,11 @@ const path = require('path')
 const assert = require('assert')
 
 describe('Utils', () => {
+    before(() => {
+        process.env.QUALSCAN_PROJECT_PATH = process.cwd()
+    })
     after(() => {
+        delete process.env.QUALSCAN_PROJECT_PATH
         delete global.packagefile
     })
 
