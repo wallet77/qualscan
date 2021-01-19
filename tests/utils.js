@@ -5,7 +5,12 @@ module.exports = {
     cli: (args, cwd, cmd = `node ${path.resolve('./index.js')}`) => {
         return new Promise(resolve => {
             exec(`${cmd} ${args.join(' ')}`,
-                { cwd },
+                {
+                    cwd,
+                    env: Object.assign({
+                        qualscanCLI: true
+                    }, process.env)
+                },
                 (error, stdout, stderr) => {
                     resolve({
                         code: error && error.code ? error.code : 0,

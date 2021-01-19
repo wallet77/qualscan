@@ -57,7 +57,6 @@ module.exports = {
 
     loadReporters: (cmd, cmdPath) => {
         cmd.reporters = {}
-
         for (const reporterName in global.reporters) {
             const reporterPath = path.join(cmdPath, './reporters/', `${reporterName}.js`)
             if (fs.existsSync(reporterPath)) {

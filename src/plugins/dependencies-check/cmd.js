@@ -9,7 +9,7 @@ const cmd = {
     callback: async () => {
         const options = global.argv['dependencies-check'].args
         options.package = global.packagefile
-        const data = await depcheck(process.cwd(), options)
+        const data = await depcheck(process.env.QUALSCAN_PROJECT_PATH, options)
         cmd.data = data
 
         const budget = global.argv['dependencies-check'].budget

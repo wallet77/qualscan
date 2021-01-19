@@ -23,7 +23,7 @@ const cmd = {
         }
 
         let weight = 0
-        const folderNodeModules = path.join(process.cwd(), 'node_modules')
+        const folderNodeModules = path.join(process.env.QUALSCAN_PROJECT_PATH, 'node_modules')
         try {
             weight = await promiseFolderSize(folderNodeModules)
         } catch (err) {
