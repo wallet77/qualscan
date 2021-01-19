@@ -18,6 +18,7 @@
   <a href="#usage">Usage</a> •
   <a href="#using-config-file">Using config file</a> •
   <a href="#reporters">Reporters</a> •
+  <a href="#api">API</a> •
   <a href="#budget">Budget</a> •
   <a href="#cicd">CI / CD</a> •
   <a href="#test">Test</a> •
@@ -168,6 +169,18 @@ qualscan --reporters json --reportPath "myCustomDir/"
 To display json in console
 ```bash
 qualscan --reporters json --reportPath ""
+```
+
+## API
+
+```javascript
+const qualscan = require('qualscan')
+const report = await qualscan.run({
+  tasks: ['code-duplication', 'project-size'],
+  scripts: ['linter'],
+  reporters: ['json'],
+  reportPath: '' // return the report as JSON object
+}, 'path/to/my/project')
 ```
 
 ## Budget
