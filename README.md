@@ -27,8 +27,8 @@
 
 ## Purpose
 
-A CLI tool to run multiple plugins in order to check the quality of your project.
-For example it can run:
+A CLI tool to run multiple plugins in order to check the quality of your project.  
+**List of features:**
 - security audit of your dependencies
 - check dependencies updates
 - check code duplications
@@ -56,12 +56,6 @@ A task is considered as successful if the `fail` threhsold (see <a href="#budget
 
 ```bash
 $ npm install qualscan -g
-```
-
-or
-
-```bash
-$ npm install qualscan --save
 ```
 
 ## Usage
@@ -135,6 +129,17 @@ You can find an [example here](https://github.com/wallet77/qualscan/tree/main/ex
 ```json
 {
     "scripts": ["linter"],
+    "tasks": [
+      "code-duplication",
+      "security-audit",
+      "updates",
+      "package-check",
+      "dependencies-exact-version",
+      "project-size",
+      "dependencies-check",
+      "dependencies-size",
+      "require-time"
+    ],
     "code-duplication": {
         "args": "--ignore */resources/code_duplication_failed/* --gitignore"
     },
