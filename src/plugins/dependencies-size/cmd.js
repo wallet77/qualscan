@@ -38,7 +38,7 @@ const cmd = {
         cmd.data = {
             dependencies: data,
             values: {
-                directDependencies: Object.keys(global.packagefile.dependencies).length,
+                directDependencies: global.packagefile.dependencies ? Object.keys(global.packagefile.dependencies).length : 0,
                 dependencies: data.length,
                 weight: weight
             }
