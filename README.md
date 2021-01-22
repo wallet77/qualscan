@@ -10,6 +10,8 @@
 
 # Qualscan = Quality Scanner
 
+**Qualcan analizes any type of project built on Javascript (NPM module, backend app, frontend app, etc).**
+
 ![Qualscan example](https://github.com/wallet77/qualscan/blob/main/examples/run_qualscan.gif)
 
 <p>
@@ -27,7 +29,7 @@
 
 ## Purpose
 
-A CLI tool to run multiple plugins in order to check the quality of your project.  
+A CLI tool to run multiple plugins in order to check the quality of your Javascript project.  
 **List of features:**
 - security audit of your dependencies
 - check dependencies updates
