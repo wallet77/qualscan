@@ -5,8 +5,7 @@ const prettyMilliseconds = require('pretty-ms')
 
 module.exports = {
     parseData: (cmd, error, stdout, stderr) => {
-        const finalStdout = stdout.substring(stdout.indexOf('[\n  {'))
-        const data = JSON.parse(finalStdout)
+        const data = JSON.parse(stdout)
 
         cmd.data = data
         cmd.level = 'succeed'

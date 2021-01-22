@@ -7,7 +7,8 @@ const cmd = {
     title: 'Project\'s size',
     doc: 'https://github.com/wallet77/qualscan/blob/main/doc/project-size.md',
     callback: async (error, stdout, stderr) => {
-        utils.parseData(cmd, error, stdout, stderr)
+        const finalStdout = stdout.substring(stdout.indexOf('[\n  {'))
+        utils.parseData(cmd, error, finalStdout, stderr)
 
         const budget = global.argv['project-size'].budget
         utils.initBudget(cmd, budget, '', '', utils.format)

@@ -232,26 +232,26 @@ const run = async (defaultConf, defaultPath) => {
     const skippedScripts = []
     const report = { data: {} }
 
-    // -----------------------------
-    // Prepare commands list
-    // -----------------------------
-    for (const index in cmdList) {
-        utils.prepareCmd(cmdList[index], allCmds, skipped)
-    }
-
-    // ---------------------------------
-    // Prepare scripts & skipped scripts
-    // ---------------------------------
-    for (let index = 0; index < scriptList.length; index++) {
-        const script = scriptList[index]
-        if (!global.packagefile.scripts || !global.packagefile.scripts[script]) {
-            skippedScripts.push(script)
-        } else {
-            utils.prepareCmd(script, allCmds, skipped, true)
-        }
-    }
-
     try {
+        // -----------------------------
+        // Prepare commands list
+        // -----------------------------
+        for (const index in cmdList) {
+            utils.prepareCmd(cmdList[index], allCmds, skipped)
+        }
+
+        // ---------------------------------
+        // Prepare scripts & skipped scripts
+        // ---------------------------------
+        for (let index = 0; index < scriptList.length; index++) {
+            const script = scriptList[index]
+            if (!global.packagefile.scripts || !global.packagefile.scripts[script]) {
+                skippedScripts.push(script)
+            } else {
+                utils.prepareCmd(script, allCmds, skipped, true)
+            }
+        }
+
         const res = await Promise.all(allCmds)
         let hasError = false
         const budgetInfo = []
