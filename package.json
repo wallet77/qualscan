@@ -1,6 +1,6 @@
 {
   "name": "qualscan",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "Scan your project to find quality issues",
   "main": "index.js",
   "bin": "./index.js",
