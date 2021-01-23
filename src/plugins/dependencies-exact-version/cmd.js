@@ -3,6 +3,21 @@ const path = require('path')
 const utils = require(path.join(__dirname, '/../utils.js'))
 const semver = require('semver')
 
+/**
+ * Check if a dependency has an invalid version
+ *
+ * @param {Object} badVersions : map of all modules with a bad version
+ * @param {String} key : defines if we are focusing on dependencies or devDependencies
+ */
+const checkVersion = (badVersions, key) => {
+    for (const dependency in global.packagefile[key]) {
+        const depVersion = (global.packagefile[key][dependency]).replace('workspace:', '')
+        if (!semver.valid(depVersion)) {
+            badVersions[key][dependency] = depVersion
+        }
+    }
+}
+
 const cmd = {
     title: 'Exact version of dependencies',
     doc: 'https://github.com/wallet77/qualscan/blob/main/doc/dependencies-exact-version.md',
@@ -15,19 +30,11 @@ const cmd = {
         const budget = global.argv['dependencies-exact-version'].budget
 
         if (global.packagefile.dependencies) {
-            for (const dependency in global.packagefile.dependencies) {
-                if (!semver.valid(global.packagefile.dependencies[dependency])) {
-                    badVersions.dependencies[dependency] = global.packagefile.dependencies[dependency]
-                }
-            }
+            checkVersion(badVersions, 'dependencies')
         }
 
         if (global.packagefile.devDependencies && global.argv['dependencies-exact-version'].devDependencies) {
-            for (const dependency in global.packagefile.devDependencies) {
-                if (!semver.valid(global.packagefile.devDependencies[dependency])) {
-                    badVersions.devDependencies[dependency] = global.packagefile.devDependencies[dependency]
-                }
-            }
+            checkVersion(badVersions, 'devDependencies')
         } else {
             for (const threshold in budget) {
                 delete budget[threshold].devDependencies
