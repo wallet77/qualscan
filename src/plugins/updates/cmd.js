@@ -31,6 +31,10 @@ const cmd = {
                 continue
             }
 
+            if (!semver.valid(module.current) || !semver.valid(module.latest)) {
+                continue
+            }
+
             if (semver.major(module.current) < semver.major(module.latest)) {
                 values.major++
             } else if (semver.minor(module.current) < semver.minor(module.latest)) {
