@@ -236,91 +236,83 @@ const run = async (defaultConf, defaultPath) => {
     const skippedScripts = []
     const report = { data: {} }
 
-    try {
-        // -----------------------------
-        // Prepare commands list
-        // -----------------------------
-        for (const index in cmdList) {
-            utils.prepareCmd(cmdList[index], allCmds, skipped)
-        }
+    // -----------------------------
+    // Prepare commands list
+    // -----------------------------
+    for (const index in cmdList) {
+        utils.prepareCmd(cmdList[index], allCmds, skipped)
+    }
 
-        // ---------------------------------
-        // Prepare scripts & skipped scripts
-        // ---------------------------------
-        for (let index = 0; index < scriptList.length; index++) {
-            const script = scriptList[index]
-            if (!global.packagefile.scripts || !global.packagefile.scripts[script]) {
-                skippedScripts.push(script)
-            } else {
-                utils.prepareCmd(script, allCmds, skipped, true)
-            }
-        }
-
-        const res = await Promise.all(allCmds)
-        let hasError = false
-        const budgetInfo = []
-        let score = 0
-
-        for (const i in res) {
-            const cmd = res[i]
-
-            hasError = hasError || cmd.level === 'fail'
-
-            if (global.argv.budgetInfo && cmd.budget) {
-                budgetInfo.push(cmd.budget)
-            }
-
-            if (cmd.level === 'succeed' || cmd.level === 'info') {
-                score++
-            }
-
-            // -----------------------------
-            // Display verbose messages
-            // -----------------------------
-            if (global.argv.verbose &&
-                (levels.indexOf(cmd.level) >= currentLevel ||
-                (global.argv.level === 'all' && cmd.level === 'succeed'))) {
-                utils.display('displayVerbose', [cmd])
-            }
-        }
-
-        score = Math.round(score * 100 / res.length)
-
-        report.data.cmds = res
-        report.data.score = score
-        report.data.skipped = {
-            plugins: skipped,
-            scripts: skippedScripts
-        }
-
-        utils.display('displayScore', [score])
-
-        // -----------------------------
-        // Display bugets information
-        // -----------------------------
-        utils.display('displayBudgets', [budgetInfo])
-
-        // -------------------------------
-        // Print skipped scripts & plugins
-        // -------------------------------
-        if (skipped.length > 0) {
-            utils.display('displaySkippedPlugins', [skipped])
-        }
-        if (skippedScripts.length > 0) {
-            utils.display('displaySkippedScripts', [skippedScripts])
-        }
-        await utils.display('end', [report])
-        if (qualscanCLI) {
-            process.exit(hasError ? 1 : 0)
+    // ---------------------------------
+    // Prepare scripts & skipped scripts
+    // ---------------------------------
+    for (let index = 0; index < scriptList.length; index++) {
+        const script = scriptList[index]
+        if (!global.packagefile.scripts || !global.packagefile.scripts[script]) {
+            skippedScripts.push(script)
         } else {
-            return report
+            utils.prepareCmd(script, allCmds, skipped, true)
         }
-    } catch (err) {
-        await utils.display('end', [report])
-        console.log(err)
-        if (qualscanCLI) {
-            process.exit(1)
+    }
+
+    const res = await Promise.all(allCmds)
+    let hasError = false
+    const budgetInfo = []
+    let score = 0
+
+    for (const i in res) {
+        const cmd = res[i]
+
+        hasError = hasError || cmd.level === 'fail'
+
+        if (global.argv.budgetInfo && cmd.budget) {
+            budgetInfo.push(cmd.budget)
         }
+
+        if (cmd.level === 'succeed' || cmd.level === 'info') {
+            score++
+        }
+
+        // -----------------------------
+        // Display verbose messages
+        // -----------------------------
+        if (global.argv.verbose &&
+            (levels.indexOf(cmd.level) >= currentLevel ||
+            (global.argv.level === 'all' && cmd.level === 'succeed'))) {
+            utils.display('displayVerbose', [cmd])
+        }
+    }
+
+    score = Math.round(score * 100 / res.length)
+
+    report.data.cmds = res
+    report.data.score = score
+    report.data.skipped = {
+        plugins: skipped,
+        scripts: skippedScripts
+    }
+
+    utils.display('displayScore', [score])
+
+    // -----------------------------
+    // Display bugets information
+    // -----------------------------
+    utils.display('displayBudgets', [budgetInfo])
+
+    // -------------------------------
+    // Print skipped scripts & plugins
+    // -------------------------------
+    if (skipped.length > 0) {
+        utils.display('displaySkippedPlugins', [skipped])
+    }
+    if (skippedScripts.length > 0) {
+        utils.display('displaySkippedScripts', [skippedScripts])
+    }
+    await utils.display('end', [report])
+    if (qualscanCLI) {
+        process.exit(hasError ? 1 : 0)
+    } else {
+        return report
     }
 }
 
