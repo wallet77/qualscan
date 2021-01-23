@@ -1,12 +1,13 @@
-[![GitHub release](https://badge.fury.io/js/qualscan.svg)](https://github.com/wallet77/qualscan/releases/)
+[![GitHub release](https://img.shields.io/npm/v/qualscan.svg)](https://github.com/wallet77/qualscan/releases/)
 [![GitHub license](https://img.shields.io/github/license/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan/blob/master/LICENSE)
-[![CI pipeline](https://github.com/wallet77/qualscan/workflows/Node.js%20CI/badge.svg)](https://github.com/wallet77/qualscan/actions?query=workflow%3A%22Node.js+CI%22)
-[![Code coverage](https://codecov.io/gh/wallet77/qualscan/branch/main/graph/badge.svg)](https://codecov.io/gh/wallet77/qualscan)
-[![Opened issues](https://img.shields.io/github/issues-raw/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan/issues)
 [![Opened PR](https://img.shields.io/github/issues-pr-raw/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan/pulls)
+[![Opened issues](https://img.shields.io/github/issues/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan/issues)
 [![DeepScan grade](https://deepscan.io/api/teams/12061/projects/15017/branches/292479/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=12061&pid=15017&bid=292479)
-
+[![CI pipeline](https://img.shields.io/github/workflow/status/wallet77/qualscan/Node.js%20CI/main.svg)](https://github.com/wallet77/qualscan/actions?query=workflow%3A%22Node.js+CI%22)
+[![Code coverage](https://img.shields.io/codecov/c/github/wallet77/qualscan.svg)](https://codecov.io/gh/wallet77/qualscan)
 [![Dependencies updates](https://img.shields.io/david/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan)
+[![Dependencies updates](https://img.shields.io/david/dev/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan)
+[![Node version](https://img.shields.io/node/v-lts/qualscan.svg)](https://github.com/wallet77/qualscan)
 
 # Qualscan = Quality Scanner
 

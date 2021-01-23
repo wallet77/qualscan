@@ -56,7 +56,7 @@
   },
   "homepage": "https://github.com/wallet77/qualscan#readme",
   "devDependencies": {
-    "eslint": "^7.17.0",
+    "eslint": "^7.18.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
@@ -70,7 +70,7 @@
     "filesize": "6.1.0",
     "get-folder-size": "2.0.1",
     "jscpd": "3.3.23",
-    "ora": "5.2.0",
+    "ora": "5.3.0",
     "pretty-ms": "7.0.1",
     "semver": "7.3.4",
     "yargs": "16.2.0"
