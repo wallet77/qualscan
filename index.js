@@ -8,7 +8,11 @@ global.qualscanCLI = require.main === module || process.env.qualscanCLI
 const run = async (defaultConf, defaultPath) => {
     const qualscanCLI = global.qualscanCLI
     const cmdListDefault = process.env.TASKS_LIST ? process.env.TASKS_LIST.split(',') : ['code-duplication', 'security-audit', 'updates', 'package-check', 'dependencies-exact-version', 'project-size', 'dependencies-check', 'dependencies-size', 'require-time']
-    const scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : []
+    let scriptListDefault = process.env.SCRIPTS_LIST ? process.env.SCRIPTS_LIST.split(',') : []
+
+    if (defaultConf && defaultConf.scripts) {
+        scriptListDefault = defaultConf.scripts
+    }
 
     const knownScripts = ['test', 'lint', 'linter']
 
@@ -24,7 +28,7 @@ const run = async (defaultConf, defaultPath) => {
     // -----------------------------
     try {
         global.packagefile = require(path.join(process.env.QUALSCAN_PROJECT_PATH, 'package.json'))
-        if (global.packagefile.scripts && scriptListDefault.length === 0) {
+        if (global.packagefile.scripts && scriptListDefault.length === 0 && !defaultConf) {
             for (let index = 0; index < knownScripts.length; index++) {
                 const script = knownScripts[index]
                 if (global.packagefile.scripts[script]) {

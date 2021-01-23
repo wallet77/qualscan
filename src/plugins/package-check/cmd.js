@@ -4,7 +4,7 @@ const utils = require(path.join(__dirname, '/../utils.js'))
 
 const args = global.argv['package-check'] || ''
 
-const cmdLine = `${path.join(__dirname, '/../../../node_modules/.bin/package-check')} ${args}`
+const cmdLine = `${path.join(__dirname, utils.getBinDir(), 'package-check')} ${args}`
 
 const cmd = {
     cmd: cmdLine,

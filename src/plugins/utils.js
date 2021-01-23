@@ -85,5 +85,13 @@ module.exports = {
 
     prettyNano: (value) => {
         return prettyMilliseconds(value / 1000 / 1000)
+    },
+
+    getBinDir () {
+        let dir = '/../../../node_modules/.bin/'
+        if (!global.qualscanCLI) {
+            dir = '/../../../../../node_modules/.bin'
+        }
+        return dir
     }
 }

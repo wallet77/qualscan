@@ -8,7 +8,7 @@ const fileReport = path.join(pathReport, 'jscpd-report.json')
 
 const args = global.argv['code-duplication'].args || `-c ${path.join(__dirname, '/config.json')}`
 
-const cmdLine = `${path.join(__dirname, '/../../../node_modules/.bin/jscpd')} ${args} ./ --reporters json --output ${pathReport}`
+const cmdLine = `${path.join(__dirname, utils.getBinDir(), 'jscpd')} ${args} ./ --reporters json --output ${pathReport}`
 
 const cmd = {
     cmd: cmdLine,

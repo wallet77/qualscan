@@ -27,7 +27,7 @@ const runCmd = async (cmd) => {
     }
 
     return new Promise((resolve, reject) => {
-        exec(cmd.cmd, async (error, stdout, stderr) => {
+        exec(cmd.cmd, { cwd: process.env.QUALSCAN_PROJECT_PATH }, async (error, stdout, stderr) => {
             try {
                 await cmd.callback(error, stdout, stderr)
 

@@ -28,4 +28,14 @@ describe('qualscan API', () => {
             assert.strictEqual(err.message.indexOf('Cannot find module \'package.json\'') > -1, true)
         }
     })
+
+    it('should run qualscan API, without scripts', async () => {
+        process.env.TASKS_LIST = 'project-size'
+        const report = await qualscan.run({
+            reporters: ['json'],
+            scripts: [],
+            reportPath: ''
+        }, path.join(__dirname, 'resources'))
+        assert.strictEqual(report.data.score, 100)
+    })
 })
