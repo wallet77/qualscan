@@ -84,4 +84,9 @@ describe('Security audit', () => {
         }), null)
         assert.strictEqual(cmd.level, 'info')
     })
+
+    it('should run security-audit and return succeed level, even if no metadata retrieved', async () => {
+        await cmd.callback(null, JSON.stringify({}), null)
+        assert.strictEqual(cmd.level, 'succeed')
+    })
 })

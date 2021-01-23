@@ -13,7 +13,8 @@
     "src/**"
   ],
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
   },
   "scripts": {
     "test": "NODE_ENV=test SCRIPTS_LIST=linter ./node_modules/.bin/mocha './tests/**/*.js'",

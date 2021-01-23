@@ -11,7 +11,10 @@ const cmd = {
 
         const budget = global.argv['security-audit'].budget
         utils.initBudget(cmd, budget, 'nb ', '')
-        utils.processBudget(cmd, budget, cmd.data.metadata.vulnerabilities)
+
+        if (cmd.data.metadata) {
+            utils.processBudget(cmd, budget, cmd.data.metadata.vulnerabilities)
+        }
 
         return cmd
     }
