@@ -1,0 +1,14 @@
+{
+  "name": "fake-package-workspace",
+  "version": "1.0.0",
+  "description": "Only for tests",
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "jscpd": "^3.3.19",
+    "yargs": "workspace:15.0.0"
+  }
+}

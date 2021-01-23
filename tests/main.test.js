@@ -12,9 +12,14 @@ describe('qualscan', () => {
         assert.strictEqual(result.code, 1)
     })
 
-    it('should run qualscan and 0 (dependencies version ignores bad version)', async () => {
+    it('should run qualscan and returns 0 (dependencies version ignores bad version)', async () => {
         const result = await cli(['--tasks updates'], './tests/resources')
         assert.strictEqual(result.code, 0)
+    })
+
+    it('should run qualscan and fail (security audit throw an error)', async () => {
+        const result = await cli(['--tasks security-audit'], './tests/resources/security-audit')
+        assert.strictEqual(result.code, 1)
     })
 
     it('should run qualscan but skipped unknown plugins', async () => {
