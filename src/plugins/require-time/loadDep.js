@@ -34,7 +34,7 @@ const customLoad = function () {
     const duration = process.hrtime(started)
 
     parent = ancestors.pop()
-    module.duration = duration[1]
+    module.duration = duration[0] * 1e9 + duration[1]
 
     if (err) {
         throw err
