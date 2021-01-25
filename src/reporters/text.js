@@ -1,5 +1,6 @@
 const path = require('path')
 const AbstractReporter = require(path.join(__dirname, './AbstractReporter'))
+const prettyMS = require('pretty-ms')
 
 class TextReporter extends AbstractReporter {
     constructor () {
@@ -83,7 +84,9 @@ class TextReporter extends AbstractReporter {
         console.log(`Scanning ${global.packagefile.name}@${global.packagefile.version}`)
     }
 
-    end () {}
+    end (report) {
+        console.log(`\nReport generated in ${prettyMS(report.time / 1000000)}`)
+    }
 }
 
 module.exports = new TextReporter()

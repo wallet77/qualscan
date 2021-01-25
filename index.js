@@ -187,7 +187,7 @@ const run = async (defaultConf, defaultPath) => {
             alias: 'rtb',
             type: 'object',
             default: {
-                fail: { entrypointTime: 500000000 }
+                fail: { entrypointTime: 50000000 }
             },
             description: 'Set the budget for require time plugin (in nanoseconds).'
         })
@@ -234,7 +234,8 @@ const run = async (defaultConf, defaultPath) => {
     const scriptList = global.argv.scripts || scriptListDefault
     const skipped = []
     const skippedScripts = []
-    const report = { data: {} }
+    const report = { data: {}, time: 0 }
+    const time = process.hrtime()
 
     // -----------------------------
     // Prepare commands list
@@ -291,6 +292,9 @@ const run = async (defaultConf, defaultPath) => {
         plugins: skipped,
         scripts: skippedScripts
     }
+
+    const diff = process.hrtime(time)
+    report.time = diff[0] * 1e9 + diff[1]
 
     utils.display('displayScore', [score])
 
