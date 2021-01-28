@@ -13,7 +13,7 @@ const cmd = {
         const budget = global.argv['project-size'].budget
         utils.initBudget(cmd, budget, '', '', utils.format)
 
-        utils.processBudget(cmd, budget, cmd.data[0], utils.format)
+        utils.processBudget(cmd, budget, cmd.data[0])
 
         return cmd
     }

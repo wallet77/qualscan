@@ -28,7 +28,7 @@ class TextReporter extends AbstractReporter {
                             prefix = '\x1b[41mFAIL\x1b[0m   '
                             color = this.colors.fail
                         }
-                        console.log(`    %s %s - %s  ${color}%s\x1b[0m/%s %s`, prefix, budget.plugin, budget.threshold, budget.value, budget.limit, budget.unit)
+                        console.log(`    %s %s - %s  ${color}%s\x1b[0m/%s %s`, prefix, budget.plugin, budget.threshold, budget.format(budget.value, metric), budget.format(budget.limit, metric), budget.unit)
                     }
                 }
             }

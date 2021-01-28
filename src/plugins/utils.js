@@ -31,19 +31,21 @@ module.exports = {
                     level: 'succeed',
                     metric: metric,
                     value: 0,
-                    limit: format(budget[threshold][metric], metric),
-                    unit: `${prefix}${metric}${suffix}`
+                    limit: budget[threshold][metric],
+                    unit: `${prefix}${metric}${suffix}`,
+                    format: format
                 }
             }
         }
     },
 
-    processBudget: (cmd, budget, data, format = (value, column) => { return value }) => {
+    processBudget: (cmd, budget, data) => {
         const levels = ['succeed', 'info', 'warn', 'fail']
 
         for (const threshold in budget) {
             for (const metric in budget[threshold]) {
-                cmd.budget[threshold][metric].value = format(data[metric], metric)
+                // cmd.budget[threshold][metric].value = format(data[metric], metric)
+                cmd.budget[threshold][metric].value = data[metric]
                 if (data[metric] > budget[threshold][metric]) {
                     cmd.budget[threshold][metric].level = threshold
 

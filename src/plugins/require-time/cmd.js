@@ -46,7 +46,7 @@ const cmd = {
         const budget = global.argv['require-time'].budget
         utils.initBudget(cmd, budget, '', '', utils.prettyNano)
 
-        utils.processBudget(cmd, budget, cmd.data, utils.prettyNano)
+        utils.processBudget(cmd, budget, cmd.data)
 
         return cmd
     }

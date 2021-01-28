@@ -44,7 +44,7 @@ const cmd = {
             }
         }
 
-        utils.processBudget(cmd, budget, cmd.data.values, utils.format)
+        utils.processBudget(cmd, budget, cmd.data.values)
 
         return cmd
     }
