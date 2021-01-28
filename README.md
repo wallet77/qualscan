@@ -11,7 +11,7 @@
 
 # Qualscan = Quality Scanner
 
-**Qualcan analizes any type of project built on Javascript (NPM module, backend app, frontend app, etc).**
+**Qualscan analizes any type of project built on Javascript (NPM module, backend app, frontend app, etc).**
 
 ![Qualscan example](https://github.com/wallet77/qualscan/blob/main/examples/run_qualscan.gif)
 
