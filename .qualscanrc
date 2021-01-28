@@ -12,7 +12,7 @@
     },
     "require-time": {
         "budget": {
-            "fail": { "entrypointTime": 80000000 }
+            "fail": { "entrypointTime": 100000000 }
         }
     }
 }
