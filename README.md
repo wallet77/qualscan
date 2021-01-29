@@ -11,6 +11,10 @@
 
 # Qualscan = Quality Scanner
 
+<div style="text-align:center">
+  <img src="examples/full_logo.png"/>
+</div>
+
 **Qualscan analizes any type of project built on Javascript (NPM module, backend app, frontend app, etc).**
 
 ![Qualscan example](https://github.com/wallet77/qualscan/blob/main/examples/run_qualscan.gif)
