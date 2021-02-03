@@ -29,13 +29,14 @@ const cmd = {
         utils.initBudget(cmd, budget, '% (', ')')
 
         if (fs.existsSync(fileReport)) {
-            const data = require(fileReport)
+            const rawdata = await fs.promises.readFile(fileReport)
+            const data = JSON.parse(rawdata)
             cmd.data = data
 
             utils.processBudget(cmd, budget, cmd.data.statistics.total)
 
-            fs.unlinkSync(fileReport)
-            fs.rmdirSync(pathReport)
+            await fs.promises.unlink(fileReport)
+            await fs.promises.rmdir(pathReport)
         }
 
         return cmd
