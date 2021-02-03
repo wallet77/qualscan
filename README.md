@@ -11,7 +11,7 @@
 
 # Qualscan = Quality Scanner
 
-<div style="text-align:center">
+<div align="center">
   <img src="examples/full_logo.png"/>
 </div>
 
