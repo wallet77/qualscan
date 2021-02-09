@@ -13,7 +13,8 @@ const fs = require('fs')
 const checkVersion = (badVersions, key) => {
     // only check version in package.json
     // if no package-lock.json was found
-    if (!fs.existsSync(path.join(process.env.QUALSCAN_PROJECT_PATH, 'package-lock.json'))) {
+    if (!fs.existsSync(path.join(process.env.QUALSCAN_PROJECT_PATH, 'package-lock.json')) &&
+        !fs.existsSync(path.join(process.env.QUALSCAN_PROJECT_PATH, 'yarn.lock'))) {
         for (const dependency in global.packagefile[key]) {
             const depVersion = (global.packagefile[key][dependency]).replace('workspace:', '')
             if (!semver.valid(depVersion)) {
