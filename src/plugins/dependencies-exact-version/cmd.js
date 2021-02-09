@@ -2,6 +2,7 @@
 const path = require('path')
 const utils = require(path.join(__dirname, '/../utils.js'))
 const semver = require('semver')
+const fs = require('fs')
 
 /**
  * Check if a dependency has an invalid version
@@ -10,10 +11,14 @@ const semver = require('semver')
  * @param {String} key : defines if we are focusing on dependencies or devDependencies
  */
 const checkVersion = (badVersions, key) => {
-    for (const dependency in global.packagefile[key]) {
-        const depVersion = (global.packagefile[key][dependency]).replace('workspace:', '')
-        if (!semver.valid(depVersion)) {
-            badVersions[key][dependency] = depVersion
+    // only check version in package.json
+    // if no package-lock.json was found
+    if (!fs.existsSync(path.join(process.env.QUALSCAN_PROJECT_PATH, 'package-lock.json'))) {
+        for (const dependency in global.packagefile[key]) {
+            const depVersion = (global.packagefile[key][dependency]).replace('workspace:', '')
+            if (!semver.valid(depVersion)) {
+                badVersions[key][dependency] = depVersion
+            }
         }
     }
 }
