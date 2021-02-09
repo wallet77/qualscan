@@ -8,7 +8,7 @@ describe('qualscan', () => {
     })
 
     it('should run qualscan but failed (dependency has range version)', async () => {
-        const result = await cli(['--tasks dependencies-exact-version', '--verbose'], './tests/resources')
+        const result = await cli(['--tasks dependencies-exact-version', '--devd', '--verbose'], './tests/resources/dependencies-exact-version')
         assert.strictEqual(result.code, 1)
     })
 
