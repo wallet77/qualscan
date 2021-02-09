@@ -3,7 +3,13 @@
 ## Overview
 
 This plugin will check if all your dependencies has an exact version.
-You should avoid symbole like "^" or "~".
+
+Since version 2.6, the plugin will:
+- check if you use a package-lock.json
+- if yes => then this task is considered as successful
+- if no => check all dependencies version in order to find range version
+
+If you don't use package-lock.json, then you should avoid symbole like "^" or "~".
 
 
 ## Reasons for failure
@@ -52,6 +58,12 @@ qualscan --tasks dependencies-exact-version -cdd
 ```
 
 ## How to fix?
+
+- Use a package-lock.json
+
+OR
+
+- Install dependencies with `save-exact`
 
 Install exact version with command line
 ```bash
