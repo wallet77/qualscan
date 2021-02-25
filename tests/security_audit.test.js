@@ -84,4 +84,34 @@ describe('Security audit', () => {
         }), null)
         assert.strictEqual(cmd.level, 'info')
     })
+
+    it('should run security-audit and return success (test unlimited)', async () => {
+        await cmd.callback(null, JSON.stringify({
+            metadata: {
+                vulnerabilities: {
+                    info: 0,
+                    low: 0,
+                    moderate: 0,
+                    high: 10000,
+                    critical: 0
+                }
+            }
+        }), null)
+        assert.strictEqual(cmd.level, 'fail')
+
+        global.argv['security-audit'].budget.fail.high = 'unlimited'
+
+        await cmd.callback(null, JSON.stringify({
+            metadata: {
+                vulnerabilities: {
+                    info: 0,
+                    low: 0,
+                    moderate: 0,
+                    high: 10000,
+                    critical: 0
+                }
+            }
+        }), null)
+        assert.strictEqual(cmd.level, 'succeed')
+    })
 })
