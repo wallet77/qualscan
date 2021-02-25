@@ -102,7 +102,7 @@ const run = async (defaultConf, defaultPath) => {
             alias: 'nab',
             type: 'object',
             default: {
-                fail: { critical: 0, high: 0 },
+                fail: { critical: 0, high: 0, moderate: 'unlimited', low: 'unlimited' },
                 warn: { moderate: 0, low: 0 },
                 info: { info: 0 }
             },
