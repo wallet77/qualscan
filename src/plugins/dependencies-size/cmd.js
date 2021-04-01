@@ -37,8 +37,7 @@ const cmd = {
         let depth = 0
         if (stdout !== '') {
             const res = await (new Promise((resolve) => {
-                exec('npm ls --production --json', { cwd: process.env.QUALSCAN_PROJECT_PATH }, (error, stdout) => {
-                    if (error) return resolve(JSON.parse(stdout) || stderr)
+                exec('npm ls --production --json', { cwd: process.env.QUALSCAN_PROJECT_PATH }, (e, stdout) => {
                     resolve(JSON.parse(stdout))
                 })
             }))

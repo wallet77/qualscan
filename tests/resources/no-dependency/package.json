@@ -1,0 +1,6 @@
+{
+  "name": "fake-package2",
+  "version": "1.0.1",
+  "description": "Only for tests, check dependencies exact version",
+  "license": "MIT"
+}
