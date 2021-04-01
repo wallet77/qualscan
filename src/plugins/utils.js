@@ -80,7 +80,7 @@ module.exports = {
     },
 
     format: (value, metric) => {
-        const excluded = ['entryCount', 'directDependencies', 'dependencies']
+        const excluded = ['entryCount', 'directDependencies', 'dependencies', 'depth']
         return excluded.indexOf(metric) === -1 && !isNaN(value) ? filesize(value, { base: 10 }) : value
     },
 

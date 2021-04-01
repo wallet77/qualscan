@@ -2,6 +2,7 @@
 const path = require('path')
 const utils = require(path.join(__dirname, '/../utils.js'))
 const getFolderSize = require('get-folder-size')
+const { exec } = require('child_process')
 
 const promiseFolderSize = (folder) => {
     return new Promise((resolve, reject) => {
@@ -12,6 +13,17 @@ const promiseFolderSize = (folder) => {
     })
 }
 
+const treeDepth = (obj, depth = 0) => {
+    let childrenDepth = depth
+    if (obj.dependencies) {
+        for (const moduleName in obj.dependencies) {
+            childrenDepth = Math.max(childrenDepth, treeDepth(obj.dependencies[moduleName], depth + 1))
+        }
+    }
+
+    return Math.max(depth, childrenDepth)
+}
+
 const cmd = {
     cmd: 'npm ls --production --parseable',
     title: 'Dependencies size',
@@ -20,6 +32,18 @@ const cmd = {
         if (error) {
             cmd.error = error
             cmd.level = 'fail'
+        }
+
+        let depth = 0
+        if (stdout !== '') {
+            const res = await (new Promise((resolve) => {
+                exec('npm ls --production --json', { cwd: process.env.QUALSCAN_PROJECT_PATH }, (error, stdout) => {
+                    if (error) return resolve(JSON.parse(stdout) || stderr)
+                    resolve(JSON.parse(stdout))
+                })
+            }))
+
+            depth = treeDepth(res)
         }
 
         let weight = 0
@@ -40,7 +64,8 @@ const cmd = {
             values: {
                 directDependencies: global.packagefile.dependencies ? Object.keys(global.packagefile.dependencies).length : 0,
                 dependencies: data.length,
-                weight: weight
+                weight,
+                depth
             }
         }
 

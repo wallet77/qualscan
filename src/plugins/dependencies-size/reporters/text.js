@@ -7,6 +7,7 @@ class TextReporter extends AbstractPluginReporter {
         console.log(`  - Numder of direct depedencies: ${this.cmd.data.values.directDependencies}`)
         console.log(`  - Numder of total depedencies: ${this.cmd.data.values.dependencies}`)
         console.log(`  - Weight of all dependencies: ${utils.format(this.cmd.data.values.weight)}`)
+        console.log(`  - Max dependencies tree depth: ${this.cmd.data.values.depth}`)
     }
 }
 
