@@ -2,7 +2,6 @@
 const path = require('path')
 const utils = require(path.join(__dirname, '/../utils.js'))
 const getFolderSize = require('get-folder-size')
-const { exec } = require('child_process')
 
 const promiseFolderSize = (folder) => {
     return new Promise((resolve, reject) => {
@@ -13,19 +12,19 @@ const promiseFolderSize = (folder) => {
     })
 }
 
-const treeDepth = (obj, depth = 0) => {
+const treeDepth = (deps, obj, depth = 0) => {
     let childrenDepth = depth
     if (obj.dependencies) {
         for (const moduleName in obj.dependencies) {
-            childrenDepth = Math.max(childrenDepth, treeDepth(obj.dependencies[moduleName], depth + 1))
+            deps[moduleName] = true
+            childrenDepth = Math.max(childrenDepth, treeDepth(deps, obj.dependencies[moduleName], depth + 1))
         }
     }
-
     return Math.max(depth, childrenDepth)
 }
 
 const cmd = {
-    cmd: 'npm ls --production --parseable',
+    cmd: 'npm ls --production --json',
     title: 'Dependencies size',
     doc: 'https://github.com/wallet77/qualscan/blob/main/doc/dependencies-size.md',
     callback: async (error, stdout, stderr) => {
@@ -34,16 +33,9 @@ const cmd = {
             cmd.level = 'fail'
         }
 
-        let depth = 0
-        if (stdout !== '') {
-            const res = await (new Promise((resolve) => {
-                exec('npm ls --production --json', { cwd: process.env.QUALSCAN_PROJECT_PATH }, (e, stdout) => {
-                    resolve(JSON.parse(stdout))
-                })
-            }))
-
-            depth = treeDepth(res)
-        }
+        const res = JSON.parse(stdout)
+        const deps = {}
+        const depth = treeDepth(deps, res)
 
         let weight = 0
         const folderNodeModules = path.join(process.env.QUALSCAN_PROJECT_PATH, 'node_modules')
@@ -59,10 +51,10 @@ const cmd = {
         const budget = global.argv['dependencies-size'].budget
         utils.initBudget(cmd, budget, '', '', utils.format)
         cmd.data = {
-            dependencies: data,
+            dependencies: deps,
             values: {
                 directDependencies: global.packagefile.dependencies ? Object.keys(global.packagefile.dependencies).length : 0,
-                dependencies: data.length,
+                dependencies: Object.keys(deps).length,
                 weight,
                 depth
             }
