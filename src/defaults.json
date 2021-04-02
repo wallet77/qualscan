@@ -1,0 +1,50 @@
+{
+    "security-audit": {
+        "budget": {
+            "fail": { "critical": 0, "high": 0, "moderate": "unlimited", "low": "unlimited" },
+            "warn": { "moderate": 0, "low": 0 },
+            "info": { "info": 0 }
+        }
+    },
+    "code-duplication": {
+        "budget": {
+            "fail": { "percentageTokens": 0, "percentage": 0 }
+        }
+    },
+    "dependencies-exact-version": {
+        "budget": {
+            "fail": { "dependencies": 0, "devDependencies": 0 }
+        }
+    },
+    "updates": {
+        "budget": {
+            "fail": { "major": 0, "minor": 5, "patch": 10 },
+            "warn": { "major": 0, "minor": 1, "patch": 5 },
+            "info": { "major": 0, "minor": 0, "patch": 0 }
+        }
+    },
+    "project-size": {
+        "budget": {
+            "fail": { "size": 50000, "unpackedSize": 1000000, "entryCount": 100 }
+        }
+    },
+    "dependencies-check": {
+        "budget": {
+            "fail": { "missing": 0, "dependencies": 0, "devDependencies": 0 }
+        },
+        "args": {
+            "ignoreBinPackage": false,
+            "skipMissing": false
+        }
+    },
+    "dependencies-size": {
+        "budget": {
+            "fail": { "weight": 100000000, "depth": 5, "dependencies": 300, "directDependencies": 10 }
+        }
+    },
+    "require-time": {
+        "budget": {
+            "fail": { "entrypointTime": 50000000 }
+        }
+    }
+}
