@@ -27,11 +27,6 @@ describe('qualscan', () => {
         assert.strictEqual(result.code, 0)
     })
 
-    it('should run qualscan and return 0 because audit has only one low vulnerability', async () => {
-        const result = await cli(['--tasks security-audit --scripts'], './tests/resources')
-        assert.strictEqual(result.code, 0)
-    })
-
     it('should run qualscan but return 1 because code-duplication has failed', async () => {
         const result = await cli(['--tasks code-duplication'], './tests/resources/')
         assert.strictEqual(result.code, 1)

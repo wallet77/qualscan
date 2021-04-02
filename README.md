@@ -43,7 +43,7 @@ A CLI tool to run multiple plugins in order to check the quality of your Javascr
 - check project's structure (readme, license, etc)
 - check exact version of dependencies
 - check dependencies (missing or unused)
-- check dependencies size (number of dep, actual size)
+- check dependencies size (number of dep, actual size, tree's depth)
 - require time of entrypoint (loading time when we require your project)
 
 In addition you can run all you custom scripts.  
@@ -264,6 +264,7 @@ Thresholds can only be passed or failed.
 | Dependencies size    | dependencies-size            | dependencies        | number of all dependencies                           |
 |                      |                              | directDependencies  | number of direct dependencies                        |
 |                      |                              | weight              | total weight of node_modules folder (production)     |
+|                      |                              | depth               | maximum dependencies tree's depth (production)       |
 | Require time         | require-time                 | entrypointTime      | loading time of the entrypoint : require('myModule') |
 
 ## CI/CD

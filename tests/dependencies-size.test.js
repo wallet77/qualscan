@@ -21,7 +21,7 @@ describe('Dependencies\'s size', () => {
     })
 
     it('should run dependencies-size without dependencies', async () => {
-        await cmd.callback(null, '', null)
+        await cmd.callback(null, '{}', null)
         assert.strictEqual(cmd.level, 'succeed')
     })
 })

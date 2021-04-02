@@ -10,6 +10,7 @@ This plugin will fail if one of the following metrics is greater than their thre
 
 | Metric              | Threshold      | 
 |:-------------------:|:--------------:|
+| Depth               | 5              |
 | Weight              | 100 MB         |
 | Dependencies        | 10             |
 | Direct dependencies | 300            |
@@ -18,7 +19,7 @@ This plugin will fail if one of the following metrics is greater than their thre
 This plugin is based on `npm ls`, to run it as a standalone module you can refer to [this page](https://docs.npmjs.com/cli/v6/commands/npm-ls).
 
 ```bash
-npm ls --production --parseable
+npm ls --production --json
 ```
 
 ## Details

@@ -179,7 +179,7 @@ const run = async (defaultConf, defaultPath) => {
             alias: 'dsb',
             type: 'object',
             default: {
-                fail: { weight: 100000000, dependencies: 300, directDependencies: 10 }
+                fail: { weight: 100000000, depth: 5, dependencies: 300, directDependencies: 10 }
             },
             description: 'Set the budget for dependencies size plugin.'
         })
