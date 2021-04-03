@@ -60,6 +60,11 @@ const run = async (defaultConf, defaultPath) => {
         }
     }
 
+    const defaults = require(path.join(__dirname, 'src/defaults.json'))
+    if (conf) {
+        utils.deepMerge(defaults, conf)
+    }
+
     // -----------------------------
     // Load conf
     // -----------------------------
@@ -101,11 +106,7 @@ const run = async (defaultConf, defaultPath) => {
         .option('security-audit.budget', {
             alias: 'nab',
             type: 'object',
-            default: {
-                fail: { critical: 0, high: 0, moderate: 'unlimited', low: 'unlimited' },
-                warn: { moderate: 0, low: 0 },
-                info: { info: 0 }
-            },
+            default: defaults['security-audit'].budget,
             description: 'Set the budget for npm audit plugin.'
         })
         .option('code-duplication.args', {
@@ -116,17 +117,13 @@ const run = async (defaultConf, defaultPath) => {
         .option('code-duplication.budget', {
             alias: 'cdb',
             type: 'object',
-            default: {
-                fail: { percentageTokens: 0, percentage: 0 }
-            },
+            default: defaults['code-duplication'].budget,
             description: 'Set the budget for code duplication plugin (in percentage).'
         })
         .option('dependencies-exact-version.budget', {
             alias: 'devb',
             type: 'object',
-            default: {
-                fail: { dependencies: 0, devDependencies: 0 }
-            },
+            default: defaults['dependencies-exact-version'].budget,
             description: 'Set the budget for npm audit plugin.'
         })
         .option('dependencies-exact-version.devDependencies', {
@@ -137,11 +134,7 @@ const run = async (defaultConf, defaultPath) => {
         .option('updates.budget', {
             alias: 'nob',
             type: 'object',
-            default: {
-                fail: { major: 0, minor: 5, patch: 10 },
-                warn: { major: 0, minor: 1, patch: 5 },
-                info: { major: 0, minor: 0, patch: 0 }
-            },
+            default: defaults.updates.budget,
             description: 'Set the budget for updates plugin.'
         })
         .option('updates.devDependencies', {
@@ -153,42 +146,31 @@ const run = async (defaultConf, defaultPath) => {
         .option('project-size.budget', {
             alias: 'npb',
             type: 'object',
-            default: {
-                fail: { size: 50000, unpackedSize: 1000000, entryCount: 100 }
-            },
+            default: defaults['project-size'].budget,
             description: 'Set the budget for project size plugin.'
         })
         .option('dependencies-check.budget', {
             alias: 'dcb',
             type: 'object',
-            default: {
-                fail: { missing: 0, dependencies: 0, devDependencies: 0 }
-            },
+            default: defaults['dependencies-check'].budget,
             description: 'Set the budget for dependencies check.'
         })
         .option('dependencies-check.args', {
             alias: 'dca',
             type: 'object',
-            default: {
-                ignoreBinPackage: false, // ignore the packages with bin entry
-                skipMissing: false // skip calculation of missing dependencies
-            },
+            default: defaults['dependencies-check'].args,
             description: 'Send custom args to dependencies check plugin.'
         })
         .option('dependencies-size.budget', {
             alias: 'dsb',
             type: 'object',
-            default: {
-                fail: { weight: 100000000, depth: 5, dependencies: 300, directDependencies: 10 }
-            },
+            default: defaults['dependencies-size'].budget,
             description: 'Set the budget for dependencies size plugin.'
         })
         .option('require-time.budget', {
             alias: 'rtb',
             type: 'object',
-            default: {
-                fail: { entrypointTime: 50000000 }
-            },
+            default: defaults['require-time'].budget,
             description: 'Set the budget for require time plugin (in nanoseconds).'
         })
         .option('require-time.entrypoint', {
