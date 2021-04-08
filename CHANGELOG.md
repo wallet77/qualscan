@@ -1,3 +1,97 @@
+# Version 3.0.0 released on 2020-04-09
+
+## Breaking changes
+
+This release is a new major version and introduces potential changes in its behavior.
+
+List of breaking changes:
+- Plugin `dependencies-size` can now report dependencies tree depth, by default the maximum is 5
+- Plugin `security-audit` now scans only production dependencies by default, to scan dev dependencies use devMode
+```json
+{
+  "devMode": true
+}
+```
+```bash
+qualscan --devMode
+```
+
+## Features
+
+**Dev Mode**
+
+This feature allow some plugings to take dev dependencies into account.  
+For example security audit is performed with `npm audit` instead of `npm audit --production`
+
+[Pull Request](https://github.com/wallet77/qualscan/pull/37) - allow dev mode 
+
+**Export configuration**
+
+Allow to export the entire configuration used by qualscan.
+```bash
+qualscan exportConf
+```
+
+[Pull Request](https://github.com/wallet77/qualscan/pull/36) - export conf
+
+**Merge conf with default values**
+
+This feature will perform a merge between default values and user configuration.  
+It allows developer to override only some specific values.
+Example to change only the maximum number of files:  
+Before you have to define the entire budget:
+```json
+{
+  "project-size": {
+    "budget": {
+      "fail": {
+        "entryCount": 200,
+        "size": 3000000,
+        "unpackedSize": 60000000
+      },
+      "warn": {
+        "entryCount": 100,
+        "size": 300000,
+        "unpackedSize": 6000000
+      }
+    }
+  }
+}
+```
+
+Now:
+```json
+{
+  "project-size": {
+    "budget": {
+      "fail": {
+        "entryCount": 200,
+      }
+    }
+  }
+}
+```
+The list of default values can be found [here](https://github.com/wallet77/qualscan/blob/main/src/defaults.json).  
+[Pull Request](https://github.com/wallet77/qualscan/pull/33) - allow to merge conf with defaults values
+
+**Tree depth**
+
+Qualscan will now scan dependencies tree depth and allow a maximum of 5 by default.  
+You can edit this value in your configuration.
+```json
+{
+  "dependencies-size": {
+    "budget": {
+      "fail": {
+        "depth": 8
+      }
+    }
+  }
+}
+```
+
+[Pull Request](https://github.com/wallet77/qualscan/pull/31) - add tree depth
+
 # Version 2.0.0 released on 2020-01-11
 
 ## Breaking changes
@@ -15,7 +109,7 @@ List of breaking changes:
         * replace `-usl` with `--project-size.budget.fail.size`  
         * replace `-psl` with `--project-size.budget.fail.unpackedSize`  
         * or use a config file
-```bash
+```json
 {
   "project-size": {
     "budget": {
