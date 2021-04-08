@@ -191,6 +191,10 @@ const run = async (defaultConf, defaultPath) => {
             description: 'Path where to save report',
             default: path.join(process.env.QUALSCAN_PROJECT_PATH, '/report')
         })
+        .command('exportConf', 'Export qualscan conf!', () => {}, (argv) => {
+            console.log(argv)
+            process.exit(0)
+        })
         .argv
 
     global.reporters = {}
@@ -306,6 +310,6 @@ if (global.qualscanCLI) {
     run()
 } else {
     module.exports = {
-        run: run
+        run
     }
 }

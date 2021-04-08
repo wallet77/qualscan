@@ -68,4 +68,9 @@ describe('qualscan', () => {
         const result = await cli(['--tasks code-duplication --bi false'], './tests/resources/')
         assert.strictEqual(result.code, 1)
     })
+
+    it('should run qualscan and export conf', async () => {
+        const result = await cli(['exportConf'], '.')
+        assert.strictEqual(result.code, 0)
+    })
 })
