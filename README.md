@@ -124,6 +124,12 @@ For a full list of possible arguments, please follow this documentation: [Jscpd 
 $ qualscan -devd
 ```
 
+**Export current configuration**
+
+```bash
+$ qualscan exportConf
+```
+
 ## Using Config file
 
 Qualscan can use a configuration file instead of a list of options.
