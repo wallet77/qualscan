@@ -191,6 +191,12 @@ const run = async (defaultConf, defaultPath) => {
             description: 'Path where to save report',
             default: path.join(process.env.QUALSCAN_PROJECT_PATH, '/report')
         })
+        .option('devMode', {
+            alias: 'dm',
+            type: 'boolean',
+            description: 'Manage project as in development mode',
+            default: false
+        })
         .command('exportConf', 'Export qualscan conf!', () => {}, (argv) => {
             console.log(argv)
             process.exit(0)
