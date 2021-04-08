@@ -23,8 +23,10 @@ const treeDepth = (deps, obj, depth = 0) => {
     return Math.max(depth, childrenDepth)
 }
 
+const args = utils.getArgs()
+
 const cmd = {
-    cmd: 'npm ls --production --json',
+    cmd: `npm ls --json ${args}`,
     title: 'Dependencies size',
     doc: 'https://github.com/wallet77/qualscan/blob/main/doc/dependencies-size.md',
     callback: async (error, stdout, stderr) => {

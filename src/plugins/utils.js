@@ -94,5 +94,9 @@ module.exports = {
             dir = '/../../../../../node_modules/.bin'
         }
         return dir
+    },
+
+    getArgs () {
+        return global.argv && global.argv.devMode ? '' : '--production'
     }
 }

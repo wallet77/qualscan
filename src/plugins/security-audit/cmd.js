@@ -2,8 +2,10 @@
 const path = require('path')
 const utils = require(path.join(__dirname, '/../utils.js'))
 
+const args = utils.getArgs()
+
 const cmd = {
-    cmd: 'npm audit -json',
+    cmd: `npm audit -json ${args}`,
     title: 'Security audit',
     doc: 'https://github.com/wallet77/qualscan/blob/main/doc/security-audit.md',
     callback: async (error, stdout, stderr) => {
