@@ -18,7 +18,12 @@ describe('qualscan', () => {
     })
 
     it('should run qualscan and fail (security audit throw an error)', async () => {
-        const result = await cli(['--tasks security-audit'], './tests/resources/security-audit')
+        const result = await cli(['--tasks security-audit', '--scripts'], './tests/resources/security-audit')
+        assert.strictEqual(result.code, 1)
+    })
+
+    it('should run qualscan and fail (security audit throw an error for dev)', async () => {
+        const result = await cli(['--tasks security-audit', '--scripts', '--devMode'], './tests/resources/security-audit/dev')
         assert.strictEqual(result.code, 1)
     })
 
