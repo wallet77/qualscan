@@ -4,6 +4,32 @@ const semver = require('semver')
 const path = require('path')
 const utils = require(path.join(__dirname, '/../utils.js'))
 
+/**
+ * Creates a RegExp from the given string, converting asterisks to .* expressions,
+ * and escaping all other characters.
+ */
+const wildcardToRegExp = (s) => {
+    return new RegExp('^' + s.split(/\*+/).map(regExpEscape).join('.*') + '$')
+}
+
+/**
+ * RegExp-escapes all characters in the given string.
+ */
+const regExpEscape = (s) => {
+    return s.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+}
+
+/**
+ * Check if a module respect all rules.
+ */
+const hasTobeExcluded = (moduleName, listOfRules = []) => {
+    for (let i = 0; i < listOfRules.length; i++) {
+        if (wildcardToRegExp(listOfRules[i]).test(moduleName)) return true
+    }
+
+    return false
+}
+
 const cmd = {
     cmd: 'npm outdated -json -long',
     title: 'Dependencies updates',
@@ -26,6 +52,10 @@ const cmd = {
 
         for (const moduleName in data) {
             const module = data[moduleName]
+
+            if (hasTobeExcluded(moduleName, global.argv.updates.exclude)) {
+                continue
+            }
 
             if (module.type === 'devDependencies' && !global.argv.updates.devDependencies) {
                 continue
