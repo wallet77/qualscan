@@ -17,7 +17,14 @@
     },
     "dependencies-size": {
         "budget": {
-            "fail": { "depth": 8 }
+            "fail": { "depth": 9 }
+        }
+    },
+    "updates": {
+        "budget": {
+            "fail": { "major": 1 },
+            "warn": { "major": 1 },
+            "info": { "major": 1 }
         }
     }
 }

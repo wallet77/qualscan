@@ -11,7 +11,8 @@ describe('Dependencies updates', () => {
                     fail: { major: 0, minor: 5, patch: 10 },
                     warn: { major: 0, minor: 1, patch: 5 },
                     info: { major: 0, minor: 0, patch: 0 }
-                }
+                },
+                exclude: ['module1', 'module3*']
             }
         }
         global.reporters = {
@@ -112,5 +113,23 @@ describe('Dependencies updates', () => {
             }
         }), null)
         assert.strictEqual(cmd.level, 'info')
+    })
+
+    it('should run updates and return succeed level because modules are excluded', async () => {
+        await cmd.callback(null, JSON.stringify({
+            module1: {
+                current: '7.0.0',
+                wanted: '7.14.0',
+                latest: '7.14.0',
+                type: 'dependencies'
+            },
+            'module3-test': {
+                current: '7.0.0',
+                wanted: '7.14.0',
+                latest: '7.14.0',
+                type: 'dependencies'
+            }
+        }), null)
+        assert.strictEqual(cmd.level, 'succeed')
     })
 })

@@ -285,15 +285,11 @@ Basic CI output with Github actions:
 
 ## Compatibility
 
-**/!\ This module use async/await syntax and the inspector module, this is why you must have node 8.0+.**
-
-Supported and tested : >= 8.0
 
 | Version       | Supported     | Tested         |
 |:-------------:|:-------------:|:--------------:|
 | 14.x          | yes           | yes            |
 | 12.x          | yes           | yes            |
-| 10.x          | yes           | yes            |
 
 ## Test
 
