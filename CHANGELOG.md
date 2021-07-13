@@ -1,3 +1,15 @@
+# Version 3.1.0 released on 2021-07-13
+
+## Features
+
+**Allow to exclude dependencies for updates**
+
+This feature allow to exclude some dependencies from a pattern for update pugin.  
+For example you can exclude all `eslint*` in order to avoid compatibility issues.
+
+[Pull Request](https://github.com/wallet77/qualscan/pull/39) - Feat/exclude dep updates
+
+
 # Version 3.0.0 released on 2020-04-09
 
 ## Breaking changes
