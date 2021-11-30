@@ -25,6 +25,7 @@
             "fail": { "major": 1 },
             "warn": { "major": 1 },
             "info": { "major": 1 }
-        }
+        },
+        "exclude": ["get-folder-size", "ora", "filesize"]
     }
 }
