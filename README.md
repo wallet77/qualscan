@@ -3,10 +3,8 @@
 [![Opened PR](https://img.shields.io/github/issues-pr-raw/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan/pulls)
 [![Opened issues](https://img.shields.io/github/issues/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan/issues)
 [![DeepScan grade](https://deepscan.io/api/teams/12061/projects/15017/branches/292479/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=12061&pid=15017&bid=292479)
-[![CI pipeline](https://img.shields.io/github/workflow/status/wallet77/qualscan/Node.js%20CI/main.svg)](https://github.com/wallet77/qualscan/actions?query=workflow%3A%22Node.js+CI%22)
+[![CI pipeline](https://github.com/wallet77/qualscan/workflows/Node.js%20CI/badge.svg)](https://github.com/wallet77/qualscan/actions?query=workflow%3A%22Node.js+CI%22)
 [![Code coverage](https://img.shields.io/codecov/c/github/wallet77/qualscan.svg)](https://codecov.io/gh/wallet77/qualscan)
-[![Dependencies updates](https://img.shields.io/david/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan)
-[![Dependencies updates](https://img.shields.io/david/dev/wallet77/qualscan.svg)](https://github.com/wallet77/qualscan)
 [![Node version](https://img.shields.io/node/v-lts/qualscan.svg)](https://github.com/wallet77/qualscan)
 
 # Qualscan = Quality Scanner
@@ -288,8 +286,9 @@ Basic CI output with Github actions:
 
 | Version       | Supported     | Tested         |
 |:-------------:|:-------------:|:--------------:|
+| 18.x          | yes           | yes            |
+| 16.x          | yes           | yes            |
 | 14.x          | yes           | yes            |
-| 12.x          | yes           | yes            |
 
 ## Test
 
